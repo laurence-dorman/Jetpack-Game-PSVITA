@@ -8,6 +8,8 @@
 #include <input/input_manager.h>
 #include <box2d/Box2D.h>
 #include "game_object.h"
+#include "menustate.h"
+#include "ingamestate.h"
 
 
 // FRAMEWORK FORWARD DECLARATIONS
@@ -20,6 +22,8 @@ namespace gef
 	class Renderer3D;
 }
 
+class State;
+
 class SceneApp : public gef::Application
 {
 public:
@@ -29,21 +33,14 @@ public:
 	
 	bool Update(float frame_time);
 
-	void InitStateUpdate(float frame_time);
-	void Level1StateUpdate(float frame_time);
-	void Level2StateUpdate(float frame_time);
-
 	void Render();
 
-	void InitStateRender();
-	void Level1StateRender();
-	void Level2StateRender();
 private:
 	void InitPlayer();
 	void InitGround();
 	void InitFont();
 	void CleanUpFont();
-	void DrawHUD(const char* gs);
+	void DrawHUD();
 	void SetupLights();
 	void UpdateSimulation(float frame_time);
     
@@ -53,12 +50,11 @@ private:
 
 	gef::SonyControllerInputManager* controllerManager;
 
-	enum GAMESTATE {
-		INIT, LEVEL1, LEVEL2
-	};
+	MenuState menu_state_;
+	InGameState in_game_state_;
 
-	GAMESTATE game_state_;
 
+	State* current_state_;
 
 	//
 	// FRONTEND DECLARATIONS

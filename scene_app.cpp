@@ -20,7 +20,7 @@ SceneApp::SceneApp(gef::Platform& platform) :
 	world_(NULL),
 	player_body_(NULL),
 	button_icon_(NULL),
-	game_state_(GAMESTATE::INIT)
+	current_state_(&menu_state_)
 {
 }
 
@@ -31,8 +31,6 @@ void SceneApp::Init()
 
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
-
-	game_state_ = GAMESTATE::INIT;
 }
 
 void SceneApp::CleanUp()
@@ -55,104 +53,32 @@ bool SceneApp::Update(float frame_time)
 	// INPUT
 	controllerManager = input_manager_->controller_input();
 
-	switch (game_state_) {
-	case INIT:
-		InitStateUpdate(frame_time);
-		break;
+	if (controllerManager)
+	{
+		const gef::SonyController* controller = controllerManager->GetController(0);
 
-	case LEVEL1:
-		Level1StateUpdate(frame_time);
-		break;
-
-	case LEVEL2:
-		Level2StateUpdate(frame_time);
-		break;
+		if (controller)
+		{
+			//d-pad
+			if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT) {
+				current_state_ = &in_game_state_;
+			}
+			if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT) {
+				current_state_ = &menu_state_;
+			}
+		}
 	}
 
+	current_state_->Update(frame_time);
 
 	return true;
-}
-
-void SceneApp::InitStateUpdate(float frame_time)
-{
-	if (controllerManager)
-	{
-		const gef::SonyController* controller = controllerManager->GetController(0);
-
-		if (controller)
-		{
-			 //d-pad
-			if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT) {
-				game_state_ = GAMESTATE::LEVEL1;
-			}
-		}
-	}
-
-}
-
-void SceneApp::Level1StateUpdate(float frame_time)
-{
-	if (controllerManager)
-	{
-		const gef::SonyController* controller = controllerManager->GetController(0);
-
-		if (controller)
-		{
-			//d-pad
-			if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT) {
-				game_state_ = GAMESTATE::LEVEL2;
-			}
-		}
-	}
-}
-
-void SceneApp::Level2StateUpdate(float frame_time)
-{
-	if (controllerManager)
-	{
-		const gef::SonyController* controller = controllerManager->GetController(0);
-
-		if (controller)
-		{
-			//d-pad
-			if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT) {
-				game_state_ = GAMESTATE::INIT;
-			}
-		}
-	}
 }
 
 
 void SceneApp::Render()
 {
-	switch (game_state_) {
-	case INIT:
-		InitStateRender();
-	break;
-
-	case LEVEL1:
-		Level1StateRender();
-	break;
-
-	case LEVEL2:
-		Level2StateRender();
-	break;
-	}
-}
-
-void SceneApp::InitStateRender()
-{
-	DrawHUD("INIT");
-}
-
-void SceneApp::Level1StateRender()
-{
-	DrawHUD("LEVEL1");
-}
-
-void SceneApp::Level2StateRender()
-{
-	DrawHUD("LEVEL2");
+	current_state_->Render();
+	DrawHUD();
 }
 
 void SceneApp::InitPlayer()
@@ -229,13 +155,13 @@ void SceneApp::CleanUpFont()
 	font_ = NULL;
 }
 
-void SceneApp::DrawHUD(const char* gs)
+void SceneApp::DrawHUD()
 {
 	sprite_renderer_->Begin();
 	if(font_)
 	{
 		// display frame rate
-		font_->RenderText(sprite_renderer_, gef::Vector4(5.0f, 5.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "GAMESTATE: %s - FPS: %.1f", gs, fps_);
+		font_->RenderText(sprite_renderer_, gef::Vector4(5.0f, 5.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "GAMESTATE: %s - FPS: %.1f", current_state_->getName(), fps_);
 	}
 	sprite_renderer_->End();
 }
