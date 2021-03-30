@@ -1,9 +1,13 @@
 #include "StateManager.h"
 
-StateManager::StateManager():
-    current_state_(&menu_state_)
+StateManager::StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font):
+    current_state_(&in_game_state_),
+    menu_state_(sprite_renderer, font),
+    in_game_state_(sprite_renderer, renderer_3d, font)
 {
- 
+    platform_ = platform;
+    sprite_renderer_ = sprite_renderer;
+    renderer_3d_ = renderer_3d;
 }
 
 StateManager::~StateManager()

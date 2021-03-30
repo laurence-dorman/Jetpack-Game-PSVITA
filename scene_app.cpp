@@ -33,7 +33,7 @@ void SceneApp::Init()
 	input_manager_ = gef::InputManager::Create(platform_);
 
 	// state manager
-	state_manager_ = new StateManager();
+	state_manager_ = new StateManager(&platform_, sprite_renderer_, renderer_3d_);
 }
 
 void SceneApp::CleanUp()

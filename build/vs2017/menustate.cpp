@@ -1,7 +1,10 @@
 #include "menustate.h"
 
-MenuState::MenuState()
+MenuState::MenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font) : 
+	sprite_renderer_(sprite_renderer), 
+	font_(font)
 {
+
 }
 
 MenuState::~MenuState()
