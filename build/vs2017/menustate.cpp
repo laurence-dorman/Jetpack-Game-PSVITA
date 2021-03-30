@@ -14,7 +14,7 @@ MenuState::~MenuState()
 }
 
 State* MenuState::Update(float frame_time, const gef::SonyController* controller) {
-	if (controller->buttons_down() & gef_SONY_CTRL_CROSS) {
+	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
 		return states_[1];
 	}
 	return this;

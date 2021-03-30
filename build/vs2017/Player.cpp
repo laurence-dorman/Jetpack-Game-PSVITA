@@ -3,44 +3,56 @@
 #include <graphics/renderer_3d.h>
 
 
-Player::Player(PrimitiveBuilder* primitive_builder)
+Player::Player() :
+	player_body_(NULL)
 {
-	Init(primitive_builder);
-	speed = gef::Vector4(0.f, 0.f, 0.f, 0.f);
-	position = gef::Vector4(0.f, 0.f, 0.f, 0.f);
-	heading = gef::Vector4(0.f, 0.f, 0.f, 0.f);
-
-	transl_matrix.SetIdentity();
-	scale_matrix.SetIdentity();
-
-	rotation_matrix_x.SetIdentity();
-	rotation_matrix_y.SetIdentity();
-	rotation_matrix_z.SetIdentity();
+	speed = b2Vec2(0.0f, 0.0f);
+	position = b2Vec2(0.0f, 4.0f);
+	heading = b2Vec2(0.f, 0.f);
 }
 
 Player::~Player()
 {
 }
 
-void Player::Update(float dt)
+void Player::Update(float dt, const gef::SonyController* controller)
 {
-	heading.set_x(sinf(rotation.y));
-	heading.set_z(cosf(rotation.y));
+	if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
+		player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.f, 5.f), 1);
+	}
 
-	setPosition(getPosition() += heading*dt * thrust * 10);
-
-	transl_matrix.SetTranslation(position);
-
-	rotation_matrix_x.RotationX(rotation.x);
-	rotation_matrix_y.RotationY(rotation.y);
-	rotation_matrix_z.RotationZ(rotation.z);
-
-	set_transform(scale_matrix * rotation_matrix_x * rotation_matrix_y * rotation_matrix_z * transl_matrix);
+	gef::Matrix44 player_transform;
+	player_transform.SetIdentity();
+	player_transform.RotationZ(player_body_->GetAngle());
+	player_transform.SetTranslation(gef::Vector4(player_body_->GetPosition().x, player_body_->GetPosition().y, 0.f));
+	this->set_transform(player_transform);
 }
 
-void Player::Init(PrimitiveBuilder* primitive_builder)
+void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world)
 {
-	set_mesh(primitive_builder->GetDefaultCubeMesh());
+	// setup the mesh for the player
+	this->set_mesh(primitive_builder->GetDefaultCubeMesh());
+
+	// create a physics body for the player
+	b2BodyDef player_body_def;
+	player_body_def.type = b2_dynamicBody;
+	player_body_def.position = b2Vec2(0.0f, 4.0f);
+	// create a connection between the rigid body and GameObject
+	player_body_def.userData.pointer = reinterpret_cast<uintptr_t>(this);
+
+	player_body_ = world->CreateBody(&player_body_def);
+
+	// create the shape for the player
+	b2PolygonShape player_shape;
+	player_shape.SetAsBox(0.5f, 0.5f);
+
+	// create the fixture
+	b2FixtureDef player_fixture_def;
+	player_fixture_def.shape = &player_shape;
+	player_fixture_def.density = 1.0f;
+
+	// create the fixture on the rigid body
+	player_body_->CreateFixture(&player_fixture_def);
 }
 
 void Player::Render(gef::Renderer3D* renderer_3d)

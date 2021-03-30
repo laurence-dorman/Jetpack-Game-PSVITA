@@ -7,7 +7,6 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	camera_(camera),
 	world_(NULL),
 	player_(NULL),
-	player_body_(NULL),
 	platform_(platform),
 	states_(states)
 	
@@ -18,7 +17,7 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	// create the renderer for draw 3D geometry
 	renderer_3d_ = gef::Renderer3D::Create(*platform_);
 
-	player_ = new Player(primitive_builder_); // init player
+	player_ = new Player(); // init player
 
 	SetupLights();
 
@@ -26,7 +25,7 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
 
-	InitPlayer();
+	player_->Init(primitive_builder_, world_);
 	InitGround();
 }
 
@@ -57,7 +56,7 @@ void InGameState::onExit()
 
 State* InGameState::Update(float frame_time, const gef::SonyController* controller)
 {
-	UpdateSimulation(frame_time);
+	UpdateSimulation(frame_time, controller);
 	return this;
 }
 
@@ -116,33 +115,6 @@ void InGameState::SetupLights()
 	default_shader_data.AddPointLight(default_point_light);
 }
 
-void InGameState::InitPlayer()
-{
-	// setup the mesh for the player
-	player_->set_mesh(primitive_builder_->GetDefaultCubeMesh());
-
-	// create a physics body for the player
-	b2BodyDef player_body_def;
-	player_body_def.type = b2_dynamicBody;
-	player_body_def.position = b2Vec2(0.0f, 4.0f);
-	// create a connection between the rigid body and GameObject
-	player_body_def.userData.pointer = reinterpret_cast<uintptr_t>(&player_);
-
-	player_body_ = world_->CreateBody(&player_body_def);
-
-	// create the shape for the player
-	b2PolygonShape player_shape;
-	player_shape.SetAsBox(0.5f, 0.5f);
-
-	// create the fixture
-	b2FixtureDef player_fixture_def;
-	player_fixture_def.shape = &player_shape;
-	player_fixture_def.density = 1.0f;
-
-	// create the fixture on the rigid body
-	player_body_->CreateFixture(&player_fixture_def);
-}
-
 void InGameState::InitGround()
 {
 	// ground dimensions
@@ -174,7 +146,7 @@ void InGameState::InitGround()
 	ground_.UpdateFromSimulation(ground_body_);
 }
 
-void InGameState::UpdateSimulation(float frame_time)
+void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* controller)
 {
 	// update physics world
 	float timeStep = 1.0f / 60.0f;
@@ -185,13 +157,7 @@ void InGameState::UpdateSimulation(float frame_time)
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
 	// update object visuals from simulation data
-	player_->Update(frame_time);
-	
-	gef::Matrix44 player_transform;
-	player_transform.SetIdentity();
-	player_transform.RotationZ(player_body_->GetAngle());
-	player_transform.SetTranslation(gef::Vector4(player_body_->GetPosition().x, player_body_->GetPosition().y, 0.f));
-	player_->set_transform(player_transform);
+	player_->Update(frame_time, controller);
 
 	// don't have to update the ground visuals as it is static
 
@@ -201,46 +167,46 @@ void InGameState::UpdateSimulation(float frame_time)
 	// get contact count
 	int contact_count = world_->GetContactCount();
 
-	//for (int contact_num = 0; contact_num < contact_count; ++contact_num)
-	//{
-	//	if (contact->IsTouching())
-	//	{
-	//		// get the colliding bodies
-	//		b2Body* bodyA = contact->GetFixtureA()->GetBody();
-	//		b2Body* bodyB = contact->GetFixtureB()->GetBody();
-	//
-	//		// DO COLLISION RESPONSE HERE
-	//		Player* player = NULL;
-	//
-	//		GameObject* gameObjectA = NULL;
-	//		GameObject* gameObjectB = NULL;
-	//
-	//		gameObjectA = reinterpret_cast<GameObject*>(bodyA->GetUserData().pointer);
-	//		gameObjectB = reinterpret_cast<GameObject*>(bodyB->GetUserData().pointer);
-	//
-	//		if (gameObjectA)
-	//		{
-	//			if (gameObjectA->type() == PLAYER)
-	//			{
-	//				player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);
-	//			}
-	//		}
-	//
-	//		if (gameObjectB)
-	//		{
-	//			if (gameObjectB->type() == PLAYER)
-	//			{
-	//				player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
-	//			}
-	//		}
-	//
-	//		if (player)
-	//		{
-	//			// take damage
-	//		}
-	//	}
-	//
-	//	// Get next contact point
-	//	contact = contact->GetNext();
-	//}
+	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
+	{
+		if (contact->IsTouching())
+		{
+			// get the colliding bodies
+			b2Body* bodyA = contact->GetFixtureA()->GetBody();
+			b2Body* bodyB = contact->GetFixtureB()->GetBody();
+	
+			// DO COLLISION RESPONSE HERE
+			Player* player = NULL;
+	
+			GameObject* gameObjectA = NULL;
+			GameObject* gameObjectB = NULL;
+	
+			gameObjectA = reinterpret_cast<GameObject*>(bodyA->GetUserData().pointer);
+			gameObjectB = reinterpret_cast<GameObject*>(bodyB->GetUserData().pointer);
+	
+			if (gameObjectA)
+			{
+				if (gameObjectA->type() == PLAYER)
+				{
+					player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);
+				}
+			}
+	
+			if (gameObjectB)
+			{
+				if (gameObjectB->type() == PLAYER)
+				{
+					player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
+				}
+			}
+	
+			if (player)
+			{
+				// take damage / play sound
+			}
+		}
+	
+		// Get next contact point
+		contact = contact->GetNext();
+	}
 }

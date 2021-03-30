@@ -21,9 +21,8 @@ public:
 	void onEnter();
 	void onExit();
 	void SetupLights();
-	void InitPlayer();
 	void InitGround();
-	void UpdateSimulation(float frame_time);
+	void UpdateSimulation(float frame_time, const gef::SonyController* controller);
 
 private:
 
@@ -39,7 +38,7 @@ private:
 
 	// player variables
 	Player* player_;
-	b2Body* player_body_;
+	
 
 	// ground variables
 	gef::Mesh* ground_mesh_;
