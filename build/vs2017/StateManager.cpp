@@ -1,17 +1,21 @@
 #include "StateManager.h"
 
-StateManager::StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font):
+StateManager::StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera) :
     current_state_(&in_game_state_),
-    menu_state_(sprite_renderer, font),
-    in_game_state_(sprite_renderer, renderer_3d, font)
+    menu_state_(sprite_renderer, font, platform),
+    in_game_state_(sprite_renderer, renderer_3d, font, camera, platform),
+    platform_(platform),
+    sprite_renderer_(sprite_renderer),
+    renderer_3d_(renderer_3d),
+    font_(font),
+    camera_(camera)
 {
-    platform_ = platform;
-    sprite_renderer_ = sprite_renderer;
-    renderer_3d_ = renderer_3d;
+
 }
 
 StateManager::~StateManager()
 {
+    
 }
 
 bool StateManager::Update(float frame_time, const gef::SonyController* controller)
@@ -27,5 +31,7 @@ void StateManager::Render()
 
 void StateManager::setState(State* state)
 {
+    current_state_->onExit();
     current_state_ = state;
+    current_state_->onEnter();
 }

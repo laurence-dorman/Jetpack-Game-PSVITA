@@ -224,8 +224,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ingamestate.cpp" />
     <ClCompile Include="menustate.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="state.cpp" />
     <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
@@ -234,8 +236,10 @@
     <ClInclude Include="..\..\load_texture.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ingamestate.h" />
     <ClInclude Include="menustate.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="state.h" />
     <ClInclude Include="StateManager.h" />
   </ItemGroup>

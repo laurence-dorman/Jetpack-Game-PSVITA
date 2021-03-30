@@ -1,22 +1,22 @@
 #pragma once
 
-#include "input/sony_controller_input_manager.h"
-
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
 {
+	class Platform;
 	class SpriteRenderer;
 	class Font;
 	class Renderer3D;
+	class SonyController;
 }
-
+class Camera;
 
 class State
 {
 public:
 	 State() {}
-	 State(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font) {}
-	 State(gef::SpriteRenderer* sprite_renderer, gef::Font* font) {}
+	 State(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform) {} // 3d
+	 State(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform) {} // sprites
 	~State() {}
 
 	virtual bool Update(float frame_time, const gef::SonyController* controller) = 0;
