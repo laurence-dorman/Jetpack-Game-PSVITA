@@ -26,6 +26,8 @@ void Player::Update(float dt, const gef::SonyController* controller)
 	player_transform.RotationZ(player_body_->GetAngle());
 	player_transform.SetTranslation(gef::Vector4(player_body_->GetPosition().x, player_body_->GetPosition().y, 0.f));
 	this->set_transform(player_transform);
+
+	position.Set(player_body_->GetPosition().x, player_body_->GetPosition().y);
 }
 
 void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world)

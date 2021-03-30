@@ -31,15 +31,6 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 
 InGameState::~InGameState()
 {
-
-}
-
-void InGameState::onEnter()
-{
-}
-
-void InGameState::onExit()
-{
 	// destroying the physics world also destroys all the objects within it
 	delete world_;
 	world_ = NULL;
@@ -54,31 +45,36 @@ void InGameState::onExit()
 	renderer_3d_ = NULL;
 }
 
+void InGameState::onEnter()
+{
+
+}
+
+void InGameState::onExit()
+{
+	
+}
+
 State* InGameState::Update(float frame_time, const gef::SonyController* controller)
 {
 	UpdateSimulation(frame_time, controller);
+
+	camera_->setTarget(gef::Vector4(player_->getPosition().x, player_->getPosition().y, 0.f, 0.f));
+	camera_->Update();
+
+	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
+		return states_[0];
+	}
 	return this;
 }
 
 void InGameState::Render()
 {
-	// setup camera
-
 	// projection
-	float fov = gef::DegToRad(45.0f);
-	float aspect_ratio = (float)platform_->width() / (float)platform_->height();
-	gef::Matrix44 projection_matrix;
-	projection_matrix = platform_->PerspectiveProjectionFov(fov, aspect_ratio, 0.1f, 100.0f);
-	renderer_3d_->set_projection_matrix(projection_matrix);
+	renderer_3d_->set_projection_matrix(camera_->getProjectionMatrix());
 
 	// view
-	gef::Vector4 camera_eye(-2.0f, 2.0f, 10.0f);
-	gef::Vector4 camera_lookat(0.0f, 0.0f, 0.0f);
-	gef::Vector4 camera_up(0.0f, 1.0f, 0.0f);
-	gef::Matrix44 view_matrix;
-	view_matrix.LookAt(camera_eye, camera_lookat, camera_up);
-	renderer_3d_->set_view_matrix(view_matrix);
-
+	renderer_3d_->set_view_matrix(camera_->getViewMatrix());
 
 	// draw 3d geometry
 	renderer_3d_->Begin();

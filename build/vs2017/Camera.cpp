@@ -2,7 +2,9 @@
 
 
 Camera::Camera(gef::Platform& platform):
-	platform_(platform)
+	platform_(platform),
+	fov_(gef::DegToRad(50.0f)),
+	aspect_ratio_((float)platform.width() / (float)platform.height())
 {
 	projection_matrix_.SetZero();
 	view_matrix_.SetZero();
@@ -14,12 +16,18 @@ Camera::~Camera()
 {
 }
 
+void Camera::Update()
+{
+	projection_matrix_ = platform_.PerspectiveProjectionFov(fov_, aspect_ratio_, 0.1f, 100.f);
+	view_matrix_.LookAt(camera_position_, camera_target_, camera_up_);
+}
+
 void Camera::SetupCamera()
 {
-	camera_position_ = gef::Vector4(5.0f, 5.0f, -5.0f);
-	camera_target_ = gef::Vector4(0.0f, 0.0f, 0.0f);
+	camera_position_ = gef::Vector4(-2.0f, 4.0f, 10.f);
+	camera_target_ = gef::Vector4(0.0f, 2.0f, 0.0f);
 	camera_up_ = gef::Vector4(0.0f, 1.0f, 0.0f);
 
-	projection_matrix_ = platform_.PerspectiveProjectionFov(gef::DegToRad(60.f), platform_.width() / platform_.height(), 0.1f, 10.f);
+	projection_matrix_ = platform_.PerspectiveProjectionFov(fov_, aspect_ratio_, 0.1f, 100.f);
 	view_matrix_.LookAt(camera_position_, camera_target_, camera_up_);
 }

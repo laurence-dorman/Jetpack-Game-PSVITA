@@ -13,6 +13,18 @@ MenuState::~MenuState()
 {
 }
 
+void MenuState::onEnter()
+{
+	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", *platform_);
+}
+
+void MenuState::onExit()
+{
+	delete button_icon_;
+	button_icon_ = NULL;
+}
+
+
 State* MenuState::Update(float frame_time, const gef::SonyController* controller) {
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
 		return states_[1];
@@ -56,12 +68,3 @@ void MenuState::Render()
 	sprite_renderer_->End();
 }
 
-void MenuState::onEnter()
-{
-}
-
-void MenuState::onExit()
-{
-	delete button_icon_;
-	button_icon_ = NULL;
-}
