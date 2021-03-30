@@ -33,6 +33,26 @@ InGameState::~InGameState()
 {
 }
 
+void InGameState::onEnter()
+{
+}
+
+void InGameState::onExit()
+{
+	// destroying the physics world also destroys all the objects within it
+	delete world_;
+	world_ = NULL;
+
+	delete ground_mesh_;
+	ground_mesh_ = NULL;
+
+	delete primitive_builder_;
+	primitive_builder_ = NULL;
+
+	delete renderer_3d_;
+	renderer_3d_ = NULL;
+}
+
 bool InGameState::Update(float frame_time, const gef::SonyController* controller)
 {
 	UpdateSimulation(frame_time);
@@ -76,26 +96,6 @@ void InGameState::Render()
 	sprite_renderer_->Begin(false);
 	//DrawHUD();
 	sprite_renderer_->End();
-}
-
-void InGameState::onEnter()
-{
-}
-
-void InGameState::onExit()
-{
-	// destroying the physics world also destroys all the objects within it
-	delete world_;
-	world_ = NULL;
-
-	delete ground_mesh_;
-	ground_mesh_ = NULL;
-
-	delete primitive_builder_;
-	primitive_builder_ = NULL;
-
-	delete renderer_3d_;
-	renderer_3d_ = NULL;
 }
 
 void InGameState::SetupLights()
@@ -184,6 +184,12 @@ void InGameState::UpdateSimulation(float frame_time)
 
 	// update object visuals from simulation data
 	player_->Update(frame_time);
+	
+	gef::Matrix44 player_transform;
+	player_transform.SetIdentity();
+	player_transform.RotationZ(player_body_->GetAngle());
+	player_transform.SetTranslation(gef::Vector4(player_body_->GetPosition().x, player_body_->GetPosition().y, 0.f));
+	player_->set_transform(player_transform);
 
 	// don't have to update the ground visuals as it is static
 
@@ -193,46 +199,46 @@ void InGameState::UpdateSimulation(float frame_time)
 	// get contact count
 	int contact_count = world_->GetContactCount();
 
-	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
-	{
-		if (contact->IsTouching())
-		{
-			// get the colliding bodies
-			b2Body* bodyA = contact->GetFixtureA()->GetBody();
-			b2Body* bodyB = contact->GetFixtureB()->GetBody();
-
-			// DO COLLISION RESPONSE HERE
-			Player* player = NULL;
-
-			GameObject* gameObjectA = NULL;
-			GameObject* gameObjectB = NULL;
-
-			gameObjectA = reinterpret_cast<GameObject*>(bodyA->GetUserData().pointer);
-			gameObjectB = reinterpret_cast<GameObject*>(bodyB->GetUserData().pointer);
-
-			if (gameObjectA)
-			{
-				if (gameObjectA->type() == PLAYER)
-				{
-					player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);
-				}
-			}
-
-			if (gameObjectB)
-			{
-				if (gameObjectB->type() == PLAYER)
-				{
-					player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
-				}
-			}
-
-			if (player)
-			{
-				// take damage
-			}
-		}
-
-		// Get next contact point
-		contact = contact->GetNext();
-	}
+	//for (int contact_num = 0; contact_num < contact_count; ++contact_num)
+	//{
+	//	if (contact->IsTouching())
+	//	{
+	//		// get the colliding bodies
+	//		b2Body* bodyA = contact->GetFixtureA()->GetBody();
+	//		b2Body* bodyB = contact->GetFixtureB()->GetBody();
+	//
+	//		// DO COLLISION RESPONSE HERE
+	//		Player* player = NULL;
+	//
+	//		GameObject* gameObjectA = NULL;
+	//		GameObject* gameObjectB = NULL;
+	//
+	//		gameObjectA = reinterpret_cast<GameObject*>(bodyA->GetUserData().pointer);
+	//		gameObjectB = reinterpret_cast<GameObject*>(bodyB->GetUserData().pointer);
+	//
+	//		if (gameObjectA)
+	//		{
+	//			if (gameObjectA->type() == PLAYER)
+	//			{
+	//				player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);
+	//			}
+	//		}
+	//
+	//		if (gameObjectB)
+	//		{
+	//			if (gameObjectB->type() == PLAYER)
+	//			{
+	//				player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
+	//			}
+	//		}
+	//
+	//		if (player)
+	//		{
+	//			// take damage
+	//		}
+	//	}
+	//
+	//	// Get next contact point
+	//	contact = contact->GetNext();
+	//}
 }
