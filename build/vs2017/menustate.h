@@ -6,15 +6,12 @@ public:
 	MenuState();
 	~MenuState();
 
-private:
-
-	bool Update(float frame_time);
+	bool Update(float frame_time, const gef::SonyController* controller);
 	void Render();
 	void onEnter();
 	void onExit();
-	const char* getName();
 
-	const char* name = "MenuState";
+private:
 
 };
 

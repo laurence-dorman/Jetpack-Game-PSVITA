@@ -8,9 +8,7 @@
 #include <input/input_manager.h>
 #include <box2d/Box2D.h>
 #include "game_object.h"
-#include "menustate.h"
-#include "ingamestate.h"
-
+#include "StateManager.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -48,13 +46,9 @@ private:
 	gef::Font* font_;
 	gef::InputManager* input_manager_;
 
-	gef::SonyControllerInputManager* controllerManager;
+	gef::SonyControllerInputManager* controller_manager_;
 
-	MenuState menu_state_;
-	InGameState in_game_state_;
-
-
-	State* current_state_;
+	StateManager* state_manager_;
 
 	//
 	// FRONTEND DECLARATIONS

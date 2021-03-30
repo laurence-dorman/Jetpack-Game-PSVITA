@@ -227,6 +227,7 @@
     <ClCompile Include="ingamestate.cpp" />
     <ClCompile Include="menustate.cpp" />
     <ClCompile Include="state.cpp" />
+    <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\game_object.h" />
@@ -236,6 +237,7 @@
     <ClInclude Include="ingamestate.h" />
     <ClInclude Include="menustate.h" />
     <ClInclude Include="state.h" />
+    <ClInclude Include="StateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -20,7 +20,7 @@ SceneApp::SceneApp(gef::Platform& platform) :
 	world_(NULL),
 	player_body_(NULL),
 	button_icon_(NULL),
-	current_state_(&menu_state_)
+	state_manager_(NULL)
 {
 }
 
@@ -31,6 +31,9 @@ void SceneApp::Init()
 
 	// initialise input manager
 	input_manager_ = gef::InputManager::Create(platform_);
+
+	// state manager
+	state_manager_ = new StateManager();
 }
 
 void SceneApp::CleanUp()
@@ -42,6 +45,9 @@ void SceneApp::CleanUp()
 
 	delete sprite_renderer_;
 	sprite_renderer_ = NULL;
+
+	delete state_manager_;
+	state_manager_ = NULL;
 }
 
 bool SceneApp::Update(float frame_time)
@@ -51,25 +57,19 @@ bool SceneApp::Update(float frame_time)
 	input_manager_->Update();
 
 	// INPUT
-	controllerManager = input_manager_->controller_input();
+	controller_manager_ = input_manager_->controller_input();
 
-	if (controllerManager)
+	if (controller_manager_)
 	{
-		const gef::SonyController* controller = controllerManager->GetController(0);
+		const gef::SonyController* controller = controller_manager_->GetController(0);
 
 		if (controller)
 		{
-			//d-pad
-			if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT) {
-				current_state_ = &in_game_state_;
-			}
-			if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT) {
-				current_state_ = &menu_state_;
-			}
+			state_manager_->Update(frame_time, controller);
 		}
 	}
 
-	current_state_->Update(frame_time);
+	
 
 	return true;
 }
@@ -77,7 +77,7 @@ bool SceneApp::Update(float frame_time)
 
 void SceneApp::Render()
 {
-	current_state_->Render();
+	state_manager_->Render();
 	DrawHUD();
 }
 
@@ -161,7 +161,7 @@ void SceneApp::DrawHUD()
 	if(font_)
 	{
 		// display frame rate
-		font_->RenderText(sprite_renderer_, gef::Vector4(5.0f, 5.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "GAMESTATE: %s - FPS: %.1f", current_state_->getName(), fps_);
+		font_->RenderText(sprite_renderer_, gef::Vector4(5.0f, 5.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f",  fps_);
 	}
 	sprite_renderer_->End();
 }

@@ -8,9 +8,9 @@ InGameState::~InGameState()
 {
 }
 
-bool InGameState::Update(float frame_time)
+bool InGameState::Update(float frame_time, const gef::SonyController* controller)
 {
-	return false;
+	return true;
 }
 
 void InGameState::Render()
@@ -23,9 +23,4 @@ void InGameState::onEnter()
 
 void InGameState::onExit()
 {
-}
-
-const char* InGameState::getName()
-{
-	return name;
 }

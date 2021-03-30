@@ -8,7 +8,7 @@ MenuState::~MenuState()
 {
 }
 
-bool MenuState::Update(float frame_time) {
+bool MenuState::Update(float frame_time, const gef::SonyController* controller) {
 	return true;
 }
 
@@ -22,9 +22,4 @@ void MenuState::onEnter()
 
 void MenuState::onExit()
 {
-}
-
-const char* MenuState::getName()
-{
-	return name;
 }
