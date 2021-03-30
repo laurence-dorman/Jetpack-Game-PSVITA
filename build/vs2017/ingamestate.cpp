@@ -1,6 +1,6 @@
 #include "ingamestate.h"
 
-InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform) :
+InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, std::vector<State*> &states) :
 	sprite_renderer_(sprite_renderer),
 	renderer_3d_(renderer_3d),
 	font_(font),
@@ -8,7 +8,8 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	world_(NULL),
 	player_(NULL),
 	player_body_(NULL),
-	platform_(platform)
+	platform_(platform),
+	states_(states)
 	
 {
 	// initialise primitive builder to make create some 3D geometry easier
@@ -31,6 +32,7 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 
 InGameState::~InGameState()
 {
+
 }
 
 void InGameState::onEnter()
@@ -53,10 +55,10 @@ void InGameState::onExit()
 	renderer_3d_ = NULL;
 }
 
-bool InGameState::Update(float frame_time, const gef::SonyController* controller)
+State* InGameState::Update(float frame_time, const gef::SonyController* controller)
 {
 	UpdateSimulation(frame_time);
-	return true;
+	return this;
 }
 
 void InGameState::Render()

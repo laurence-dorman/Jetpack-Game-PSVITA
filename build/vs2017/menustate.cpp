@@ -1,9 +1,10 @@
 #include "menustate.h"
 
-MenuState::MenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform) :
+MenuState::MenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, std::vector<State*> &states) :
 	sprite_renderer_(sprite_renderer),
 	font_(font),
-	platform_(platform)
+	platform_(platform),
+	states_(states)
 {
 	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", *platform_);
 }
@@ -12,8 +13,11 @@ MenuState::~MenuState()
 {
 }
 
-bool MenuState::Update(float frame_time, const gef::SonyController* controller) {
-	return true;
+State* MenuState::Update(float frame_time, const gef::SonyController* controller) {
+	if (controller->buttons_down() & gef_SONY_CTRL_CROSS) {
+		return states_[1];
+	}
+	return this;
 }
 
 void MenuState::Render()

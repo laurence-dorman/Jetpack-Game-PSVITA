@@ -3,6 +3,8 @@
 #include "menustate.h"
 #include "ingamestate.h"
 
+#include <vector>
+
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
 {
@@ -25,6 +27,7 @@ public:
 	void setState(State* state);
 
 private:
+	std::vector<State*> states;
 
 	MenuState menu_state_;
 	InGameState in_game_state_;

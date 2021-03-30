@@ -19,7 +19,7 @@ public:
 	 State(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform) {} // sprites
 	~State() {}
 
-	virtual bool Update(float frame_time, const gef::SonyController* controller) = 0;
+	virtual State* Update(float frame_time, const gef::SonyController* controller) = 0;
 	virtual void Render() = 0;
 	virtual void onEnter() = 0;
 	virtual void onExit() = 0;

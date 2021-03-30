@@ -13,10 +13,10 @@
 class InGameState : public State
 {
 public:
-	InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform);
+	InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, std::vector<State*> &states);
 	~InGameState();
 
-	bool Update(float frame_time, const gef::SonyController* controller);
+	State* Update(float frame_time, const gef::SonyController* controller);
 	void Render();
 	void onEnter();
 	void onExit();
@@ -45,5 +45,7 @@ private:
 	gef::Mesh* ground_mesh_;
 	GameObject ground_;
 	b2Body* ground_body_;
+
+	std::vector<State*>& states_;
 };
 
