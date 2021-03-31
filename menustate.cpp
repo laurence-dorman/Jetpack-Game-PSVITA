@@ -42,7 +42,7 @@ void MenuState::Render()
 	// render "PRESS" text
 	font_->RenderText(
 		sprite_renderer_,
-		gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.5f - 56.0f, -0.99f),
+		gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.5f - 64.0f, -0.99f),
 		1.0f,
 		0xffffffff,
 		gef::TJ_CENTRE,
@@ -60,7 +60,7 @@ void MenuState::Render()
 	// render "TO START" text
 	font_->RenderText(
 		sprite_renderer_,
-		gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.5f + 32.0f, -0.99f),
+		gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.5f + 16.0f, -0.99f),
 		1.0f,
 		0xffffffff,
 		gef::TJ_CENTRE,

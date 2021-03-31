@@ -37,7 +37,9 @@ void StateManager::Render()
 
 void StateManager::setState(State* state)
 {
-    current_state_->onExit();
+    if (current_state_) {
+        current_state_->onExit();
+    }
     current_state_ = state;
     current_state_->onEnter();
 }

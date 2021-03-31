@@ -29,7 +29,6 @@ void SceneApp::Init()
 
 	InitFont();
 
-
 	// init camera
 	camera_ = new Camera(platform_); 
 
@@ -38,8 +37,6 @@ void SceneApp::Init()
 
 	// state manager
 	state_manager_ = new StateManager(&platform_, sprite_renderer_, renderer_3d_, font_, camera_);
-
-
 }
 
 void SceneApp::CleanUp()
@@ -93,7 +90,7 @@ void SceneApp::Render()
 void SceneApp::InitFont()
 {
 	font_ = new gef::Font(platform_);
-	font_->Load("comic_sans");
+	font_->Load("yu_gothic");
 }
 
 void SceneApp::CleanUpFont()
@@ -104,11 +101,10 @@ void SceneApp::CleanUpFont()
 
 void SceneApp::DrawHUD()
 {
-	
 	if(font_)
 	{
 		// display frame rate
-		font_->RenderText(sprite_renderer_, gef::Vector4(5.0f, 5.0f, -0.9f), 1.0f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f",  fps_);
+		font_->RenderText(sprite_renderer_, gef::Vector4(5.0f, 5.0f, -0.9f), 0.75f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f",  fps_);
 	}
 	sprite_renderer_->End();
 }
