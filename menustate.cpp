@@ -11,6 +11,8 @@ MenuState::MenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef:
 
 MenuState::~MenuState()
 {
+	delete button_icon_;
+	button_icon_ = NULL;
 }
 
 void MenuState::onEnter()
@@ -20,14 +22,13 @@ void MenuState::onEnter()
 
 void MenuState::onExit()
 {
-	delete button_icon_;
-	button_icon_ = NULL;
+	
 }
 
 
 State* MenuState::Update(float frame_time, const gef::SonyController* controller) {
 	if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
-		return states_[1];
+		return states_[INGAMESTATE];
 	}
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		return NULL;

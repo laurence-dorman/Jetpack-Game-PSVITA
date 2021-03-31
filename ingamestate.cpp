@@ -63,7 +63,7 @@ State* InGameState::Update(float frame_time, const gef::SonyController* controll
 	camera_->Update();
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
-		return states_[0];
+		return states_[MENUSTATE];
 	}
 	return this;
 }

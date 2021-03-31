@@ -11,6 +11,8 @@ namespace gef
 }
 class Camera;
 
+
+
 class State
 {
 public:
@@ -23,6 +25,12 @@ public:
 	virtual void Render() = 0;
 	virtual void onEnter() = 0;
 	virtual void onExit() = 0;
+
+protected:
+	enum STATE {
+		MENUSTATE =	0,
+		INGAMESTATE = 1
+	};
 
 private:
 	
