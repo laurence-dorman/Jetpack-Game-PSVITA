@@ -22,12 +22,17 @@ StateManager::~StateManager()
 bool StateManager::Update(float frame_time, const gef::SonyController* controller)
 {
     current_state_ = current_state_->Update(frame_time, controller);
+    if (!current_state_) {
+        return false;
+    }
     return true;
 }
 
 void StateManager::Render()
 {
-    current_state_->Render();
+    if (current_state_) {
+        current_state_->Render();
+    }
 }
 
 void StateManager::setState(State* state)

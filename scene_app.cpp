@@ -74,7 +74,7 @@ bool SceneApp::Update(float frame_time)
 
 		if (controller)
 		{
-			state_manager_->Update(frame_time, controller);
+			return state_manager_->Update(frame_time, controller);
 		}
 	}
 
