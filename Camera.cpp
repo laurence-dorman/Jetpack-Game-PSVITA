@@ -18,7 +18,6 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	projection_matrix_ = platform_.PerspectiveProjectionFov(fov_, aspect_ratio_, 0.1f, 100.f);
 	view_matrix_.LookAt(camera_position_, camera_target_, camera_up_);
 }
 

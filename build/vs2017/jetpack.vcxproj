@@ -208,12 +208,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Camera.cpp" />
     <ClCompile Include="..\..\game_object.cpp" />
+    <ClCompile Include="..\..\ingamestate.cpp" />
     <ClCompile Include="..\..\load_texture.cpp" />
     <ClCompile Include="..\..\main_d3d11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\menustate.cpp" />
+    <ClCompile Include="..\..\Player.cpp" />
     <ClCompile Include="..\..\primitive_builder.cpp" />
     <ClCompile Include="..\..\scene_app.cpp" />
     <ClCompile Include="..\..\main_vita.cpp">
@@ -224,24 +228,20 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="ingamestate.cpp" />
-    <ClCompile Include="menustate.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="state.cpp" />
-    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="..\..\state.cpp" />
+    <ClCompile Include="..\..\StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Camera.h" />
     <ClInclude Include="..\..\game_object.h" />
+    <ClInclude Include="..\..\ingamestate.h" />
     <ClInclude Include="..\..\load_texture.h" />
+    <ClInclude Include="..\..\menustate.h" />
+    <ClInclude Include="..\..\Player.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="ingamestate.h" />
-    <ClInclude Include="menustate.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="state.h" />
-    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="..\..\state.h" />
+    <ClInclude Include="..\..\StateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
