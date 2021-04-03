@@ -2,9 +2,9 @@
 #include "primitive_builder.h"
 #include <graphics/renderer_3d.h>
 
-
 Player::Player() :
-	player_body_(NULL)
+	player_body_(NULL),
+	max_speed(10.f)
 {
 	speed = b2Vec2(0.0f, 0.0f);
 	position = b2Vec2(0.0f, 4.0f);
@@ -17,9 +17,27 @@ Player::~Player()
 
 void Player::Update(float dt, const gef::SonyController* controller)
 {
-	if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
-		player_body_->ApplyLinearImpulseToCenter(b2Vec2(0.f, 5.f), 1);
+
+	float rotation = gef::DegToRad(controller->left_stick_x_axis() * -60.f);
+	b2Vec2 rot_vec(-sin(rotation), cos(rotation));
+	rot_vec *= 0.3;
+
+	if (controller->left_stick_x_axis() != 0.f) {
+		player_body_->SetAwake(true);
 	}
+
+	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
+		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
+	}
+
+	b2Vec2 vel = player_body_->GetLinearVelocity();
+	float speed = vel.Normalize();
+
+	if (speed > max_speed && controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
+		player_body_->SetLinearVelocity(max_speed * vel);
+	}
+
+	player_body_->SetTransform(player_body_->GetPosition(), rotation);
 
 	gef::Matrix44 player_transform;
 	player_transform.SetIdentity();
@@ -43,6 +61,8 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world)
 	player_body_def.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
 	player_body_ = world->CreateBody(&player_body_def);
+
+	player_body_->SetTransform(player_body_def.position, gef::DegToRad(90.f));
 
 	// create the shape for the player
 	b2PolygonShape player_shape;

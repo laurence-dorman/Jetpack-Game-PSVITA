@@ -16,6 +16,7 @@ public:
 
 	void setTarget(gef::Vector4 target) { camera_target_ = target; };
 	void setPosition(gef::Vector4 pos) { camera_position_ = pos; };
+	gef::Vector4 getPosition() { return camera_position_; };
 
 	float fov_;
 	float aspect_ratio_;
@@ -29,6 +30,8 @@ private:
 	gef::Vector4 camera_target_;
 	gef::Vector4 camera_position_;
 	gef::Vector4 camera_up_;
+
+	float max_speed;
 
 	
 

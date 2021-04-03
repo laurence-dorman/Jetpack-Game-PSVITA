@@ -1,4 +1,5 @@
 #include "ingamestate.h"
+#include <system/debug_log.h>
 
 InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, std::vector<State*> &states) :
 	sprite_renderer_(sprite_renderer),
@@ -24,6 +25,17 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	// initialise the physics world
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
+
+	scene_assets_ = LoadSceneAssets(*platform_, "models/jetpack.scn");
+
+	if (scene_assets_)
+	{
+		jetpack_.set_mesh(GetMeshFromSceneAssets(scene_assets_));
+	}
+	else
+	{
+		gef::DebugOut("Scene file %s failed to load\n", "models/jetpack.scn");
+	}
 
 	player_->Init(primitive_builder_, world_);
 	InitGround();
@@ -60,7 +72,15 @@ State* InGameState::Update(float frame_time, const gef::SonyController* controll
 	UpdateSimulation(frame_time, controller);
 
 	camera_->setTarget(gef::Vector4(player_->getPosition().x, player_->getPosition().y, 0.f, 0.f));
+	camera_->setPosition(gef::Vector4(player_->getPosition().x, player_->getPosition().y, camera_->getPosition().z(), 0.f));
 	camera_->Update();
+
+	gef::Matrix44 transform;
+
+	transform.RotationY(gef::DegToRad(-90.f));
+	transform.SetTranslation(gef::Vector4(0.f, 2.f, 0.f));
+
+	jetpack_.set_transform(transform * player_->transform());
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		return states_[MENUSTATE];
@@ -82,9 +102,11 @@ void InGameState::Render()
 	// draw ground
 	renderer_3d_->DrawMesh(ground_);
 
+	renderer_3d_->DrawMesh(jetpack_);
+
 	// draw player
 	renderer_3d_->set_override_material(&primitive_builder_->red_material());
-	renderer_3d_->DrawMesh(*player_);
+	//renderer_3d_->DrawMesh(*player_);
 	renderer_3d_->set_override_material(NULL);
 
 	renderer_3d_->End();
@@ -93,6 +115,38 @@ void InGameState::Render()
 	sprite_renderer_->Begin(false);
 	//DrawHUD();
 	sprite_renderer_->End();
+}
+
+gef::Scene* InGameState::LoadSceneAssets(gef::Platform& platform, const char* filename)
+{
+	gef::Scene* scene = new gef::Scene();
+
+	if (scene->ReadSceneFromFile(platform, filename))
+	{
+		// if scene file loads successful
+		// create material and mesh resources from the scene data
+		scene->CreateMaterials(platform);
+		scene->CreateMeshes(platform);
+	}
+	else
+	{
+		delete scene;
+		scene = NULL;
+	}
+
+	return scene;
+}
+
+gef::Mesh* InGameState::GetMeshFromSceneAssets(gef::Scene* scene)
+{
+	gef::Mesh* mesh = NULL;
+
+	// if the scene data contains at least one mesh
+	// return the first mesh
+	if (scene && scene->meshes.size() > 0)
+		mesh = scene->meshes.front();
+
+	return mesh;
 }
 
 void InGameState::SetupLights()
@@ -114,7 +168,7 @@ void InGameState::SetupLights()
 void InGameState::InitGround()
 {
 	// ground dimensions
-	gef::Vector4 ground_half_dimensions(5.0f, 0.5f, 0.5f);
+	gef::Vector4 ground_half_dimensions(50.0f, 0.5f, 0.5f);
 
 	// setup the mesh for the ground
 	ground_mesh_ = primitive_builder_->CreateBoxMesh(ground_half_dimensions);

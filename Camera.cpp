@@ -23,7 +23,7 @@ void Camera::Update()
 
 void Camera::SetupCamera()
 {
-	camera_position_ = gef::Vector4(-2.0f, 4.0f, 10.f);
+	camera_position_ = gef::Vector4(-2.0f, 4.0f, 25.f);
 	camera_target_ = gef::Vector4(0.0f, 2.0f, 0.0f);
 	camera_up_ = gef::Vector4(0.0f, 1.0f, 0.0f);
 
