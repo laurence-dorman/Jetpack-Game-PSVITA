@@ -26,18 +26,19 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
 
-	scene_assets_ = LoadSceneAssets(*platform_, "models/jetpack.scn");
+	scene_assets_ = LoadSceneAssets(*platform_, "models/jetpack/player.scn");
 
 	if (scene_assets_)
 	{
-		jetpack_.set_mesh(GetMeshFromSceneAssets(scene_assets_));
+		player_mesh_.set_mesh(GetMeshFromSceneAssets(scene_assets_));
 	}
 	else
 	{
-		gef::DebugOut("Scene file %s failed to load\n", "models/jetpack.scn");
+		gef::DebugOut("Scene file %s failed to load\n", "models/jetpack/player.scn");
 	}
 
 	player_->Init(primitive_builder_, world_);
+	player_->set_mesh(player_mesh_.mesh());
 	InitGround();
 }
 
@@ -71,16 +72,12 @@ State* InGameState::Update(float frame_time, const gef::SonyController* controll
 {
 	UpdateSimulation(frame_time, controller);
 
-	camera_->setTarget(gef::Vector4(player_->getPosition().x, player_->getPosition().y, 0.f, 0.f));
-	camera_->setPosition(gef::Vector4(player_->getPosition().x, player_->getPosition().y, camera_->getPosition().z(), 0.f));
+	camera_->setTarget(gef::Vector4(player_->getPosition().x, player_->getPosition().y + 10.f, 0.f, 0.f));
+	camera_->setPosition(gef::Vector4(player_->getPosition().x, player_->getPosition().y + 10.f, camera_->getPosition().z(), 0.f));
 	camera_->Update();
 
-	gef::Matrix44 transform;
-
-	transform.RotationY(gef::DegToRad(-90.f));
-	transform.SetTranslation(gef::Vector4(0.f, 2.f, 0.f));
-
-	jetpack_.set_transform(transform * player_->transform());
+	//gef::Matrix44 transform;
+	//transform.RotationY(gef::DegToRad(-90.f));
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		return states_[MENUSTATE];
@@ -102,12 +99,8 @@ void InGameState::Render()
 	// draw ground
 	renderer_3d_->DrawMesh(ground_);
 
-	renderer_3d_->DrawMesh(jetpack_);
-
 	// draw player
-	renderer_3d_->set_override_material(&primitive_builder_->red_material());
-	//renderer_3d_->DrawMesh(*player_);
-	renderer_3d_->set_override_material(NULL);
+	renderer_3d_->DrawMesh(*player_);
 
 	renderer_3d_->End();
 

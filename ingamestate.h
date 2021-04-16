@@ -48,7 +48,7 @@ private:
 	GameObject ground_;
 	b2Body* ground_body_;
 
-	gef::MeshInstance jetpack_;
+	gef::MeshInstance player_mesh_;
 	gef::Scene* scene_assets_;
 	
 	std::vector<State*>& states_;

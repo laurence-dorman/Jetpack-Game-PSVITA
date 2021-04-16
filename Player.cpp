@@ -56,17 +56,17 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world)
 	// create a physics body for the player
 	b2BodyDef player_body_def;
 	player_body_def.type = b2_dynamicBody;
-	player_body_def.position = b2Vec2(0.0f, 4.0f);
+	player_body_def.position = b2Vec2(0.0f, 7.0f);
 	// create a connection between the rigid body and GameObject
 	player_body_def.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
 	player_body_ = world->CreateBody(&player_body_def);
 
-	player_body_->SetTransform(player_body_def.position, gef::DegToRad(90.f));
+	//player_body_->SetTransform(player_body_def.position, gef::DegToRad(90.f));
 
 	// create the shape for the player
 	b2PolygonShape player_shape;
-	player_shape.SetAsBox(0.5f, 0.5f);
+	player_shape.SetAsBox(1.0f, 2.f);
 
 	// create the fixture
 	b2FixtureDef player_fixture_def;
