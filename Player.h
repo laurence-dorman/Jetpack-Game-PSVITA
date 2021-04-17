@@ -60,5 +60,9 @@ private:
 
 	b2Vec2 rot_vec;
 
+	float timer;
+
+	float clamp(const float v, const float lo, const float hi); // from algorithm header
+
 };
 

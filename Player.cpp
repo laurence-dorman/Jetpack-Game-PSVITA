@@ -9,6 +9,7 @@ Player::Player() :
 	speed = b2Vec2(0.0f, 0.0f);
 	position = b2Vec2(0.0f, 4.0f);
 	heading = b2Vec2(0.f, 0.f);
+	timer = 0.f;
 }
 
 Player::~Player()
@@ -17,36 +18,28 @@ Player::~Player()
 
 void Player::Update(float dt, const gef::SonyController* controller)
 {
-	//if (player_body_->GetLinearVelocity().y > 0.05 || player_body_->GetLinearVelocity().y < -0.05) {
-	//	rotation = gef::DegToRad(controller->left_stick_x_axis() * -60.f);
-	//	rot_vec.Set(-sin(rotation), cos(rotation));
-	//	rot_vec *= 20;
-	//}
-	//else {
-	//	rotation = gef::DegToRad(0.f);
-	//	rot_vec.Set(-sin(rotation), cos(rotation));
-	//	rot_vec *= 20;
-	//}
-
-
-
-	if (controller->left_stick_x_axis() != 0.f) {
-		player_body_->SetAwake(true);
-	}
 
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
-		rotation_ = gef::DegToRad(controller->left_stick_x_axis() * -60.f);
+		rotation_ = clamp((rotation_ + gef::DegToRad(controller->left_stick_x_axis() * -2.f)), gef::DegToRad(-60.f), gef::DegToRad(60.f));
 		rot_vec.Set(-sin(rotation_), cos(rotation_));
 		rot_vec *= 20;
 
 		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
+
+		timer = 0.f;
 	}
-	else
-	{
-		rotation_ = gef::DegToRad(0.f);
-		rot_vec.Set(-sin(rotation_), cos(rotation_));
-		rot_vec *= 20;
+	else {
+		if (timer < 1) {
+			rotation_ = gef::Lerp(rotation_, 0.f, timer);
+			timer += dt*0.3;
+		}
+		else {
+			timer = 0.f;
+		}
+		
 	}
+
+	
 
 	gef::DebugOut("Velocity: (%.1f, %.1f)\n", player_body_->GetLinearVelocity().x, player_body_->GetLinearVelocity().y);
 
@@ -111,4 +104,10 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 void Player::Render(gef::Renderer3D* renderer_3d)
 {
 	renderer_3d->DrawMesh(*this);
+}
+
+float Player::clamp(const float v, const float lo, const float hi)
+{
+	assert(!(hi < lo));
+	return (v < lo) ? lo : (hi < v) ? hi : v;
 }
