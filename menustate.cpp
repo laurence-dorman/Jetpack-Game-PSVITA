@@ -6,7 +6,7 @@ MenuState::MenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef:
 	platform_(platform),
 	states_(states)
 {
-	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", *platform_);
+	button_icon_ = CreateTextureFromPNG("playstation-circle-dark-icon.png", *platform_);
 }
 
 MenuState::~MenuState()
@@ -17,7 +17,7 @@ MenuState::~MenuState()
 
 void MenuState::onEnter()
 {
-	button_icon_ = CreateTextureFromPNG("playstation-cross-dark-icon.png", *platform_);
+
 }
 
 void MenuState::onExit()
@@ -27,7 +27,7 @@ void MenuState::onExit()
 
 
 State* MenuState::Update(float frame_time, const gef::SonyController* controller) {
-	if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
+	if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE) {
 		return states_[INGAMESTATE];
 	}
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {

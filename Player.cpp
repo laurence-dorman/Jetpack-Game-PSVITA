@@ -10,6 +10,7 @@ Player::Player() :
 	position = b2Vec2(0.0f, 4.0f);
 	heading = b2Vec2(0.f, 0.f);
 	timer = 0.f;
+	rotation_ = 0.f;
 }
 
 Player::~Player()
@@ -18,7 +19,6 @@ Player::~Player()
 
 void Player::Update(float dt, const gef::SonyController* controller)
 {
-
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
 		rotation_ = clamp((rotation_ + gef::DegToRad(controller->left_stick_x_axis() * -2.f)), gef::DegToRad(-60.f), gef::DegToRad(60.f));
 		rot_vec.Set(-sin(rotation_), cos(rotation_));
@@ -36,10 +36,7 @@ void Player::Update(float dt, const gef::SonyController* controller)
 		else {
 			timer = 0.f;
 		}
-		
 	}
-
-	
 
 	gef::DebugOut("Velocity: (%.1f, %.1f)\n", player_body_->GetLinearVelocity().x, player_body_->GetLinearVelocity().y);
 
@@ -80,7 +77,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 	// create a physics body for the player
 	b2BodyDef player_body_def;
 	player_body_def.type = b2_dynamicBody;
-	player_body_def.position = b2Vec2(0.0f, 4.0f);
+	player_body_def.position = b2Vec2(0.0f, 0.0f);
 	// create a connection between the rigid body and GameObject
 	player_body_def.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
@@ -88,7 +85,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 
 	// create the shape for the player
 	b2PolygonShape player_shape;
-	player_shape.SetAsBox(1.5f, 7.0f, b2Vec2(0.0f, 7.0f), 0);
+	player_shape.SetAsBox(1.5f, 6.0f, b2Vec2(0.75f, 6.f), 0);
 
 	//player_shape.Set(player_mesh_.mesh(), player_mesh_.mesh());
 
@@ -96,6 +93,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 	b2FixtureDef player_fixture_def;
 	player_fixture_def.shape = &player_shape;
 	player_fixture_def.density = 1.0f;
+	player_fixture_def.friction = 0.5f;
 
 	// create the fixture on the rigid body
 	player_body_->CreateFixture(&player_fixture_def);
