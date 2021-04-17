@@ -230,6 +230,7 @@
     </ClCompile>
     <ClCompile Include="..\..\state.cpp" />
     <ClCompile Include="..\..\StateManager.cpp" />
+    <ClCompile Include="model_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Camera.h" />
@@ -242,6 +243,7 @@
     <ClInclude Include="..\..\scene_app.h" />
     <ClInclude Include="..\..\state.h" />
     <ClInclude Include="..\..\StateManager.h" />
+    <ClInclude Include="model_loader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,6 +10,8 @@
 #include <box2d/Box2D.h>
 #include "game_object.h"
 #include "graphics/scene.h"
+#include "model_loader.h"
+#include <system/debug_log.h>
 
 class InGameState : public State
 {
@@ -19,8 +21,6 @@ public:
 
 	State* Update(float frame_time, const gef::SonyController* controller);
 	void Render();
-	gef::Scene* LoadSceneAssets(gef::Platform& platform, const char* filename);
-	gef::Mesh* GetMeshFromSceneAssets(gef::Scene* scene);
 	void onEnter();
 	void onExit();
 	void SetupLights();
@@ -48,8 +48,7 @@ private:
 	GameObject ground_;
 	b2Body* ground_body_;
 
-	gef::MeshInstance player_mesh_;
-	gef::Scene* scene_assets_;
+	ModelLoader* model_loader_;
 	
 	std::vector<State*>& states_;
 };

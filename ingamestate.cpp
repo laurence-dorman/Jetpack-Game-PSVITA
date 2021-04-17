@@ -1,5 +1,4 @@
 #include "ingamestate.h"
-#include <system/debug_log.h>
 
 InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, std::vector<State*> &states) :
 	sprite_renderer_(sprite_renderer),
@@ -26,19 +25,8 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
 
-	scene_assets_ = LoadSceneAssets(*platform_, "models/jetpack/player.scn");
+	player_->Init(primitive_builder_, world_, platform_);
 
-	if (scene_assets_)
-	{
-		player_mesh_.set_mesh(GetMeshFromSceneAssets(scene_assets_));
-	}
-	else
-	{
-		gef::DebugOut("Scene file %s failed to load\n", "models/jetpack/player.scn");
-	}
-
-	player_->Init(primitive_builder_, world_);
-	player_->set_mesh(player_mesh_.mesh());
 	InitGround();
 }
 
@@ -73,7 +61,7 @@ State* InGameState::Update(float frame_time, const gef::SonyController* controll
 	UpdateSimulation(frame_time, controller);
 
 	camera_->setTarget(gef::Vector4(player_->getPosition().x, player_->getPosition().y + 10.f, 0.f, 0.f));
-	camera_->setPosition(gef::Vector4(player_->getPosition().x, player_->getPosition().y + 10.f, camera_->getPosition().z(), 0.f));
+	//camera_->setPosition(gef::Vector4(player_->getPosition().x, player_->getPosition().y + 10.f, camera_->getPosition().z(), 0.f));
 	camera_->Update();
 
 	//gef::Matrix44 transform;
@@ -110,37 +98,6 @@ void InGameState::Render()
 	sprite_renderer_->End();
 }
 
-gef::Scene* InGameState::LoadSceneAssets(gef::Platform& platform, const char* filename)
-{
-	gef::Scene* scene = new gef::Scene();
-
-	if (scene->ReadSceneFromFile(platform, filename))
-	{
-		// if scene file loads successful
-		// create material and mesh resources from the scene data
-		scene->CreateMaterials(platform);
-		scene->CreateMeshes(platform);
-	}
-	else
-	{
-		delete scene;
-		scene = NULL;
-	}
-
-	return scene;
-}
-
-gef::Mesh* InGameState::GetMeshFromSceneAssets(gef::Scene* scene)
-{
-	gef::Mesh* mesh = NULL;
-
-	// if the scene data contains at least one mesh
-	// return the first mesh
-	if (scene && scene->meshes.size() > 0)
-		mesh = scene->meshes.front();
-
-	return mesh;
-}
 
 void InGameState::SetupLights()
 {

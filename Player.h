@@ -4,6 +4,8 @@
 #include "maths/math_utils.h"
 #include <input/sony_controller_input_manager.h>
 #include <box2d/Box2D.h>
+#include "model_loader.h"
+#include <system/debug_log.h>
 
 class PrimitiveBuilder;
 
@@ -24,7 +26,7 @@ public:
 	b2Vec2 getSpeed() { return speed; };
 	void setSpeed(b2Vec2 s) { speed = s; };
 
-	void Init(PrimitiveBuilder* primitive_builder, b2World* world);
+	void Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Platform* platform);
 	void Render(gef::Renderer3D* renderer_3d);
 
 	void setThrust(float t) { thrust = t; };
@@ -33,8 +35,8 @@ public:
 	void setPosition(b2Vec2 pos) { position = pos; };
 	b2Vec2 getPosition() { return position; };
 
-	void setRotation(gef::Quaternion q) { rotation = q; };
-	gef::Quaternion getRotation() { return rotation; };
+	//void setRotation(gef::Quaternion q) { rotation = q; };
+	//gef::Quaternion getRotation() { return rotation; };
 
 private:
 
@@ -42,12 +44,21 @@ private:
 	float thrust = 0.f;
 	const float max_speed = 10.f;
 
-	gef::Quaternion rotation;
+	//gef::Quaternion rotation;
 	b2Vec2 position;
 
 	b2Vec2 heading;
 
-
 	b2Body* player_body_;
+
+	ModelLoader* model_loader_;
+
+	gef::MeshInstance player_mesh_;
+	gef::Scene* scene_assets_;
+
+	float rotation_;
+
+	b2Vec2 rot_vec;
+
 };
 
