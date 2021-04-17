@@ -64,9 +64,6 @@ State* InGameState::Update(float frame_time, const gef::SonyController* controll
 	//camera_->setPosition(gef::Vector4(player_->getPosition().x, player_->getPosition().y + 10.f, camera_->getPosition().z(), 0.f));
 	camera_->Update();
 
-	//gef::Matrix44 transform;
-	//transform.RotationY(gef::DegToRad(-90.f));
-
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		return states_[MENUSTATE];
 	}

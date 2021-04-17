@@ -24,7 +24,7 @@ void Camera::Update()
 void Camera::SetupCamera()
 {
 	camera_position_ = gef::Vector4(-2.0f, 4.0f, 35.f);
-	camera_target_ = gef::Vector4(0.0f, 2.0f, 0.0f);
+	camera_target_ = gef::Vector4(0.0f, 2.0f, -1.f);
 	camera_up_ = gef::Vector4(0.0f, 1.0f, 0.0f);
 
 	projection_matrix_ = platform_.PerspectiveProjectionFov(fov_, aspect_ratio_, 0.1f, 100.f);
