@@ -40,6 +40,10 @@ public:
 	void setPosition(b2Vec2 pos) { position = pos; };
 	b2Vec2 getPosition() { return position; };
 
+	float lerpRotation(float target, float time);
+
+	b2Vec2 getAirResistance(b2Vec2 vel);
+
 	//void setRotation(gef::Quaternion q) { rotation = q; };
 	//gef::Quaternion getRotation() { return rotation; };
 
@@ -64,6 +68,8 @@ private:
 	float rotation_;
 
 	b2Vec2 rot_vec;
+
+	float current_rotation_;
 
 	gef::SkinnedMeshInstance* player_;
 

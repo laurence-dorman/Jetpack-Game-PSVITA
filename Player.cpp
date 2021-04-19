@@ -12,6 +12,7 @@ Player::Player() :
 	position = b2Vec2(0.0f, 4.0f);
 	heading = b2Vec2(0.f, 0.f);
 	rotation_ = 0.f;
+	current_rotation_ = 0.f;
 }
 
 Player::~Player()
@@ -116,17 +117,19 @@ void Player::Update(float dt, const gef::SonyController* controller)
 
 
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
-		rotation_ = clamp((rotation_ + gef::DegToRad(controller->left_stick_x_axis() * -2.f)), gef::DegToRad(-45.f), gef::DegToRad(45.f));
+		rotation_ = lerpRotation(gef::DegToRad(controller->left_stick_x_axis() * -45.f), 0.1f);
+
 		rot_vec.Set(-sin(rotation_), cos(rotation_));
-		rot_vec *= 10;
+		rot_vec *= 200.f * dt;
 
 		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
 	}
 	else {
-		rotation_ = gef::Lerp(rotation_, 0.f, 0.05f);
+		rotation_ = lerpRotation(0.f, 0.07f);
 	}
 
-	//gef::DebugOut("Rotation: %.2f\n", gef::RadToDeg(rotation_));
+	// apply air resistance
+	player_body_->ApplyForceToCenter(getAirResistance(player_body_->GetLinearVelocity()), 1);
 
 	gef::DebugOut("Velocity: (%.1f, %.1f)\n", player_body_->GetLinearVelocity().x, player_body_->GetLinearVelocity().y);
 
@@ -134,10 +137,8 @@ void Player::Update(float dt, const gef::SonyController* controller)
 	float speed = vel.Normalize();
 
 	//gef::DebugOut("Speed: %.2f\n", speed);
-
-	if (player_body_->GetLinearVelocity().y > max_speed && controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
-		player_body_->SetLinearVelocity(max_speed * vel);
-	}
+	//gef::DebugOut("Rotation: %.2f\n", gef::RadToDeg(rotation_));
+	
 
 	player_body_->SetTransform(player_body_->GetPosition(), rotation_);
 
@@ -159,4 +160,27 @@ void Player::Render(gef::Renderer3D* renderer_3d)
 	//	renderer_3d->DrawSkinnedMesh(*player_, player_->bone_matrices());
 	//}
 		
+}
+
+float Player::lerpRotation(float target, float time)
+{
+	current_rotation_ = gef::Lerp(current_rotation_, target, time);
+	return current_rotation_;
+}
+
+b2Vec2 Player::getAirResistance(b2Vec2 vel)
+{
+	b2Vec2 v_sqr;
+	v_sqr = player_body_->GetLinearVelocity();
+	v_sqr.x *= v_sqr.x;
+	v_sqr.y *= v_sqr.y;
+
+	b2Vec2 air_resistance;
+	air_resistance.x = 0.5f * v_sqr.x;
+	air_resistance.y = 0.5f * v_sqr.y;
+
+	air_resistance.y *= (player_body_->GetLinearVelocity().y > 0) ? -1 : 1;
+	air_resistance.x *= (player_body_->GetLinearVelocity().x > 0) ? -1 : 1;
+
+	return air_resistance;
 }

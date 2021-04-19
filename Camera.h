@@ -5,7 +5,7 @@
 #include "player.h"
 
 #define PLAYERHEIGHT 10.f
-#define Z_OFFSET 50.f
+#define Z_OFFSET 65.f
 
 class Camera
 {

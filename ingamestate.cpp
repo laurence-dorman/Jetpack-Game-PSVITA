@@ -198,7 +198,7 @@ void InGameState::SetupLights()
 void InGameState::InitGround()
 {
 	// ground dimensions
-	gef::Vector4 ground_half_dimensions(50.0f, 0.5f, 0.5f);
+	gef::Vector4 ground_half_dimensions(50.0f, 0.5f, 500.0f);
 
 	// setup the mesh for the ground
 	ground_mesh_ = primitive_builder_->CreateBoxMesh(ground_half_dimensions);
