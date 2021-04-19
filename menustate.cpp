@@ -65,7 +65,7 @@ void MenuState::Render()
 		1.0f,
 		0xffffffff,
 		gef::TJ_CENTRE,
-		"TO START");
+		"TO RESUME");
 
 
 	//DrawHUD();

@@ -21,7 +21,7 @@ public:
 	void setTarget(Player* target) { 
 		camera_target_ = target; 
 		current_lookat_ = gef::Vector4(target->getPosition().x, target->getPosition().y + PLAYERHEIGHT, 0.f); 
-		current_position_ = gef::Vector4(target->getPosition().x, target->getPosition().y, Z_OFFSET);
+		current_position_ = gef::Vector4(target->getPosition().x, target->getPosition().y + PLAYERHEIGHT, Z_OFFSET);
 	};
 
 	void setPosition(gef::Vector4 pos) { camera_position_ = pos; };
