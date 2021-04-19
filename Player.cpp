@@ -11,7 +11,6 @@ Player::Player() :
 	speed = b2Vec2(0.0f, 0.0f);
 	position = b2Vec2(0.0f, 4.0f);
 	heading = b2Vec2(0.f, 0.f);
-	timer = 0.f;
 	rotation_ = 0.f;
 }
 
@@ -122,18 +121,9 @@ void Player::Update(float dt, const gef::SonyController* controller)
 		rot_vec *= 10;
 
 		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
-
-		timer = 0.f;
 	}
 	else {
-		if (timer < 1 && std::abs(rotation_ - 0.f) >= 0.01f) {
-			rotation_ = gef::Lerp(rotation_, 0.f, timer);
-			timer += dt*0.3;
-		}
-		else {
-			timer = 0.f;
-			rotation_ = 0.f;
-		}
+		rotation_ = gef::Lerp(rotation_, 0.f, 0.05f);
 	}
 
 	//gef::DebugOut("Rotation: %.2f\n", gef::RadToDeg(rotation_));

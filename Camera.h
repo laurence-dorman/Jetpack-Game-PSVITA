@@ -27,7 +27,6 @@ public:
 	void setPosition(gef::Vector4 pos) { camera_position_ = pos; };
 	gef::Vector4 getPosition() { return camera_position_; };
 	void UpdateTarget(float dt);
-	
 
 	float fov_;
 	float aspect_ratio_;

@@ -64,8 +64,6 @@ private:
 
 	b2Vec2 rot_vec;
 
-	float timer;
-
 	gef::SkinnedMeshInstance* player_;
 
 	MotionClipPlayer anim_player_;
