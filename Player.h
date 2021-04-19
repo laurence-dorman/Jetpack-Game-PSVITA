@@ -6,6 +6,10 @@
 #include <box2d/Box2D.h>
 #include "model_loader.h"
 #include <system/debug_log.h>
+#include <animation/skeleton.h>
+#include <graphics/skinned_mesh_instance.h>
+#include "motion_clip_player.h"
+#include "animation_loader.h"
 
 class PrimitiveBuilder;
 
@@ -53,7 +57,7 @@ private:
 
 	ModelLoader* model_loader_;
 
-	gef::MeshInstance player_mesh_;
+	//gef::MeshInstance player_mesh_;
 	gef::Scene* scene_assets_;
 
 	float rotation_;
@@ -61,6 +65,14 @@ private:
 	b2Vec2 rot_vec;
 
 	float timer;
+
+	gef::SkinnedMeshInstance* player_;
+
+	MotionClipPlayer anim_player_;
+	gef::Animation* trans_anim_;
+
+	AnimationLoader* animation_loader_;
+
 
 	float clamp(const float v, const float lo, const float hi); // from algorithm header
 

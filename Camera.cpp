@@ -1,7 +1,6 @@
 #include "Camera.h"
 
-
-Camera::Camera(gef::Platform& platform):
+Camera::Camera(gef::Platform& platform) :
 	platform_(platform),
 	fov_(gef::DegToRad(50.0f)),
 	aspect_ratio_((float)platform.width() / (float)platform.height())
@@ -16,17 +15,26 @@ Camera::~Camera()
 {
 }
 
-void Camera::Update()
+void Camera::Update(float dt)
 {
-	view_matrix_.LookAt(camera_position_, camera_target_, camera_up_);
+	UpdateTarget(dt);
+
+	view_matrix_.LookAt(camera_position_, current_lookat_, camera_up_);
+	
+	setPosition(current_position_);
+}
+
+void Camera::UpdateTarget(float dt)
+{
+	current_lookat_.Lerp(current_lookat_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + PLAYERHEIGHT, 0.f), 0.1f);
+	current_position_.Lerp(current_position_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y, Z_OFFSET), 0.1f);
 }
 
 void Camera::SetupCamera()
 {
-	camera_position_ = gef::Vector4(-2.0f, 4.0f, 35.f);
-	camera_target_ = gef::Vector4(0.0f, 2.0f, -1.f);
+	camera_position_ = gef::Vector4(0.0f, 0.0f, Z_OFFSET);
 	camera_up_ = gef::Vector4(0.0f, 1.0f, 0.0f);
 
 	projection_matrix_ = platform_.PerspectiveProjectionFov(fov_, aspect_ratio_, 0.1f, 100.f);
-	view_matrix_.LookAt(camera_position_, camera_target_, camera_up_);
+
 }

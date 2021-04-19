@@ -27,6 +27,8 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 
 	player_->Init(primitive_builder_, world_, platform_);
 
+	camera_->setTarget(player_);
+
 	InitGround();
 }
 
@@ -60,14 +62,77 @@ State* InGameState::Update(float frame_time, const gef::SonyController* controll
 {
 	UpdateSimulation(frame_time, controller);
 
-	camera_->setTarget(gef::Vector4(player_->getPosition().x, player_->getPosition().y + 10.f, 0.f, 0.f));
-	//camera_->setPosition(gef::Vector4(player_->getPosition().x, player_->getPosition().y + 10.f, camera_->getPosition().z(), 0.f));
-	camera_->Update();
+	camera_->Update(frame_time);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		return states_[MENUSTATE];
 	}
 	return this;
+}
+
+void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* controller)
+{
+	// update physics world
+	float timeStep = 1.0f / 60.0f;
+
+	int32 velocityIterations = 6;
+	int32 positionIterations = 2;
+
+	world_->Step(timeStep, velocityIterations, positionIterations);
+
+	// update object visuals from simulation data
+	player_->Update(frame_time, controller);
+
+	// don't have to update the ground visuals as it is static
+
+	// collision detection
+	// get the head of the contact list
+	b2Contact* contact = world_->GetContactList();
+	// get contact count
+	int contact_count = world_->GetContactCount();
+
+	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
+	{
+		if (contact->IsTouching())
+		{
+			// get the colliding bodies
+			b2Body* bodyA = contact->GetFixtureA()->GetBody();
+			b2Body* bodyB = contact->GetFixtureB()->GetBody();
+
+			// DO COLLISION RESPONSE HERE
+			Player* player = NULL;
+
+			GameObject* gameObjectA = NULL;
+			GameObject* gameObjectB = NULL;
+
+			gameObjectA = reinterpret_cast<GameObject*>(bodyA->GetUserData().pointer);
+			gameObjectB = reinterpret_cast<GameObject*>(bodyB->GetUserData().pointer);
+
+			if (gameObjectA)
+			{
+				if (gameObjectA->type() == PLAYER)
+				{
+					player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);
+				}
+			}
+
+			if (gameObjectB)
+			{
+				if (gameObjectB->type() == PLAYER)
+				{
+					player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
+				}
+			}
+
+			if (player)
+			{
+				// take damage / play sound
+			}
+		}
+
+		// Get next contact point
+		contact = contact->GetNext();
+	}
 }
 
 void InGameState::Render()
@@ -108,7 +173,7 @@ void InGameState::SetupLights()
 	// the position of the light is set far away so it acts light a directional light
 	gef::PointLight default_point_light;
 	default_point_light.set_colour(gef::Colour(0.7f, 0.7f, 1.0f, 1.0f));
-	default_point_light.set_position(gef::Vector4(-500.0f, 400.0f, 700.0f));
+	default_point_light.set_position(gef::Vector4(-200.0f, 400.0f, 700.0f));
 	default_shader_data.AddPointLight(default_point_light);
 }
 
@@ -141,69 +206,4 @@ void InGameState::InitGround()
 
 	// update visuals from simulation data
 	ground_.UpdateFromSimulation(ground_body_);
-}
-
-void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* controller)
-{
-	// update physics world
-	float timeStep = 1.0f / 60.0f;
-
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
-
-	world_->Step(timeStep, velocityIterations, positionIterations);
-
-	// update object visuals from simulation data
-	player_->Update(frame_time, controller);
-
-	// don't have to update the ground visuals as it is static
-
-	// collision detection
-	// get the head of the contact list
-	b2Contact* contact = world_->GetContactList();
-	// get contact count
-	int contact_count = world_->GetContactCount();
-
-	for (int contact_num = 0; contact_num < contact_count; ++contact_num)
-	{
-		if (contact->IsTouching())
-		{
-			// get the colliding bodies
-			b2Body* bodyA = contact->GetFixtureA()->GetBody();
-			b2Body* bodyB = contact->GetFixtureB()->GetBody();
-	
-			// DO COLLISION RESPONSE HERE
-			Player* player = NULL;
-	
-			GameObject* gameObjectA = NULL;
-			GameObject* gameObjectB = NULL;
-	
-			gameObjectA = reinterpret_cast<GameObject*>(bodyA->GetUserData().pointer);
-			gameObjectB = reinterpret_cast<GameObject*>(bodyB->GetUserData().pointer);
-	
-			if (gameObjectA)
-			{
-				if (gameObjectA->type() == PLAYER)
-				{
-					player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);
-				}
-			}
-	
-			if (gameObjectB)
-			{
-				if (gameObjectB->type() == PLAYER)
-				{
-					player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
-				}
-			}
-	
-			if (player)
-			{
-				// take damage / play sound
-			}
-		}
-	
-		// Get next contact point
-		contact = contact->GetNext();
-	}
 }
