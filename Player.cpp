@@ -160,9 +160,3 @@ void Player::Render(gef::Renderer3D* renderer_3d)
 	//}
 		
 }
-
-float Player::clamp(const float v, const float lo, const float hi)
-{
-	assert(!(hi < lo));
-	return (v < lo) ? lo : (hi < v) ? hi : v;
-}

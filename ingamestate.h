@@ -12,6 +12,7 @@
 #include "graphics/scene.h"
 #include "model_loader.h"
 #include <system/debug_log.h>
+#include "utilities.h"
 
 class InGameState : public State
 {
@@ -26,6 +27,7 @@ public:
 	void SetupLights();
 	void InitGround();
 	void UpdateSimulation(float frame_time, const gef::SonyController* controller);
+	void UpdateSky();
 
 private:
 
@@ -41,6 +43,8 @@ private:
 
 	// player variables
 	Player* player_;
+
+	gef::Colour sky_colour_;
 	
 
 	// ground variables

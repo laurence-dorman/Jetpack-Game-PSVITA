@@ -10,6 +10,7 @@
 #include <graphics/skinned_mesh_instance.h>
 #include "motion_clip_player.h"
 #include "animation_loader.h"
+#include "utilities.h"
 
 class PrimitiveBuilder;
 
@@ -70,9 +71,6 @@ private:
 	gef::Animation* trans_anim_;
 
 	AnimationLoader* animation_loader_;
-
-
-	float clamp(const float v, const float lo, const float hi); // from algorithm header
 
 };
 

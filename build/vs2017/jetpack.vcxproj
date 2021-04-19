@@ -233,6 +233,7 @@
     <ClCompile Include="animation_loader.cpp" />
     <ClCompile Include="model_loader.cpp" />
     <ClCompile Include="motion_clip_player.cpp" />
+    <ClCompile Include="utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Camera.h" />
@@ -248,6 +249,7 @@
     <ClInclude Include="animation_loader.h" />
     <ClInclude Include="model_loader.h" />
     <ClInclude Include="motion_clip_player.h" />
+    <ClInclude Include="utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,9 @@
 #include "ingamestate.h"
 
+#define SKY_R 0.0f
+#define SKY_G 0.5f
+#define SKY_B 0.92f
+
 InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, std::vector<State*> &states) :
 	sprite_renderer_(sprite_renderer),
 	renderer_3d_(renderer_3d),
@@ -28,6 +32,10 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	player_->Init(primitive_builder_, world_, platform_);
 
 	camera_->setTarget(player_);
+
+	sky_colour_ = gef::Colour(0.4f, 0.525f, 0.7f, 1.0f);
+
+	platform_->set_render_target_clear_colour(sky_colour_);
 
 	InitGround();
 }
@@ -61,6 +69,7 @@ void InGameState::onExit()
 State* InGameState::Update(float frame_time, const gef::SonyController* controller)
 {
 	UpdateSimulation(frame_time, controller);
+	UpdateSky();
 
 	camera_->Update(frame_time);
 
@@ -133,6 +142,15 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 		// Get next contact point
 		contact = contact->GetNext();
 	}
+}
+
+void InGameState::UpdateSky()
+{
+	sky_colour_.r = clamp(SKY_R - (player_->getPosition().y / 250.f), 0.f, SKY_R);
+	sky_colour_.g = clamp(SKY_G - (player_->getPosition().y / 250.f), 0.f, SKY_G);
+	sky_colour_.b = clamp(SKY_B - (player_->getPosition().y / 250.f), 0.f, SKY_B);
+
+	platform_->set_render_target_clear_colour(sky_colour_);
 }
 
 void InGameState::Render()
