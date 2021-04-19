@@ -9,7 +9,7 @@ Player::Player() :
 	scene_assets_(NULL)
 {
 	speed = b2Vec2(0.0f, 0.0f);
-	position = b2Vec2(0.0f, 4.0f);
+	position = b2Vec2(0.0f, 0.0f);
 	heading = b2Vec2(0.f, 0.f);
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;
