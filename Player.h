@@ -12,6 +12,9 @@
 #include "animation_loader.h"
 #include "utilities.h"
 
+#define ACCELERATION_MODIFIER 200.f
+#define MAX_ANGLE 45.f
+
 class PrimitiveBuilder;
 
 namespace gef

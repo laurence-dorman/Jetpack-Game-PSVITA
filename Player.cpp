@@ -115,12 +115,11 @@ void Player::Update(float dt, const gef::SonyController* controller)
 	//	player_->set_transform(player_transform);
 	//}
 
-
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
-		rotation_ = lerpRotation(gef::DegToRad(controller->left_stick_x_axis() * -45.f), 0.1f);
+		rotation_ = lerpRotation(gef::DegToRad(controller->left_stick_x_axis() * -MAX_ANGLE), 0.1f);
 
 		rot_vec.Set(-sin(rotation_), cos(rotation_));
-		rot_vec *= 200.f * dt;
+		rot_vec *= ACCELERATION_MODIFIER * dt;
 
 		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
 	}
@@ -133,12 +132,8 @@ void Player::Update(float dt, const gef::SonyController* controller)
 
 	gef::DebugOut("Velocity: (%.1f, %.1f)\n", player_body_->GetLinearVelocity().x, player_body_->GetLinearVelocity().y);
 
-	b2Vec2 vel = player_body_->GetLinearVelocity();
-	float speed = vel.Normalize();
-
 	//gef::DebugOut("Speed: %.2f\n", speed);
 	//gef::DebugOut("Rotation: %.2f\n", gef::RadToDeg(rotation_));
-	
 
 	player_body_->SetTransform(player_body_->GetPosition(), rotation_);
 
@@ -179,7 +174,7 @@ b2Vec2 Player::getAirResistance(b2Vec2 vel)
 	air_resistance.x = 0.5f * v_sqr.x;
 	air_resistance.y = 0.5f * v_sqr.y;
 
-	air_resistance.y *= (player_body_->GetLinearVelocity().y > 0) ? -1 : 1;
+	air_resistance.y *= (player_body_->GetLinearVelocity().y > 0) ? -1 : 0.2;
 	air_resistance.x *= (player_body_->GetLinearVelocity().x > 0) ? -1 : 1;
 
 	return air_resistance;
