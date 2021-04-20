@@ -3,6 +3,7 @@
 #define SKY_R 0.0f
 #define SKY_G 0.5f
 #define SKY_B 0.92f
+#define SPACE_HEIGHT 500.f
 
 InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, std::vector<State*> &states) :
 	sprite_renderer_(sprite_renderer),
@@ -23,6 +24,8 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 
 	player_ = new Player(); // init player
 
+	stars_manager_ = new StarsManager(platform_, 1000);
+
 	SetupLights();
 
 	// initialise the physics world
@@ -33,7 +36,7 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 
 	camera_->setTarget(player_);
 
-	sky_colour_ = gef::Colour(0.4f, 0.525f, 0.7f, 1.0f);
+	sky_colour_ = gef::Colour(SKY_R, SKY_G, SKY_B, 1.0f);
 
 	platform_->set_render_target_clear_colour(sky_colour_);
 
@@ -146,9 +149,11 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 
 void InGameState::UpdateSky()
 {
-	sky_colour_.r = clamp(SKY_R - (player_->getPosition().y / 250.f), 0.f, SKY_R);
-	sky_colour_.g = clamp(SKY_G - (player_->getPosition().y / 250.f), 0.f, SKY_G);
-	sky_colour_.b = clamp(SKY_B - (player_->getPosition().y / 250.f), 0.f, SKY_B);
+	sky_colour_.r = clamp(SKY_R - (player_->getPosition().y / SPACE_HEIGHT), 0.f, SKY_R);
+	sky_colour_.g = clamp(SKY_G - (player_->getPosition().y / SPACE_HEIGHT), 0.f, SKY_G);
+	sky_colour_.b = clamp(SKY_B - (player_->getPosition().y / SPACE_HEIGHT), 0.f, SKY_B);
+
+	//gef::DebugOut("RGB: %.6f, %.6f, %.6f\n", sky_colour_.r, sky_colour_.g, sky_colour_.b);
 
 	platform_->set_render_target_clear_colour(sky_colour_);
 }
@@ -163,6 +168,9 @@ void InGameState::Render()
 
 	// draw 3d geometry
 	renderer_3d_->Begin();
+
+	//draw stars
+	stars_manager_->Render(sprite_renderer_, clamp(player_->getPosition().y / SPACE_HEIGHT, 0.f, 1.f));
 
 	// draw ground
 	renderer_3d_->DrawMesh(ground_);

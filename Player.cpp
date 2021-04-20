@@ -6,11 +6,9 @@ Player::Player() :
 	player_body_(NULL),
 	max_speed(10.f),
 	trans_anim_(NULL),
-	scene_assets_(NULL)
+	scene_assets_(NULL),
+	position_(0.f, 0.f)
 {
-	speed = b2Vec2(0.0f, 0.0f);
-	position = b2Vec2(0.0f, 0.0f);
-	heading = b2Vec2(0.f, 0.f);
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;
 }
@@ -130,20 +128,22 @@ void Player::Update(float dt, const gef::SonyController* controller)
 	// apply air resistance
 	player_body_->ApplyForceToCenter(getAirResistance(player_body_->GetLinearVelocity()), 1);
 
-	gef::DebugOut("Velocity: (%.1f, %.1f)\n", player_body_->GetLinearVelocity().x, player_body_->GetLinearVelocity().y);
-
-	//gef::DebugOut("Speed: %.2f\n", speed);
+	//gef::DebugOut("Velocity: (%.1f, %.1f)\n", player_body_->GetLinearVelocity().x, player_body_->GetLinearVelocity().y);
+	//gef::DebugOut("Position: (%.1f, %.1f)\n", player_body_->GetPosition().x, player_body_->GetPosition().y);
 	//gef::DebugOut("Rotation: %.2f\n", gef::RadToDeg(rotation_));
 
 	player_body_->SetTransform(player_body_->GetPosition(), rotation_);
 
 	gef::Matrix44 player_transform;
 	player_transform.SetIdentity();
+
 	player_transform.RotationZ(player_body_->GetAngle());
+
 	player_transform.SetTranslation(gef::Vector4(player_body_->GetPosition().x, player_body_->GetPosition().y, 0.f));
+
 	this->set_transform(player_transform);
 
-	position.Set(player_body_->GetPosition().x, player_body_->GetPosition().y);
+	position_ = player_body_->GetPosition();
 }
 
 void Player::Render(gef::Renderer3D* renderer_3d)

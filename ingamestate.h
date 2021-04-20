@@ -13,6 +13,7 @@
 #include "model_loader.h"
 #include <system/debug_log.h>
 #include "utilities.h"
+#include "stars_manager.h"
 
 class InGameState : public State
 {
@@ -46,6 +47,7 @@ private:
 
 	gef::Colour sky_colour_;
 	
+	StarsManager* stars_manager_;
 
 	// ground variables
 	gef::Mesh* ground_mesh_;

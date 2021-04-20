@@ -13,7 +13,7 @@
 #include "utilities.h"
 
 #define ACCELERATION_MODIFIER 200.f
-#define MAX_ANGLE 45.f
+#define MAX_ANGLE 60.f
 
 class PrimitiveBuilder;
 
@@ -31,35 +31,24 @@ public:
 
 	void Update(float dt, const gef::SonyController* controller);
 
-	b2Vec2 getSpeed() { return speed; };
-	void setSpeed(b2Vec2 s) { speed = s; };
-
 	void Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Platform* platform);
 	void Render(gef::Renderer3D* renderer_3d);
 
 	void setThrust(float t) { thrust = t; };
 	float getThrust() { return thrust; };
 
-	void setPosition(b2Vec2 pos) { position = pos; };
-	b2Vec2 getPosition() { return position; };
+	void setPosition(b2Vec2 pos) { position_ = pos; };
+	b2Vec2 getPosition() { return position_; };
 
 	float lerpRotation(float target, float time);
 
 	b2Vec2 getAirResistance(b2Vec2 vel);
 
-	//void setRotation(gef::Quaternion q) { rotation = q; };
-	//gef::Quaternion getRotation() { return rotation; };
-
 private:
-
-	b2Vec2 speed;
 	float thrust = 0.f;
 	const float max_speed = 10.f;
 
-	//gef::Quaternion rotation;
-	b2Vec2 position;
-
-	b2Vec2 heading;
+	b2Vec2 position_;
 
 	b2Body* player_body_;
 
