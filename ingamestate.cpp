@@ -26,6 +26,9 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 
 	stars_manager_ = new StarsManager(platform_, 1000);
 
+	particles_manager_ = new ParticleManager(platform_);
+	particles_manager_->setTarget(player_);
+
 	SetupLights();
 
 	// initialise the physics world
@@ -75,6 +78,7 @@ State* InGameState::Update(float frame_time, const gef::SonyController* controll
 	UpdateSky();
 
 	camera_->Update(frame_time);
+	particles_manager_->Update(frame_time);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		return states_[MENUSTATE];
@@ -177,6 +181,9 @@ void InGameState::Render()
 
 	// draw player
 	renderer_3d_->DrawMesh(*player_);
+
+	// draw particles
+	particles_manager_->Render(renderer_3d_);
 
 	renderer_3d_->End();
 

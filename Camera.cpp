@@ -26,8 +26,8 @@ void Camera::Update(float dt)
 
 void Camera::UpdateTarget(float dt)
 {
-	current_lookat_.Lerp(current_lookat_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + PLAYERHEIGHT, 0.f), 0.1f);
-	current_position_.Lerp(current_position_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + PLAYERHEIGHT, Z_OFFSET), 0.1f);
+	current_lookat_.Lerp(current_lookat_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + 5.f, 0.f), 0.1f);
+	current_position_.Lerp(current_position_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + 5.f, Z_OFFSET), 0.1f);
 }
 
 void Camera::SetupCamera()

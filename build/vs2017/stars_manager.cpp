@@ -22,6 +22,10 @@ StarsManager::StarsManager(gef::Platform* platform, int num_stars):
 
 StarsManager::~StarsManager()
 {
+	for (auto s : stars) {
+		delete s;
+	}
+	stars.clear();
 }
 
 void StarsManager::Render(gef::SpriteRenderer* sprite_renderer, float alpha)

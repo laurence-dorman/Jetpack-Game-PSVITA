@@ -14,6 +14,7 @@
 #include <system/debug_log.h>
 #include "utilities.h"
 #include "stars_manager.h"
+#include "particle_manager.h"
 
 class InGameState : public State
 {
@@ -48,6 +49,7 @@ private:
 	gef::Colour sky_colour_;
 	
 	StarsManager* stars_manager_;
+	ParticleManager* particles_manager_;
 
 	// ground variables
 	gef::Mesh* ground_mesh_;

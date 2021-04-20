@@ -75,7 +75,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 	// create a physics body for the player
 	b2BodyDef player_body_def;
 	player_body_def.type = b2_dynamicBody;
-	player_body_def.position = b2Vec2(0.0f, 0.0f);
+	player_body_def.position = b2Vec2(0.0f, 6.0f);
 	// create a connection between the rigid body and GameObject
 	player_body_def.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
@@ -83,7 +83,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 
 	// create the shape for the player
 	b2PolygonShape player_shape;
-	player_shape.SetAsBox(0.4f, 6.0f, b2Vec2(0.0f, 6.f), 0);
+	player_shape.SetAsBox(0.4f, 6.0f, b2Vec2(0.0f, -0.5f), 0);
 
 	//player_shape.Set(player_mesh_.mesh(), player_mesh_.mesh());
 
