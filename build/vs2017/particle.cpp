@@ -38,16 +38,19 @@ bool Particle::Update(float frame_time)
 	
 	translation.SetIdentity();
 	translation.SetTranslation(gef::Vector4(cosf(rotation_) / 5.f, sinf(rotation_)/ 5.f, 0));
+	
+	gef::Matrix44 new_transform;
+
 	translation = translation * this->transform();
 	
 	gef::Vector4 pos = translation.GetTranslation();
-
+	
 	gef::Matrix44 scale;
 	gef::Vector4 scale_vec(1.01f, 1.01f, 1.01f);
 	scale.Scale(scale_vec);
 	
 	translation = translation * scale;
-
+	
 	translation.SetTranslation(pos);
 
 	this->set_transform( translation);
