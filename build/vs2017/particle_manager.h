@@ -31,9 +31,6 @@ private:
 	PrimitiveBuilder* primitive_builder_;
 	gef::Platform* platform_;
 
-	gef::Material* particle_material_;
-	gef::Mesh* particle_mesh_;
-
 	float timer_;
 };
 

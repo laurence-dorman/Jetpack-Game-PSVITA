@@ -7,7 +7,8 @@ Player::Player() :
 	max_speed(10.f),
 	trans_anim_(NULL),
 	scene_assets_(NULL),
-	position_(0.f, 0.f)
+	position_(0.f, 0.f),
+	thrusting_(false)
 {
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;
@@ -114,6 +115,7 @@ void Player::Update(float dt, const gef::SonyController* controller)
 	//}
 
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
+		thrusting_ = true;
 		rotation_ = lerpRotation(gef::DegToRad(controller->left_stick_x_axis() * -MAX_ANGLE), 0.1f);
 
 		rot_vec.Set(-sin(rotation_), cos(rotation_));
@@ -122,6 +124,7 @@ void Player::Update(float dt, const gef::SonyController* controller)
 		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
 	}
 	else {
+		thrusting_ = false;
 		rotation_ = lerpRotation(0.f, 0.07f);
 	}
 

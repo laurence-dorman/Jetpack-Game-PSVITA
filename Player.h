@@ -44,6 +44,8 @@ public:
 
 	b2Vec2 getAirResistance(b2Vec2 vel);
 
+	bool isThrusting() { return thrusting_; };
+
 private:
 	float thrust = 0.f;
 	const float max_speed = 10.f;
@@ -69,6 +71,8 @@ private:
 	gef::Animation* trans_anim_;
 
 	AnimationLoader* animation_loader_;
+
+	bool thrusting_;
 
 };
 
