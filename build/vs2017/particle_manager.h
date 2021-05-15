@@ -25,6 +25,8 @@ public:
 
 private:
 
+	void addParticle(gef::Material* mat, gef::Mesh* mesh, gef::Vector4 pos);
+
 	std::vector<Particle*> particles_;
 
 	Player* target_;

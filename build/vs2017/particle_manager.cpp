@@ -27,23 +27,10 @@ void ParticleManager::Update(float frame_time)
 
 			gef::Material* particle_material = new gef::Material();
 			particle_material->set_colour(gef::Colour(1.0f, 1.0f, 1.0f).GetABGR());
-			gef::Mesh *particle_mesh = primitive_builder_->CreateSphereMesh(0.6f, 5, 5, gef::Vector4(0.f, 0.f, 0.f), particle_material);
+			gef::Mesh* particle_mesh = primitive_builder_->CreateSphereMesh(0.6f, 5, 5, gef::Vector4(0.f, 0.f, 0.f), particle_material);
 
-			gef::Matrix44 transform;
-			transform.SetIdentity();
-			transform.SetTranslation(gef::Vector4(-0.55f, 0, 0));
-
-			transform = transform * target_->transform();
-
-			Particle* particle1 = new Particle(particle_material, particle_mesh, transform);
-
-			transform.SetTranslation(gef::Vector4(0.55f, 0, 0));
-			transform = transform * target_->transform();
-
-			Particle* particle2 = new Particle(particle_material, particle_mesh, transform);
-
-			particles_.push_back(particle1);
-			particles_.push_back(particle2);
+			addParticle(particle_material, particle_mesh, gef::Vector4(-0.55f, 0.f, 0.f)); // left booster
+			addParticle(particle_material, particle_mesh, gef::Vector4(0.55f, 0.f, 0.f)); // right booster
 		}
 	}
 
@@ -59,4 +46,17 @@ void ParticleManager::Render(gef::Renderer3D* renderer_3d)
 	for (auto p : particles_) {
 		renderer_3d->DrawMesh(*p);
 	}
+}
+
+void ParticleManager::addParticle(gef::Material* mat, gef::Mesh* mesh, gef::Vector4 pos)
+{
+	gef::Matrix44 transform;
+	transform.SetIdentity();
+	transform.SetTranslation(pos);
+
+	transform = transform * target_->transform();
+
+	Particle* particle = new Particle(mat, mesh, transform);
+
+	particles_.push_back(particle);
 }
