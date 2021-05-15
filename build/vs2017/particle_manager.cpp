@@ -21,7 +21,7 @@ void ParticleManager::Update(float frame_time)
 {
 	if (target_->isThrusting()) {
 		timer_ += frame_time;
-		if (timer_ >= 0.02f) {
+		if (timer_ >= 0.02f) { // spawn rate =~ 0.02s
 			timer_ = 0.f;
 			addParticle(gef::Vector4(-0.55f, 0.f, 0.f)); // left booster
 			addParticle(gef::Vector4(0.55f, 0.f, 0.f)); // right booster
