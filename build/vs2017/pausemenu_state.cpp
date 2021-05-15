@@ -1,7 +1,7 @@
-#include "mainmenu_state.h"
-#include "system/debug_log.h"
+#include "pausemenu_state.h"
 
-MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, std::vector<State*> &states) :
+
+PauseMenuState::PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, std::vector<State*> &states) :
 	sprite_renderer_(sprite_renderer),
 	font_(font),
 	platform_(platform),
@@ -10,24 +10,24 @@ MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* fo
 	button_icon_ = CreateTextureFromPNG("playstation-circle-dark-icon.png", *platform_);
 }
 
-MainMenuState::~MainMenuState()
+PauseMenuState::~PauseMenuState()
 {
 	delete button_icon_;
 	button_icon_ = NULL;
 }
 
-void MainMenuState::onEnter()
+void PauseMenuState::onEnter()
 {
 	
 }
 
-void MainMenuState::onExit()
+void PauseMenuState::onExit()
 {
 	
 }
 
 
-State* MainMenuState::Update(float frame_time, const gef::SonyController* controller) {
+State* PauseMenuState::Update(float frame_time, const gef::SonyController* controller) {
 	if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE) {
 		
 		return states_[INGAMESTATE];
@@ -38,7 +38,7 @@ State* MainMenuState::Update(float frame_time, const gef::SonyController* contro
 	return this;
 }
 
-void MainMenuState::Render()
+void PauseMenuState::Render()
 {
 	sprite_renderer_->Begin();
 
@@ -49,7 +49,7 @@ void MainMenuState::Render()
 		1.0f,
 		0xffffffff,
 		gef::TJ_CENTRE,
-		"MAIN MENU - PRESS");
+		"PRESS");
 
 	// Render button icon
 	gef::Sprite button;

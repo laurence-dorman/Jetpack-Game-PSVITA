@@ -29,7 +29,8 @@ public:
 protected:
 	enum STATE {
 		MENUSTATE =	0,
-		INGAMESTATE = 1
+		INGAMESTATE = 1,
+		PAUSEMENUSTATE = 2
 	};
 
 private:

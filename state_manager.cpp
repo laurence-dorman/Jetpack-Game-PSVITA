@@ -1,11 +1,12 @@
-#include "StateManager.h"
+#include "state_manager.h"
 
 StateManager::StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera) :
     current_state_(NULL),
     old_state_(NULL),
-    states({&mainmenu_state_, &ingame_state_}),
-    mainmenu_state_(sprite_renderer, font, platform, states),
-    ingame_state_(sprite_renderer, renderer_3d, font, camera, platform, states),
+    states_({&mainmenu_state_, &ingame_state_, &pausemenu_state_ }),
+    mainmenu_state_(sprite_renderer, font, platform, states_),
+    pausemenu_state_(sprite_renderer, font, platform, states_),
+    ingame_state_(sprite_renderer, renderer_3d, font, camera, platform, states_),
     platform_(platform),
     sprite_renderer_(sprite_renderer),
     renderer_3d_(renderer_3d),

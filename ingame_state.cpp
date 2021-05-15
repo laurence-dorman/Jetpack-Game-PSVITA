@@ -81,7 +81,7 @@ State* InGameState::Update(float frame_time, const gef::SonyController* controll
 	particles_manager_->Update(frame_time);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
-		return states_[MENUSTATE];
+		return states_[PAUSEMENUSTATE];
 	}
 	return this;
 }

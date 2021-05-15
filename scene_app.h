@@ -6,7 +6,7 @@
 #include "primitive_builder.h"
 #include <graphics/mesh_instance.h>
 #include <input/input_manager.h>
-#include "StateManager.h"
+#include "state_manager.h"
 #include "Camera.h"
 
 // FRAMEWORK FORWARD DECLARATIONS

@@ -2,6 +2,7 @@
 
 #include "mainmenu_state.h"
 #include "ingame_state.h"
+#include "pausemenu_state.h"
 
 #include <vector>
 
@@ -27,10 +28,11 @@ public:
 	void setState(State* state);
 
 private:
-	std::vector<State*> states;
+	std::vector<State*> states_;
 
 	MainMenuState mainmenu_state_;
 	InGameState ingame_state_;
+	PauseMenuState pausemenu_state_;
 
 	State* current_state_;
 	State* old_state_;
