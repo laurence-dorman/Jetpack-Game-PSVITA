@@ -210,13 +210,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\Camera.cpp" />
     <ClCompile Include="..\..\game_object.cpp" />
-    <ClCompile Include="..\..\ingamestate.cpp" />
+    <ClCompile Include="..\..\ingame_state.cpp" />
     <ClCompile Include="..\..\load_texture.cpp" />
     <ClCompile Include="..\..\main_d3d11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\menustate.cpp" />
+    <ClCompile Include="..\..\mainmenu_state.cpp" />
     <ClCompile Include="..\..\Player.cpp" />
     <ClCompile Include="..\..\primitive_builder.cpp" />
     <ClCompile Include="..\..\scene_app.cpp" />
@@ -241,9 +241,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\Camera.h" />
     <ClInclude Include="..\..\game_object.h" />
-    <ClInclude Include="..\..\ingamestate.h" />
+    <ClInclude Include="..\..\ingame_state.h" />
     <ClInclude Include="..\..\load_texture.h" />
-    <ClInclude Include="..\..\menustate.h" />
+    <ClInclude Include="..\..\mainmenu_state.h" />
     <ClInclude Include="..\..\Player.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "menustate.h"
-#include "ingamestate.h"
+#include "mainmenu_state.h"
+#include "ingame_state.h"
 
 #include <vector>
 
@@ -29,10 +29,11 @@ public:
 private:
 	std::vector<State*> states;
 
-	MenuState menu_state_;
-	InGameState in_game_state_;
+	MainMenuState mainmenu_state_;
+	InGameState ingame_state_;
 
 	State* current_state_;
+	State* old_state_;
 	gef::Platform* platform_;
 
 	gef::Font* font_;

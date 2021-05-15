@@ -10,11 +10,11 @@
 #include <vector>
 
 
-class MenuState : public State
+class MainMenuState : public State
 {
 public:
-	MenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, std::vector<State*> &states);
-	~MenuState();
+	MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, std::vector<State*> &states);
+	~MainMenuState();
 
 	State* Update(float frame_time, const gef::SonyController* controller);
 	void Render();

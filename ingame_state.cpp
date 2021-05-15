@@ -1,4 +1,4 @@
-#include "ingamestate.h"
+#include "ingame_state.h"
 
 #define SKY_R 0.0f
 #define SKY_G 0.5f
@@ -64,7 +64,7 @@ InGameState::~InGameState()
 
 void InGameState::onEnter()
 {
-
+	
 }
 
 void InGameState::onExit()

@@ -36,10 +36,10 @@
     <ClCompile Include="..\..\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ingamestate.cpp">
+    <ClCompile Include="..\..\ingame_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\menustate.cpp">
+    <ClCompile Include="..\..\mainmenu_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Player.cpp">
@@ -92,10 +92,10 @@
     <ClInclude Include="..\..\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ingamestate.h">
+    <ClInclude Include="..\..\ingame_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\menustate.h">
+    <ClInclude Include="..\..\mainmenu_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\state.h">
