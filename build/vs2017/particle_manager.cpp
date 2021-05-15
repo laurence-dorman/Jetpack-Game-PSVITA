@@ -1,6 +1,6 @@
 #include "particle_manager.h"
 
-ParticleManager::ParticleManager(gef::Platform* platform):
+ParticleManager::ParticleManager(gef::Platform* platform) :
 	timer_(0.f),
 	target_(NULL),
 	platform_(platform)
@@ -30,7 +30,7 @@ void ParticleManager::Update(float frame_time)
 
 	for (int i = 0; i < particles_.size(); i++) {
 		if (!particles_[i]->Update(frame_time)) {
-			particles_.erase(particles_.begin() + i); 
+			particles_.erase(particles_.begin() + i);
 		}
 	}
 }
