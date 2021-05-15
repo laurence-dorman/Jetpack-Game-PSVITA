@@ -2,7 +2,7 @@
 
 ParticleManager::ParticleManager(gef::Platform* platform) :
 	timer_(0.f),
-	target_(NULL),
+	player_(NULL),
 	platform_(platform)
 {
 	primitive_builder_ = new PrimitiveBuilder(*platform_);
@@ -19,7 +19,7 @@ ParticleManager::~ParticleManager()
 
 void ParticleManager::Update(float frame_time)
 {
-	if (target_->isThrusting()) {
+	if (player_->isThrusting()) {
 		timer_ += frame_time;
 		if (timer_ >= 0.02f) { // spawn rate =~ 0.02s
 			timer_ = 0.f;
@@ -52,7 +52,7 @@ void ParticleManager::addParticle(gef::Vector4 pos)
 	transform.SetIdentity();
 	transform.SetTranslation(pos);
 
-	transform = transform * target_->transform(); // translates from target by pos
+	transform = transform * player_->transform(); // translates from player by pos
 
 	particles_.push_back(new Particle(particle_material, particle_mesh, transform));
 }

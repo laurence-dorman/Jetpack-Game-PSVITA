@@ -20,7 +20,7 @@ public:
 
 	void setTarget(Player* player) 
 	{
-		target_ = player;
+		player_ = player;
 	};
 
 private:
@@ -29,7 +29,7 @@ private:
 
 	std::vector<Particle*> particles_;
 
-	Player* target_;
+	Player* player_;
 	PrimitiveBuilder* primitive_builder_;
 	gef::Platform* platform_;
 
