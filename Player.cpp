@@ -116,7 +116,7 @@ void Player::Update(float dt, const gef::SonyController* controller)
 
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
 		thrusting_ = true;
-		rotation_ = lerpRotation(gef::DegToRad(controller->left_stick_x_axis() * -MAX_ANGLE), 0.1f);
+		rotation_ = lerpRotation(controller->left_stick_x_axis() * -MAX_ANGLE, 0.1f);
 
 		rot_vec.Set(-sin(rotation_), cos(rotation_));
 		rot_vec *= ACCELERATION_MODIFIER * dt;

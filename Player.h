@@ -13,7 +13,7 @@
 #include "utilities.h"
 
 #define ACCELERATION_MODIFIER 200.f
-#define MAX_ANGLE 60.f
+#define MAX_ANGLE 1.047198f // 60 degrees in rad
 
 class PrimitiveBuilder;
 

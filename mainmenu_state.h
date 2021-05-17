@@ -7,6 +7,9 @@
 #include "system/platform.h"
 #include <graphics/sprite.h>
 #include "load_texture.h"
+
+#include "menu_manager.h"
+
 #include <vector>
 
 
@@ -26,6 +29,8 @@ private:
 	gef::Font* font_;
 	gef::SpriteRenderer* sprite_renderer_;
 	gef::Platform* platform_;
+
+	MenuManager* menu_manager_;
 
 	//
 	// FRONTEND DECLARATIONS

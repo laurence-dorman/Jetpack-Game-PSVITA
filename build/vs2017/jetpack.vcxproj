@@ -231,6 +231,8 @@
     <ClCompile Include="..\..\state.cpp" />
     <ClCompile Include="..\..\state_manager.cpp" />
     <ClCompile Include="animation_loader.cpp" />
+    <ClCompile Include="menu_element.cpp" />
+    <ClCompile Include="menu_manager.cpp" />
     <ClCompile Include="model_loader.cpp" />
     <ClCompile Include="motion_clip_player.cpp" />
     <ClCompile Include="particle.cpp" />
@@ -251,6 +253,8 @@
     <ClInclude Include="..\..\state.h" />
     <ClInclude Include="..\..\state_manager.h" />
     <ClInclude Include="animation_loader.h" />
+    <ClInclude Include="menu_element.h" />
+    <ClInclude Include="menu_manager.h" />
     <ClInclude Include="model_loader.h" />
     <ClInclude Include="motion_clip_player.h" />
     <ClInclude Include="particle_manager.h" />
