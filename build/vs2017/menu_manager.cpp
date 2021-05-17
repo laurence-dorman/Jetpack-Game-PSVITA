@@ -23,21 +23,15 @@ void MenuManager::Update(const gef::SonyController* controller)
 {
 	if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN) {
 		elements_[position_]->setSelected(false);
-		position_++;
 
-		if (position_ > elements_.size() - 1) {
-			position_ = 0;
-		}
+		 position_ < elements_.size() - 1 ? position_++ : position_ = 0;
 
 		elements_[position_]->setSelected(true);
 	}
 	if (controller->buttons_pressed() & gef_SONY_CTRL_UP) {
 		elements_[position_]->setSelected(false);
-		position_--;
 
-		if (position_ < 0) {
-			position_ = elements_.size() - 1;
-		}
+		position_ > 0 ? position_-- : position_ = elements_.size() - 1;
 
 		elements_[position_]->setSelected(true);
 	}
