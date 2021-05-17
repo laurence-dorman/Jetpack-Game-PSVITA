@@ -1,13 +1,14 @@
 #include "menu_element.h"
 
-MenuElement::MenuElement(const char* text, gef::Vector4 pos, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer) :
+MenuElement::MenuElement(const char* text, gef::Vector4 pos, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state) :
 	pos_(pos),
 	size_(size),
 	platform_(platform),
 	text_(text),
 	font_(font),
 	sprite_renderer_(sprite_renderer),
-	selected_(false)
+	selected_(false),
+	state_(state)
 {
 	setSize(size);
 }

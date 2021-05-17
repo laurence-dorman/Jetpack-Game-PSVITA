@@ -16,10 +16,10 @@
 class MainMenuState : public State
 {
 public:
-	MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, std::vector<State*> &states);
+	MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, StateManager* state_manager);
 	~MainMenuState();
 
-	State* Update(float frame_time, const gef::SonyController* controller);
+	void Update(float frame_time, const gef::SonyController* controller);
 	void Render();
 	void onEnter();
 	void onExit();
@@ -29,6 +29,7 @@ private:
 	gef::Font* font_;
 	gef::SpriteRenderer* sprite_renderer_;
 	gef::Platform* platform_;
+	StateManager* state_manager_;
 
 	MenuManager* menu_manager_;
 
@@ -37,6 +38,5 @@ private:
 	//
 	gef::Texture* button_icon_;
 
-	std::vector<State*> &states_;
 };
 

@@ -1,11 +1,12 @@
 #include "pausemenu_state.h"
 
+#include "state_manager.h"
 
-PauseMenuState::PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, std::vector<State*> &states) :
+PauseMenuState::PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, StateManager* state_manager) :
 	sprite_renderer_(sprite_renderer),
 	font_(font),
 	platform_(platform),
-	states_(states)
+	state_manager_(state_manager)
 {
 	button_icon_ = CreateTextureFromPNG("playstation-circle-dark-icon.png", *platform_);
 }
@@ -27,15 +28,15 @@ void PauseMenuState::onExit()
 }
 
 
-State* PauseMenuState::Update(float frame_time, const gef::SonyController* controller) {
+void PauseMenuState::Update(float frame_time, const gef::SonyController* controller) {
 	if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE) {
 		
-		return states_[INGAMESTATE];
+		state_manager_->setState(StateManager::INGAMESTATE);
 	}
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
-		return NULL;
+		state_manager_->quit();
+		return;
 	}
-	return this;
 }
 
 void PauseMenuState::Render()

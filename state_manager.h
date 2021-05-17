@@ -25,7 +25,18 @@ public:
 
 	bool Update(float frame_time, const gef::SonyController* controller);
 	void Render();
-	void setState(State* state);
+
+	enum STATE {
+		MENUSTATE = 0,
+		INGAMESTATE = 1,
+		PAUSEMENUSTATE = 2,
+		HOWTOPLAYSTATE = 3,
+		SETTINGSSTATE = 4,
+		QUIT = 5,
+	};
+
+	void setState(STATE s);
+	void quit();
 
 private:
 	std::vector<State*> states_;
@@ -33,6 +44,7 @@ private:
 	MainMenuState mainmenu_state_;
 	InGameState ingame_state_;
 	PauseMenuState pausemenu_state_;
+	
 
 	State* current_state_;
 	State* old_state_;

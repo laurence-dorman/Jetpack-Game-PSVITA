@@ -1,12 +1,14 @@
 #include "menu_manager.h"
+#include "state_manager.h"
 
-MenuManager::MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, gef::Vector4 pos) :
+MenuManager::MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, gef::Vector4 pos, StateManager* state_manager) :
 	sprite_renderer_(sprite_renderer),
 	font_(font),
 	platform_(platform),
 	pos_(pos),
 	string_length(0),
-	position_(0)
+	position_(0),
+	state_manager_(state_manager)
 {
 
 }
@@ -35,10 +37,19 @@ void MenuManager::Update(const gef::SonyController* controller)
 
 		elements_[position_]->setSelected(true);
 	}
+
+	if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
+		if (elements_[position_]->getState() == StateManager::QUIT) {
+			state_manager_->quit();
+			return;
+		}
+		state_manager_->setState(static_cast<StateManager::STATE>(elements_[position_]->getState()));
+	}
 	
 	for (auto e : elements_) {
 		e->Update();
 	}
+	
 
 }
 
@@ -49,7 +60,7 @@ void MenuManager::Render()
 	}
 }
 
-void MenuManager::addElement(const char* text, float offset)
+void MenuManager::addElement(const char* text, float offset, int state)
 {
 	if (strlen(text) > string_length) {
 		string_length = strlen(text);
@@ -61,7 +72,7 @@ void MenuManager::addElement(const char* text, float offset)
 
 	float position_y = pos_.y() + (elements_.size() * offset);
 
-	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), string_length, platform_, font_, sprite_renderer_);
+	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), string_length, platform_, font_, sprite_renderer_, state);
 
 	if (elements_.empty()) {
 		element->setSelected(true);

@@ -12,7 +12,6 @@ namespace gef
 class Camera;
 
 
-
 class State
 {
 public:
@@ -21,7 +20,7 @@ public:
 	 State(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform) {} // sprites
 	~State() {}
 
-	virtual State* Update(float frame_time, const gef::SonyController* controller) = 0;
+	virtual void Update(float frame_time, const gef::SonyController* controller) = 0;
 	virtual void Render() = 0;
 	virtual void onEnter() = 0;
 	virtual void onExit() = 0;

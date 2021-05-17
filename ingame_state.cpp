@@ -1,11 +1,13 @@
 #include "ingame_state.h"
 
+#include "state_manager.h"
+
 #define SKY_R 0.0f
 #define SKY_G 0.5f
 #define SKY_B 0.92f
 #define SPACE_HEIGHT 500.f
 
-InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, std::vector<State*> &states) :
+InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, StateManager* state_manager) :
 	sprite_renderer_(sprite_renderer),
 	renderer_3d_(renderer_3d),
 	font_(font),
@@ -13,7 +15,7 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	world_(NULL),
 	player_(NULL),
 	platform_(platform),
-	states_(states)
+	state_manager_(state_manager)
 	
 {
 	// initialise primitive builder to make create some 3D geometry easier
@@ -72,7 +74,7 @@ void InGameState::onExit()
 	
 }
 
-State* InGameState::Update(float frame_time, const gef::SonyController* controller)
+void InGameState::Update(float frame_time, const gef::SonyController* controller)
 {
 	UpdateSimulation(frame_time, controller);
 	UpdateSky();
@@ -81,9 +83,9 @@ State* InGameState::Update(float frame_time, const gef::SonyController* controll
 	particles_manager_->Update(frame_time);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
-		return states_[PAUSEMENUSTATE];
+		state_manager_->setState(StateManager::PAUSEMENUSTATE);
 	}
-	return this;
+	
 }
 
 void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* controller)

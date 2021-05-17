@@ -16,13 +16,15 @@
 #include "stars_manager.h"
 #include "particle_manager.h"
 
+class StateManager;
+
 class InGameState : public State
 {
 public:
-	InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, std::vector<State*> &states);
+	InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, StateManager* state_manager);
 	~InGameState();
 
-	State* Update(float frame_time, const gef::SonyController* controller);
+	void Update(float frame_time, const gef::SonyController* controller);
 	void Render();
 	void onEnter();
 	void onExit();
@@ -39,6 +41,7 @@ private:
 	Camera* camera_;
 	PrimitiveBuilder* primitive_builder_;
 	gef::Platform* platform_;
+	StateManager* state_manager_;
 	
 	// create the physics world
 	b2World* world_;
@@ -58,6 +61,5 @@ private:
 
 	ModelLoader* model_loader_;
 	
-	std::vector<State*>& states_;
 };
 

@@ -9,14 +9,15 @@
 #include "load_texture.h"
 #include <vector>
 
+class StateManager;
 
 class PauseMenuState : public State
 {
 public:
-	PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, std::vector<State*> &states);
+	PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, StateManager* state_manager);
 	~PauseMenuState();
 
-	State* Update(float frame_time, const gef::SonyController* controller);
+	void Update(float frame_time, const gef::SonyController* controller);
 	void Render();
 	void onEnter();
 	void onExit();
@@ -26,12 +27,8 @@ private:
 	gef::Font* font_;
 	gef::SpriteRenderer* sprite_renderer_;
 	gef::Platform* platform_;
+	StateManager* state_manager_;
 
-	//
-	// FRONTEND DECLARATIONS
-	//
 	gef::Texture* button_icon_;
-
-	std::vector<State*> &states_;
 };
 
