@@ -1,16 +1,18 @@
 #include "state_manager.h"
+#include <audio/audio_manager.h>
 
-StateManager::StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera) :
+StateManager::StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::AudioManager* audio_manager) :
     current_state_(NULL),
     states_({&mainmenu_state_, &ingame_state_, &pausemenu_state_ }),
-    mainmenu_state_(sprite_renderer, font, platform, this),
-    pausemenu_state_(sprite_renderer, font, platform, this),
-    ingame_state_(sprite_renderer, renderer_3d, font, camera, platform, this),
+    mainmenu_state_(sprite_renderer, audio_manager, font, platform, this),
+    pausemenu_state_(sprite_renderer, audio_manager, font, platform, this),
+    ingame_state_(sprite_renderer, audio_manager, renderer_3d, font, camera, platform, this),
     platform_(platform),
     sprite_renderer_(sprite_renderer),
     renderer_3d_(renderer_3d),
     font_(font),
-    camera_(camera)
+    camera_(camera),
+    audio_manager_(audio_manager)
 {
     setState(STATE::MENUSTATE);
 }

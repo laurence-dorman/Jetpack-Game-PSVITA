@@ -5,6 +5,7 @@
 #include "graphics/sprite.h"
 #include "system/platform.h"
 #include "graphics/font.h"
+#include <audio/audio_manager.h>
 #include "menu_element.h"
 
 class StateManager;
@@ -14,7 +15,7 @@ class StateManager;
 class MenuManager
 {
 public:
-	MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, gef::Vector4 pos, StateManager* state_manager);
+	MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, gef::Vector4 pos, StateManager* state_manager, gef::AudioManager* audio_manager);
 	~MenuManager();
 
 	void Update(const gef::SonyController* controller);
@@ -28,6 +29,7 @@ private:
 	gef::Platform* platform_;
 	gef::Vector4 pos_;
 	StateManager* state_manager_;
+	gef::AudioManager* audio_manager_;
 
 	int string_length;
 

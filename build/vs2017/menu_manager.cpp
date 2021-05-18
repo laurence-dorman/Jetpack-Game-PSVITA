@@ -1,16 +1,18 @@
 #include "menu_manager.h"
 #include "state_manager.h"
 
-MenuManager::MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, gef::Vector4 pos, StateManager* state_manager) :
+MenuManager::MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, gef::Vector4 pos, StateManager* state_manager, gef::AudioManager* audio_manager) :
 	sprite_renderer_(sprite_renderer),
 	font_(font),
 	platform_(platform),
 	pos_(pos),
 	string_length(0),
 	position_(0),
-	state_manager_(state_manager)
+	state_manager_(state_manager),
+	audio_manager_(audio_manager)
 {
-
+	audio_manager_->LoadSample("menu_moved.wav", *platform_);
+	audio_manager_->LoadSample("menu_select.wav", *platform_);
 }
 
 MenuManager::~MenuManager()
@@ -24,6 +26,8 @@ MenuManager::~MenuManager()
 void MenuManager::Update(const gef::SonyController* controller)
 {
 	if (controller->buttons_pressed() & gef_SONY_CTRL_DOWN) {
+		
+		audio_manager_->PlaySample(0, 0);
 		elements_[position_]->setSelected(false);
 
 		 position_ < elements_.size() - 1 ? position_++ : position_ = 0;
@@ -31,6 +35,7 @@ void MenuManager::Update(const gef::SonyController* controller)
 		elements_[position_]->setSelected(true);
 	}
 	if (controller->buttons_pressed() & gef_SONY_CTRL_UP) {
+		audio_manager_->PlaySample(0, 0);
 		elements_[position_]->setSelected(false);
 
 		position_ > 0 ? position_-- : position_ = elements_.size() - 1;
@@ -43,6 +48,7 @@ void MenuManager::Update(const gef::SonyController* controller)
 			state_manager_->quit();
 			return;
 		}
+		audio_manager_->PlaySample(1, 0);
 		state_manager_->setState(static_cast<StateManager::STATE>(elements_[position_]->getState()));
 	}
 	

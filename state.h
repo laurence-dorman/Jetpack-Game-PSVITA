@@ -8,6 +8,7 @@ namespace gef
 	class Font;
 	class Renderer3D;
 	class SonyController;
+	class AudioManager;
 }
 class Camera;
 
@@ -16,8 +17,8 @@ class State
 {
 public:
 	 State() {}
-	 State(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform) {} // 3d
-	 State(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform) {} // sprites
+	 State(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform) {} // 3d
+	 State(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform) {} // sprites
 	~State() {}
 
 	virtual void Update(float frame_time, const gef::SonyController* controller) = 0;

@@ -10,6 +10,7 @@
 #include <box2d/Box2D.h>
 #include "game_object.h"
 #include "graphics/scene.h"
+#include <audio/audio_manager.h>
 #include "model_loader.h"
 #include <system/debug_log.h>
 #include "utilities.h"
@@ -21,7 +22,7 @@ class StateManager;
 class InGameState : public State
 {
 public:
-	InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, StateManager* state_manager);
+	InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, StateManager* state_manager);
 	~InGameState();
 
 	void Update(float frame_time, const gef::SonyController* controller);
@@ -42,6 +43,7 @@ private:
 	PrimitiveBuilder* primitive_builder_;
 	gef::Platform* platform_;
 	StateManager* state_manager_;
+	gef::AudioManager* audio_manager_;
 	
 	// create the physics world
 	b2World* world_;

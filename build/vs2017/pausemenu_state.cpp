@@ -2,11 +2,12 @@
 
 #include "state_manager.h"
 
-PauseMenuState::PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, StateManager* state_manager) :
+PauseMenuState::PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager) :
 	sprite_renderer_(sprite_renderer),
 	font_(font),
 	platform_(platform),
-	state_manager_(state_manager)
+	state_manager_(state_manager),
+	audio_manager_(audio_manager)
 {
 	button_icon_ = CreateTextureFromPNG("playstation-circle-dark-icon.png", *platform_);
 }

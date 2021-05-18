@@ -7,7 +7,7 @@
 #define SKY_B 0.92f
 #define SPACE_HEIGHT 500.f
 
-InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, StateManager* state_manager) :
+InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, StateManager* state_manager) :
 	sprite_renderer_(sprite_renderer),
 	renderer_3d_(renderer_3d),
 	font_(font),
@@ -15,7 +15,8 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* 
 	world_(NULL),
 	player_(NULL),
 	platform_(platform),
-	state_manager_(state_manager)
+	state_manager_(state_manager),
+	audio_manager_(audio_manager)
 	
 {
 	// initialise primitive builder to make create some 3D geometry easier

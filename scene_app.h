@@ -40,6 +40,7 @@ private:
 	gef::SpriteRenderer* sprite_renderer_;
 	gef::Font* font_;
 	gef::InputManager* input_manager_;
+	gef::AudioManager* audio_manager_;
 
 	gef::SonyControllerInputManager* controller_manager_;
 
@@ -52,11 +53,6 @@ private:
 	//
 	gef::Renderer3D* renderer_3d_;
 	PrimitiveBuilder* primitive_builder_;
-
-
-	// audio variables
-	int sfx_id_;
-	int sfx_voice_id_;
 
 	float fps_;
 

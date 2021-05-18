@@ -2,15 +2,16 @@
 #include "system/debug_log.h"
 #include "state_manager.h"
 
-MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* font, gef::Platform* platform, StateManager* state_manager) :
+MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager) :
 	sprite_renderer_(sprite_renderer),
 	font_(font),
 	platform_(platform),
-	state_manager_(state_manager)
+	state_manager_(state_manager),
+	audio_manager_(audio_manager)
 {
 	button_icon_ = CreateTextureFromPNG("playstation-circle-dark-icon.png", *platform_);
 
-	menu_manager_ = new MenuManager(sprite_renderer_, font_, platform_, gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.35f, -1.0f), state_manager_);
+	menu_manager_ = new MenuManager(sprite_renderer_, font_, platform_, gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.35f, -1.0f), state_manager_, audio_manager_);
 
 	int button_offset = 75.f;
 
@@ -18,8 +19,6 @@ MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* fo
 	menu_manager_->addElement("HOW TO PLAY", button_offset, StateManager::STATE::HOWTOPLAYSTATE);
 	menu_manager_->addElement("SETTINGS", button_offset, StateManager::STATE::SETTINGSSTATE);
 	menu_manager_->addElement("QUIT GAME", button_offset, StateManager::STATE::QUIT);
-
-	
 }
 
 MainMenuState::~MainMenuState()
