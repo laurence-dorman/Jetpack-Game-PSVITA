@@ -18,6 +18,8 @@ MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::Font* fo
 	menu_manager_->addElement("HOW TO PLAY", button_offset, StateManager::STATE::HOWTOPLAYSTATE);
 	menu_manager_->addElement("SETTINGS", button_offset, StateManager::STATE::SETTINGSSTATE);
 	menu_manager_->addElement("QUIT GAME", button_offset, StateManager::STATE::QUIT);
+
+	
 }
 
 MainMenuState::~MainMenuState()
@@ -31,7 +33,7 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::onEnter()
 {
-	
+	platform_->set_render_target_clear_colour(gef::Colour(0.1, 0.6, 0.7, 1));
 }
 
 void MainMenuState::onExit()
@@ -45,7 +47,7 @@ void MainMenuState::Update(float frame_time, const gef::SonyController* controll
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		state_manager_->quit();
 	}
-
+	
 	menu_manager_->Update(controller);
 
 }

@@ -33,9 +33,6 @@ private:
 
 	MenuManager* menu_manager_;
 
-	//
-	// FRONTEND DECLARATIONS
-	//
 	gef::Texture* button_icon_;
 
 };
