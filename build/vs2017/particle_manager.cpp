@@ -19,7 +19,6 @@ ParticleManager::~ParticleManager()
 
 void ParticleManager::Update(float frame_time)
 {
-
 	if (player_->isThrusting()) {
 		timer_ += frame_time;
 		if (timer_ >= 0.02f) { // spawn rate =~ 0.02s
@@ -32,6 +31,7 @@ void ParticleManager::Update(float frame_time)
 	for (int i = 0; i < particles_.size(); i++) {
 		if (!particles_[i]->Update(frame_time)) {
 			particles_[i]->~Particle();
+			delete particles_[i];
 			particles_.erase(particles_.begin() + i);
 		}
 	}
