@@ -25,13 +25,6 @@ public:
 	virtual void onEnter() = 0;
 	virtual void onExit() = 0;
 
-protected:
-	enum STATE {
-		MENUSTATE =	0,
-		INGAMESTATE = 1,
-		PAUSEMENUSTATE = 2
-	};
-
 private:
 	
 };

@@ -2,7 +2,6 @@
 
 StateManager::StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera) :
     current_state_(NULL),
-    old_state_(NULL),
     states_({&mainmenu_state_, &ingame_state_, &pausemenu_state_ }),
     mainmenu_state_(sprite_renderer, font, platform, this),
     pausemenu_state_(sprite_renderer, font, platform, this),
@@ -23,7 +22,6 @@ StateManager::~StateManager()
 
 bool StateManager::Update(float frame_time, const gef::SonyController* controller)
 {
-    old_state_ = current_state_;
 
     current_state_->Update(frame_time, controller);
 
@@ -43,8 +41,8 @@ void StateManager::Render()
 
 void StateManager::setState(STATE s)
 {
-    if (old_state_) { // if old_state_ isnt null
-        old_state_->onExit(); // do onExit for that state
+    if (current_state_) { // if current_state_ isnt null
+        current_state_->onExit(); // do onExit for that state
     }
 
     current_state_ = states_[s];

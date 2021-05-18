@@ -47,7 +47,6 @@ private:
 	
 
 	State* current_state_;
-	State* old_state_;
 	gef::Platform* platform_;
 
 	gef::Font* font_;
