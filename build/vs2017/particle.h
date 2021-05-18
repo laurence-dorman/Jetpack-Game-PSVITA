@@ -8,7 +8,7 @@ class Particle : public gef::MeshInstance
 {
 public:
 
-	Particle(gef::Material* material, gef::Mesh* mesh, gef::Matrix44 transform);
+	Particle(gef::Material* material, gef::Mesh* mesh, gef::Matrix44* transform);
 	~Particle();
 
 	bool Update(float frame_time);
@@ -16,7 +16,7 @@ public:
 private:
 	gef::Material* material_;
 	gef::Mesh* mesh_;
-	gef::Matrix44 transform_;
+	gef::Matrix44* transform_;
 
 	float time_left_;
 	float time_alive_;

@@ -4,7 +4,7 @@
 
 #include "system/debug_log.h"
 
-Particle::Particle(gef::Material* material, gef::Mesh* mesh, gef::Matrix44 transform) :
+Particle::Particle(gef::Material* material, gef::Mesh* mesh, gef::Matrix44* transform) :
 	material_(material),
 	mesh_(mesh),
 	transform_(transform),
@@ -16,7 +16,7 @@ Particle::Particle(gef::Material* material, gef::Mesh* mesh, gef::Matrix44 trans
 	set_mesh(mesh_);
 	rotation_ = gef::DegToRad(rand() % (280 - 260 + 1) + 260); // set rotation to random angle between 260 and 280 deg
 
-	this->set_transform(transform);
+	this->set_transform(*transform);
 }
 
 Particle::~Particle()
@@ -26,6 +26,9 @@ Particle::~Particle()
 
 	delete material_;
 	material_ = NULL;
+
+	delete transform_;
+	transform_ = NULL;
 }
 
 bool Particle::Update(float frame_time)

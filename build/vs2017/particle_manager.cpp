@@ -15,6 +15,9 @@ ParticleManager::~ParticleManager()
 		delete p;
 	}
 	particles_.clear();
+
+	delete primitive_builder_;
+	primitive_builder_ = NULL;
 }
 
 void ParticleManager::Update(float frame_time)
@@ -23,8 +26,8 @@ void ParticleManager::Update(float frame_time)
 		timer_ += frame_time;
 		if (timer_ >= 0.02f) { // spawn rate =~ 0.02s
 			timer_ = 0.f;
-			addParticle(gef::Vector4(-0.55f, 0.f, 0.f)); // left booster
-			addParticle(gef::Vector4(0.55f, 0.f, 0.f)); // right booster
+			addParticle(&gef::Vector4(-0.55f, 0.f, 0.f)); // left booster
+			addParticle(&gef::Vector4(0.55f, 0.f, 0.f));  // right booster
 		}
 	}
 
@@ -44,17 +47,17 @@ void ParticleManager::Render(gef::Renderer3D* renderer_3d)
 	}
 }
 
-void ParticleManager::addParticle(gef::Vector4 pos)
+void ParticleManager::addParticle(gef::Vector4 *pos)
 {
 	gef::Material* particle_material = new gef::Material(); // create new material (each particle has own material)
 	particle_material->set_colour(gef::Colour(1.0f, 1.0f, 1.0f).GetABGR()); // initial colour is white
 	gef::Mesh* particle_mesh = primitive_builder_->CreateSphereMesh(0.6f, 5, 5, gef::Vector4(0.f, 0.f, 0.f), particle_material); // create sphere mesh with material
 
-	gef::Matrix44 transform; // create transform matrix that translates to pos
-	transform.SetIdentity();
-	transform.SetTranslation(pos);
+	gef::Matrix44* transform = new gef::Matrix44(); // create transform matrix that translates to pos
+	transform->SetIdentity();
+	transform->SetTranslation(*pos);
 
-	transform = transform * player_->transform(); // translates from player by pos
+	*transform = *transform * player_->transform(); // translates from player by pos
 
 	particles_.push_back(new Particle(particle_material, particle_mesh, transform));
 }

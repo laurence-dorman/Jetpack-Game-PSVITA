@@ -25,7 +25,7 @@ public:
 
 private:
 
-	void addParticle(gef::Vector4 pos);
+	void addParticle(gef::Vector4 *pos);
 
 	std::vector<Particle*> particles_;
 
