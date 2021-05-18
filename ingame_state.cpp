@@ -38,7 +38,7 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager
 	b2Vec2 gravity(0.0f, -9.81f);
 	world_ = new b2World(gravity);
 
-	player_->Init(primitive_builder_, world_, platform_);
+	player_->Init(primitive_builder_, world_, platform_, audio_manager_);
 
 	camera_->setTarget(player_);
 

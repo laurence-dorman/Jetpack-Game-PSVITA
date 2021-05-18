@@ -11,8 +11,10 @@ MenuManager::MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, 
 	state_manager_(state_manager),
 	audio_manager_(audio_manager)
 {
-	audio_manager_->LoadSample("menu_moved.wav", *platform_);
+	audio_manager_->LoadSample("menu_move.wav", *platform_);
 	audio_manager_->LoadSample("menu_select.wav", *platform_);
+	audio_manager_->LoadSample("menu_adjust.wav", *platform_);
+
 }
 
 MenuManager::~MenuManager()
@@ -34,7 +36,7 @@ void MenuManager::Update(const gef::SonyController* controller)
 
 		elements_[position_]->setSelected(true);
 	}
-	if (controller->buttons_pressed() & gef_SONY_CTRL_UP) {
+	else if (controller->buttons_pressed() & gef_SONY_CTRL_UP) {
 		audio_manager_->PlaySample(0, 0);
 		elements_[position_]->setSelected(false);
 
@@ -42,8 +44,15 @@ void MenuManager::Update(const gef::SonyController* controller)
 
 		elements_[position_]->setSelected(true);
 	}
+	else if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT) {
+		audio_manager_->PlaySample(2, 0);
 
-	if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
+	}
+	else if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT) {
+		audio_manager_->PlaySample(2, 0);
+
+	}
+	else if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
 		if (elements_[position_]->getState() == StateManager::QUIT) {
 			state_manager_->quit();
 			return;
@@ -55,7 +64,6 @@ void MenuManager::Update(const gef::SonyController* controller)
 	for (auto e : elements_) {
 		e->Update();
 	}
-	
 
 }
 

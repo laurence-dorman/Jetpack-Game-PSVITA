@@ -9,7 +9,8 @@ Player::Player() :
 	trans_anim_(NULL),
 	scene_assets_(NULL),
 	position_(0.f, 0.f),
-	thrusting_(false)
+	thrusting_(false),
+	playing_(false)
 {
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;
@@ -27,8 +28,12 @@ Player::~Player()
 	mesh_ = NULL;
 }
 
-void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Platform* platform)
+void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Platform* platform, gef::AudioManager* audio_manager)
 {
+	audio_manager_ = audio_manager;
+
+	audio_manager_->LoadSample("thruster.wav", *platform);
+
 	scene_assets_ = new gef::Scene();
 	scene_assets_ = model_loader_->LoadSceneAssets(*platform, "models/jetpack/player.scn");
 
@@ -96,6 +101,8 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 
 	// create the fixture on the rigid body
 	player_body_->CreateFixture(&player_fixture_def);
+
+	
 }
 
 void Player::Update(float dt, const gef::SonyController* controller)
@@ -122,10 +129,18 @@ void Player::Update(float dt, const gef::SonyController* controller)
 		rot_vec *= ACCELERATION_MODIFIER * dt;
 
 		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
+
+		if (!audio_manager_->sample_voice_playing(3)) {
+			audio_manager_->PlaySample(3, 1);
+		}
+		
 	}
 	else {
+
+		audio_manager_->StopPlayingSampleVoice(3);
 		thrusting_ = false;
 		rotation_ = lerpRotation(0.f, 0.07f);
+
 	}
 
 	// apply air resistance
