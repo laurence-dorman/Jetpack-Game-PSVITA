@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "primitive_builder.h"
 #include <graphics/renderer_3d.h>
+#include "graphics/mesh.h"
 
 Player::Player() :
 	player_body_(NULL),
@@ -84,9 +85,8 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 
 	// create the shape for the player
 	b2PolygonShape player_shape;
-	player_shape.SetAsBox(0.4f, 6.0f, b2Vec2(0.0f, -0.5f), 0);
-
-	//player_shape.Set(player_mesh_.mesh(), player_mesh_.mesh());
+	player_shape.SetAsBox(0.4f, 6.3f, b2Vec2(0.0f, -0.75f), 0);
+	
 
 	// create the fixture
 	b2FixtureDef player_fixture_def;
