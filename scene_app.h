@@ -7,7 +7,8 @@
 #include <graphics/mesh_instance.h>
 #include <input/input_manager.h>
 #include "state_manager.h"
-#include "Camera.h"
+#include "camera.h"
+#include "settings.h"
 
 // FRAMEWORK FORWARD DECLARATIONS
 namespace gef
@@ -41,6 +42,12 @@ private:
 	gef::Font* font_;
 	gef::InputManager* input_manager_;
 	gef::AudioManager* audio_manager_;
+
+	Settings* settings_;
+
+	int master_volume_;
+	bool b_sfx_;
+	bool b_music_;
 
 	gef::SonyControllerInputManager* controller_manager_;
 

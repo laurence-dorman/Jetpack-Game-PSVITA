@@ -9,7 +9,7 @@
 #include <audio/audio_manager.h>
 #include "load_texture.h"
 #include <vector>
-
+#include "settings.h"
 #include "menu_manager.h"
 
 class StateManager;
@@ -17,7 +17,7 @@ class StateManager;
 class PauseMenuState : public State
 {
 public:
-	PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager);
+	PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager, Settings* settings);
 	~PauseMenuState();
 
 	void Update(float frame_time, const gef::SonyController* controller);
@@ -33,11 +33,9 @@ private:
 	gef::Platform* platform_;
 	StateManager* state_manager_;
 	gef::AudioManager* audio_manager_;
+	Settings* settings_;
 
 	MenuManager* menu_manager_;
 
-	int master_volume_;
-	bool b_sfx_;
-	bool b_music_;
 };
 

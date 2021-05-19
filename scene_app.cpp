@@ -42,8 +42,14 @@ void SceneApp::Init()
 	audio_manager_ = gef::AudioManager::Create();
 	audio_manager_->SetMasterVolume(50.f);
 
+	master_volume_ = 10;
+	b_sfx_ = true;
+	b_music_ = true;
+
+	settings_ = new Settings(&master_volume_, &b_sfx_, &b_music_);
+
 	// state manager
-	state_manager_ = new StateManager(&platform_, sprite_renderer_, renderer_3d_, font_, camera_, audio_manager_);
+	state_manager_ = new StateManager(&platform_, sprite_renderer_, renderer_3d_, font_, camera_, audio_manager_, settings_);
 
 }
 

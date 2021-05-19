@@ -5,6 +5,7 @@
 #include "pausemenu_state.h"
 #include "mainsettings_state.h"
 #include "howto_state.h"
+#include "settings.h"
 
 #include <vector>
 
@@ -23,7 +24,7 @@ class Camera;
 class StateManager
 {
 public:
-	StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::AudioManager* audio_manager);
+	StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_renderer, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::AudioManager* audio_manager, Settings* settings);
 	~StateManager();
 
 	bool Update(float frame_time, const gef::SonyController* controller);
@@ -51,7 +52,8 @@ private:
 	PauseMenuState pausemenu_state_;
 	HowToState howto_state_;
 	MainSettingsState mainsettings_state_;
-	
+
+	Settings* settings_;
 
 	State* current_state_;
 	gef::Platform* platform_;
