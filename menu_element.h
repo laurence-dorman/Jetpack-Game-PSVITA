@@ -18,7 +18,7 @@ public:
 	};
 
 	MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state, TYPE type);
-	MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, TYPE type, int* slider_value);
+	MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, TYPE type, int* slider_value, int min, int max);
 	MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, TYPE type, bool* toggle);
 
 	void Render();
@@ -31,7 +31,7 @@ public:
 
 	TYPE getType() { return type_; };
 
-	void addValue(int i) { *value_ += i; if (*value_ < 0) *value_ = 0; if (*value_ > 10) *value_ = 10; };
+	void addValue(int i) { *value_ += i; if (*value_ < min_) *value_ = min_; if (*value_ > max_) *value_ = max_; };
 
 	void Toggle() { *toggle_ ? *toggle_ = false : *toggle_ = true; };
 
@@ -57,6 +57,8 @@ private:
 
 	int* value_;
 	bool* toggle_;
+
+	int min_, max_;
 
 	TYPE type_;
 };

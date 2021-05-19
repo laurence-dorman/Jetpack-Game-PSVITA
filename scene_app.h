@@ -48,6 +48,7 @@ private:
 	int master_volume_;
 	bool b_sfx_;
 	bool b_music_;
+	int difficulty_;
 
 	gef::SonyControllerInputManager* controller_manager_;
 

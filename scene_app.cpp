@@ -45,8 +45,9 @@ void SceneApp::Init()
 	master_volume_ = 5;
 	b_sfx_ = true;
 	b_music_ = true;
+	difficulty_ = 5;
 
-	settings_ = new Settings(&master_volume_, &b_sfx_, &b_music_);
+	settings_ = new Settings(&master_volume_, &b_sfx_, &b_music_, &difficulty_);
 
 	// state manager
 	state_manager_ = new StateManager(&platform_, sprite_renderer_, renderer_3d_, font_, camera_, audio_manager_, settings_);

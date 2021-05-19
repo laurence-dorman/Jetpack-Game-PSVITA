@@ -3,6 +3,7 @@
 #include <graphics/renderer_3d.h>
 #include "graphics/mesh.h"
 #include "system/debug_log.h"
+#include "settings.h"
 
 Player::Player() :
 	player_body_(NULL),
@@ -12,7 +13,7 @@ Player::Player() :
 	position_(0.f, 0.f),
 	thrusting_(false),
 	playing_(false),
-	fuel_(10.f)
+	fuel_(50.f)
 {
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;
@@ -105,7 +106,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 	
 }
 
-void Player::Update(float dt, const gef::SonyController* controller)
+void Player::Update(float dt, const gef::SonyController* controller, Settings* settings)
 {
 	// animation stuff (not using for now)
 	//if (player_) {
@@ -128,7 +129,7 @@ void Player::Update(float dt, const gef::SonyController* controller)
 		rotation_ = lerpRotation(controller->left_stick_x_axis() * -MAX_ANGLE, 0.1f);
 
 		rot_vec.Set(-sin(rotation_), cos(rotation_));
-		rot_vec *= ACCELERATION_MODIFIER * dt;
+		rot_vec *= (ACCELERATION_MODIFIER * dt) / *settings->difficulty_;
 
 		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
 
@@ -136,7 +137,7 @@ void Player::Update(float dt, const gef::SonyController* controller)
 			audio_manager_->PlaySample(3, 1);
 		}
 
-		fuel_ -= dt;
+		fuel_ -= (dt * *settings->difficulty_);
 		
 	}
 	else {
@@ -209,7 +210,7 @@ void Player::Reset()
 	playing_ = false;
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;
-	fuel_ = 10.f;
+	fuel_ = 50.f;
 	position_.Set(0.f, 6.f);
 	player_body_->SetTransform(b2Vec2(0.0f, 6.0f), 0.f);
 }

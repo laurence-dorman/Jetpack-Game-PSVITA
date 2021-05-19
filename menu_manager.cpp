@@ -130,7 +130,7 @@ void MenuManager::addElement(const char* text, float scale, float offset, int st
 	elements_.push_back(element);
 }
 
-void MenuManager::addElement(const char* text, float scale, float offset, MenuElement::TYPE type, int* slider_value)
+void MenuManager::addElement(const char* text, float scale, float offset, MenuElement::TYPE type, int* slider_value, int min, int max)
 {
 	if (strlen(text) > string_length) {
 		string_length = (int)strlen(text) * 40 * scale;
@@ -142,7 +142,7 @@ void MenuManager::addElement(const char* text, float scale, float offset, MenuEl
 
 	float position_y = pos_.y() + (elements_.size() * offset);
 
-	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, type, slider_value);
+	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, type, slider_value, min, max);
 
 	if (elements_.empty()) {
 		element->setSelected(true);

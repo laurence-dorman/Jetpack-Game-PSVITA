@@ -44,6 +44,8 @@ public:
 	void setState(STATE s);
 	void quit();
 
+	Settings* settings_;
+
 private:
 	std::vector<State*> states_;
 
@@ -52,8 +54,6 @@ private:
 	PauseMenuState pausemenu_state_;
 	HowToState howto_state_;
 	MainSettingsState mainsettings_state_;
-
-	Settings* settings_;
 
 	State* current_state_;
 	gef::Platform* platform_;

@@ -13,10 +13,12 @@
 #include "utilities.h"
 #include <audio/audio_manager.h>
 
-#define ACCELERATION_MODIFIER 200.f
+
+#define ACCELERATION_MODIFIER 1000.f
 #define MAX_ANGLE 1.047198f // 60 degrees in rad
 
 class PrimitiveBuilder;
+class Settings;
 
 namespace gef
 {
@@ -30,7 +32,7 @@ public:
 	Player();
 	~Player();
 
-	void Update(float dt, const gef::SonyController* controller);
+	void Update(float dt, const gef::SonyController* controller, Settings* settings);
 
 	void Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Platform* platform, gef::AudioManager* audio_manager);
 	void Render(gef::Renderer3D* renderer_3d);

@@ -20,7 +20,7 @@ MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float 
 	
 }
 
-MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, TYPE type, int* slider_value) :
+MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, TYPE type, int* slider_value, int min, int max) :
 	pos_(pos),
 	text_scale_(scale),
 	size_(size),
@@ -33,7 +33,9 @@ MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float 
 	big_text_scale_(text_scale_ * 1.1f),
 	type_(type),
 	toggle_(false),
-	value_(slider_value)
+	value_(slider_value),
+	min_(min),
+	max_(max)
 {
 	setSize(size);
 

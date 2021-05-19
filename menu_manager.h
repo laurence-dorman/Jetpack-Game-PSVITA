@@ -23,7 +23,7 @@ public:
 	void Reset();
 
 	void addElement(const char* text, float scale, float offset, int state, MenuElement::TYPE type);
-	void addElement(const char* text, float scale, float offset, MenuElement::TYPE type, int* slider_value);
+	void addElement(const char* text, float scale, float offset, MenuElement::TYPE type, int* slider_value, int min, int max);
 	void addElement(const char* text, float scale, float offset, MenuElement::TYPE type, bool* toggle);
 
 private:

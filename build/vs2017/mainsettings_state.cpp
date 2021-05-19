@@ -9,12 +9,13 @@ MainSettingsState::MainSettingsState(gef::SpriteRenderer* sprite_renderer, gef::
 	audio_manager_(audio_manager),
 	settings_(settings)
 {
-	menu_manager_ = new MenuManager(sprite_renderer_, font_, platform_, gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.3f, -1.0f), state_manager_, audio_manager_);
+	menu_manager_ = new MenuManager(sprite_renderer_, font_, platform_, gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.2f, -1.0f), state_manager_, audio_manager_);
 
 	float b_offset = 75.f;
 	float b_scale = 0.75f;
 
-	menu_manager_->addElement("MASTER VOLUME", b_scale, b_offset, MenuElement::SLIDER, settings_->master_volume_);
+	menu_manager_->addElement("MASTER VOLUME", b_scale, b_offset, MenuElement::SLIDER, settings_->master_volume_, 0, 10);
+	menu_manager_->addElement("DIFFICULTY", b_scale, b_offset, MenuElement::SLIDER, settings_->difficulty_, 1, 5);
 	menu_manager_->addElement("MUSIC", b_scale, b_offset, MenuElement::TOGGLE, settings_->b_music_);
 	menu_manager_->addElement("SND FX", b_scale, b_offset, MenuElement::TOGGLE, settings_->b_sfx_);
 	menu_manager_->addElement("BACK", b_scale, b_offset, StateManager::STATE::MENUSTATE, MenuElement::NORMAL);
