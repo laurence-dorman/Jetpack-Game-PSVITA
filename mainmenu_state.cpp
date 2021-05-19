@@ -9,10 +9,10 @@ MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioMan
 	audio_manager_(audio_manager)
 {
 
-	menu_manager_ = new MenuManager(sprite_renderer_, font_, platform_, gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.35f, -1.0f), state_manager_, audio_manager_);
+	menu_manager_ = new MenuManager(sprite_renderer_, font_, platform_, gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.3f, -1.0f), state_manager_, audio_manager_);
 
 	float b_offset = 75.f;
-	float b_scale = 1.0f;
+	float b_scale = 0.8f;
 
 	menu_manager_->addElement("START GAME", b_scale, b_offset, StateManager::STATE::INGAMESTATE, MenuElement::NORMAL);
 	menu_manager_->addElement("HOW TO PLAY", b_scale, b_offset, StateManager::STATE::HOWTOPLAYSTATE, MenuElement::NORMAL);

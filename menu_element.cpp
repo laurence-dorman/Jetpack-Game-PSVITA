@@ -79,7 +79,7 @@ void MenuElement::setSize(float size)
 
 void MenuElement::updateSprite(float scale, float alpha)
 {
-	float button_width = 420.f * scale * text_scale_;
+	float button_width = 500.f * scale * text_scale_;
 	float button_height = button_width * 0.15f;
 
 	gef::Colour button_colour(0.f, 0.f, 0.f, alpha);
@@ -119,7 +119,7 @@ void MenuElement::Render()
 	{
 		font_->RenderText(
 			sprite_renderer_,
-			text_pos_ + gef::Vector4((int)strlen(text_)*10, 0.f, 0.f),
+			text_pos_ + gef::Vector4((int)strlen(text_)*11, 0.f, 0.f),
 			text_scale_,
 			0xff00ff00,
 			gef::TJ_CENTRE,
