@@ -14,6 +14,7 @@ MenuManager::MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, 
 	audio_manager_->LoadSample("menu_move.wav", *platform_);
 	audio_manager_->LoadSample("menu_select.wav", *platform_);
 	audio_manager_->LoadSample("menu_adjust.wav", *platform_);
+	audio_manager_->LoadSample("thruster.wav", *platform_);
 
 }
 

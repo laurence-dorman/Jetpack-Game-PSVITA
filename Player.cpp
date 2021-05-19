@@ -34,8 +34,6 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 {
 	audio_manager_ = audio_manager;
 
-	audio_manager_->LoadSample("thruster.wav", *platform);
-
 	scene_assets_ = new gef::Scene();
 	scene_assets_ = model_loader_->LoadSceneAssets(*platform, "models/jetpack/player.scn");
 

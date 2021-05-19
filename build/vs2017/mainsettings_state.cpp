@@ -58,6 +58,7 @@ void MainSettingsState::Update(float frame_time, const gef::SonyController* cont
 	audio_manager_->SetSampleVoiceVolumeInfo(0, sfx_volume_info);
 	audio_manager_->SetSampleVoiceVolumeInfo(1, sfx_volume_info);
 	audio_manager_->SetSampleVoiceVolumeInfo(2, sfx_volume_info);
+	audio_manager_->SetSampleVoiceVolumeInfo(3, sfx_volume_info);
 }
 
 void MainSettingsState::Render()
