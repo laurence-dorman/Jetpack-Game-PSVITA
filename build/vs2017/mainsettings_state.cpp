@@ -31,6 +31,10 @@ void MainSettingsState::onExit()
 {
 }
 
+void MainSettingsState::Reset()
+{
+}
+
 void MainSettingsState::Update(float frame_time, const gef::SonyController* controller)
 {
 	menu_manager_->Update(controller);

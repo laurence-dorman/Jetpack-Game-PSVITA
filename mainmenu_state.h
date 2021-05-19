@@ -24,6 +24,7 @@ public:
 	void Render();
 	void onEnter();
 	void onExit();
+	void Reset();
 
 private:
 

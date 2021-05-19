@@ -13,6 +13,7 @@ public:
 	~Camera();
 
 	void Update(float dt);
+	void Reset();
 
 	gef::Matrix44 getProjectionMatrix() { return projection_matrix_; };
 	gef::Matrix44 getViewMatrix() { return view_matrix_; };

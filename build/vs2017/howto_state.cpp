@@ -30,6 +30,10 @@ void HowToState::onExit()
 {
 }
 
+void HowToState::Reset()
+{
+}
+
 void HowToState::Update(float frame_time, const gef::SonyController* controller)
 {
 	menu_manager_->Update(controller);

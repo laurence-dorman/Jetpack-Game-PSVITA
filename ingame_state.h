@@ -33,6 +33,7 @@ public:
 	void InitGround();
 	void UpdateSimulation(float frame_time, const gef::SonyController* controller);
 	void UpdateSky();
+	void Reset();
 
 private:
 

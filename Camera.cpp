@@ -24,6 +24,12 @@ void Camera::Update(float dt)
 	setPosition(current_position_);
 }
 
+void Camera::Reset()
+{
+	current_lookat_ = gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + 5.f, 0.f);
+	current_position_ = gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + 5.f, Z_OFFSET);
+}
+
 void Camera::UpdateTarget(float dt)
 {
 	current_lookat_.Lerp(current_lookat_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + 5.f, 0.f), 0.1f);

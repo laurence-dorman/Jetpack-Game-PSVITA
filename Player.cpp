@@ -2,6 +2,7 @@
 #include "primitive_builder.h"
 #include <graphics/renderer_3d.h>
 #include "graphics/mesh.h"
+#include "system/debug_log.h"
 
 Player::Player() :
 	player_body_(NULL),
@@ -10,7 +11,8 @@ Player::Player() :
 	scene_assets_(NULL),
 	position_(0.f, 0.f),
 	thrusting_(false),
-	playing_(false)
+	playing_(false),
+	fuel_(10.f)
 {
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;
@@ -121,7 +123,9 @@ void Player::Update(float dt, const gef::SonyController* controller)
 	//	player_->set_transform(player_transform);
 	//}
 
-	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE) {
+	gef::DebugOut("FUEL: %.2f\n", fuel_);
+
+	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE && fuel_ > 0) {
 		thrusting_ = true;
 		rotation_ = lerpRotation(controller->left_stick_x_axis() * -MAX_ANGLE, 0.1f);
 
@@ -133,6 +137,8 @@ void Player::Update(float dt, const gef::SonyController* controller)
 		if (!audio_manager_->sample_voice_playing(3)) {
 			audio_manager_->PlaySample(3, 1);
 		}
+
+		fuel_ -= dt;
 		
 	}
 	else {
@@ -196,4 +202,16 @@ b2Vec2 Player::getAirResistance(b2Vec2 vel)
 	air_resistance.x *= (player_body_->GetLinearVelocity().x > 0) ? -1.f : 1.f;
 
 	return air_resistance;
+}
+
+void Player::Reset()
+{
+	player_body_->SetLinearVelocity(b2Vec2(0.f, 0.f));
+	thrusting_ = false;
+	playing_ = false;
+	rotation_ = 0.f;
+	current_rotation_ = 0.f;
+	fuel_ = 10.f;
+	position_.Set(0.f, 6.f);
+	player_body_->SetTransform(b2Vec2(0.0f, 6.0f), 0.f);
 }

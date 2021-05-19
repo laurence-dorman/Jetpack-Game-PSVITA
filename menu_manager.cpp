@@ -45,19 +45,31 @@ void MenuManager::Update(const gef::SonyController* controller)
 		elements_[position_]->setSelected(true);
 	}
 	else if (controller->buttons_pressed() & gef_SONY_CTRL_RIGHT) {
+		// IF ELEMENT IS A SLIDER ELEMENT
+		// INCREMENT ELEMENT SLIDER INTEGER
+
 		audio_manager_->PlaySample(2, 0);
 
 	}
 	else if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT) {
+		// IF ELEMENT IS A SLIDER ELEMENT
+		// DECREMENT ELEMENT SLIDER INTEGER
+
 		audio_manager_->PlaySample(2, 0);
 
 	}
 	else if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
+		audio_manager_->PlaySample(1, 0);
+
+		// IF ELEMENT IS A TOGGLE BUTTON
+		// SWAP BOOLEAN OF TOGGLE BUTTON (IF TRUE, SET TO FALSE ETC)
+		// ELSE:
+
 		if (elements_[position_]->getState() == StateManager::QUIT) {
 			state_manager_->quit();
 			return;
 		}
-		audio_manager_->PlaySample(1, 0);
+
 		state_manager_->setState(static_cast<StateManager::STATE>(elements_[position_]->getState()));
 	}
 	

@@ -132,6 +132,12 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 				if (gameObjectA->type() == PLAYER)
 				{
 					player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);
+
+					// IF BODY B EXISTS
+					// CHECK IF BODY B IS TYPE FUEL
+					// IF TRUE, PLAYER_->ADDFUEL(5.F);
+					// DELETE FUEL OBJECT
+					
 				}
 			}
 
@@ -145,6 +151,7 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 
 			if (player)
 			{
+				
 				// take damage / play sound
 			}
 		}
@@ -163,6 +170,13 @@ void InGameState::UpdateSky()
 	//gef::DebugOut("RGB: %.6f, %.6f, %.6f\n", sky_colour_.r, sky_colour_.g, sky_colour_.b);
 
 	platform_->set_render_target_clear_colour(sky_colour_);
+}
+
+void InGameState::Reset()
+{
+	player_->Reset();
+	camera_->Reset();
+	particles_manager_->Reset();
 }
 
 void InGameState::Render()

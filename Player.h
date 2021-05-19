@@ -47,6 +47,10 @@ public:
 
 	bool isThrusting() { return thrusting_; };
 
+	void addFuel(float fuel) { fuel_ += fuel; }
+
+	void Reset();
+
 private:
 	float thrust = 0.f;
 	const float max_speed = 10.f;
@@ -78,6 +82,8 @@ private:
 	bool thrusting_;
 
 	bool playing_;
+
+	float fuel_;
 
 };
 

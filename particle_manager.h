@@ -17,6 +17,7 @@ public:
 
 	void Update(float frame_time);
 	void Render(gef::Renderer3D* renderer_3d);
+	void Reset();
 
 	void setTarget(Player* player) 
 	{

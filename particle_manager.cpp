@@ -47,6 +47,14 @@ void ParticleManager::Render(gef::Renderer3D* renderer_3d)
 	}
 }
 
+void ParticleManager::Reset()
+{
+	for (auto p : particles_) {
+		delete p;
+	}
+	particles_.clear();
+}
+
 void ParticleManager::addParticle(gef::Vector4 *pos)
 {
 	gef::Material* particle_material = new gef::Material(); // create new material (each particle has own material)

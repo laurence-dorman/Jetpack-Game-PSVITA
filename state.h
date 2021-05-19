@@ -25,6 +25,7 @@ public:
 	virtual void Render() = 0;
 	virtual void onEnter() = 0;
 	virtual void onExit() = 0;
+	virtual void Reset() = 0;
 
 private:
 	

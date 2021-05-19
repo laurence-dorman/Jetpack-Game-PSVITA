@@ -38,6 +38,8 @@ public:
 		QUIT = 5,
 	};
 
+	State* getState(int i) { return states_[i]; };
+
 	void setState(STATE s);
 	void quit();
 

@@ -33,7 +33,11 @@ void MainMenuState::onEnter()
 
 void MainMenuState::onExit()
 {
-	
+	state_manager_->getState(StateManager::STATE::INGAMESTATE)->Reset();
+}
+
+void MainMenuState::Reset()
+{
 }
 
 
