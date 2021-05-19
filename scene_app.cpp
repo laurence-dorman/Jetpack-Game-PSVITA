@@ -103,7 +103,7 @@ void SceneApp::Render()
 {
 	sprite_renderer_->Begin();
 	state_manager_->Render();
-	DrawHUD();
+	//DrawHUD();
 }
 
 
