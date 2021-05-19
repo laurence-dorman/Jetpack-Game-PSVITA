@@ -86,6 +86,12 @@ void MenuManager::Render()
 	}
 }
 
+void MenuManager::Reset()
+{
+	elements_[position_]->setSize(1.0f);
+	position_ = 0;
+}
+
 void MenuManager::addElement(const char* text, float scale, float offset, int state)
 {
 	if (strlen(text) > string_length) {

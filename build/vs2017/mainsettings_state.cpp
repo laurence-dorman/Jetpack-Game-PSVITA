@@ -25,6 +25,7 @@ MainSettingsState::~MainSettingsState()
 
 void MainSettingsState::onEnter()
 {
+	menu_manager_->Reset();
 }
 
 void MainSettingsState::onExit()

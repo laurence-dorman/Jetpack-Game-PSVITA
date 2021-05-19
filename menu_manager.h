@@ -20,6 +20,7 @@ public:
 
 	void Update(const gef::SonyController* controller);
 	void Render();
+	void Reset();
 
 	void addElement(const char* text, float scale, float offset, int state);
 

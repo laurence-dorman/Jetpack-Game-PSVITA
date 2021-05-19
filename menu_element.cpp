@@ -33,7 +33,7 @@ void MenuElement::setSize(float size)
 {
 	size_ = size;
 
-	updateSprite(1.0f, 0.5f);
+	updateSprite(size_, 0.5f);
 }
 
 void MenuElement::updateSprite(float scale, float alpha)
