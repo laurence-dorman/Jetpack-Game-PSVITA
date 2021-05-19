@@ -13,7 +13,7 @@
 class MenuElement
 {
 public:
-	MenuElement(const char* text, gef::Vector4 pos, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state);
+	MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state);
 
 	void Render();
 	void Update();
@@ -37,6 +37,7 @@ private:
 
 	const char* text_;
 	float size_;
+	float text_scale_;
 
 	bool selected_;
 };

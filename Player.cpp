@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "player.h"
 #include "primitive_builder.h"
 #include <graphics/renderer_3d.h>
 #include "graphics/mesh.h"
@@ -192,8 +192,8 @@ b2Vec2 Player::getAirResistance(b2Vec2 vel)
 	air_resistance.x = 0.5f * v_sqr.x;
 	air_resistance.y = 0.5f * v_sqr.y;
 
-	air_resistance.y *= (player_body_->GetLinearVelocity().y > 0) ? -1 : 0.2;
-	air_resistance.x *= (player_body_->GetLinearVelocity().x > 0) ? -1 : 1;
+	air_resistance.y *= (player_body_->GetLinearVelocity().y > 0) ? -1.f : 0.2f;
+	air_resistance.x *= (player_body_->GetLinearVelocity().x > 0) ? -1.f : 1.f;
 
 	return air_resistance;
 }

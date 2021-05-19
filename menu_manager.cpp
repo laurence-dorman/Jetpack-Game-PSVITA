@@ -40,7 +40,7 @@ void MenuManager::Update(const gef::SonyController* controller)
 		audio_manager_->PlaySample(0, 0);
 		elements_[position_]->setSelected(false);
 
-		position_ > 0 ? position_-- : position_ = elements_.size() - 1;
+		position_ > 0 ? position_-- : position_ = (int)elements_.size() - 1;
 
 		elements_[position_]->setSelected(true);
 	}
@@ -74,19 +74,19 @@ void MenuManager::Render()
 	}
 }
 
-void MenuManager::addElement(const char* text, float offset, int state)
+void MenuManager::addElement(const char* text, float scale, float offset, int state)
 {
 	if (strlen(text) > string_length) {
-		string_length = strlen(text);
+		string_length = (int)strlen(text) * 40.f * scale;
 
 		for (auto e: elements_) {
-			e->setSize(string_length);
+			e->setSize((float)string_length);
 		}
 	}
 
 	float position_y = pos_.y() + (elements_.size() * offset);
 
-	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), string_length, platform_, font_, sprite_renderer_, state);
+	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, state);
 
 	if (elements_.empty()) {
 		element->setSelected(true);

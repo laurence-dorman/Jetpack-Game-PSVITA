@@ -33,13 +33,13 @@
     <ClCompile Include="..\..\load_texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Camera.cpp">
+    <ClCompile Include="..\..\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\mainmenu_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Player.cpp">
+    <ClCompile Include="..\..\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\state.cpp">
@@ -95,7 +95,7 @@
     <ClInclude Include="..\..\load_texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Camera.h">
+    <ClInclude Include="..\..\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\mainmenu_state.h">
@@ -137,7 +137,7 @@
     <ClInclude Include="..\..\stars_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Player.h">
+    <ClInclude Include="..\..\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\utilities.h">

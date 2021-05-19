@@ -14,7 +14,7 @@ Particle::Particle(gef::Material* material, gef::Mesh* mesh, gef::Matrix44* tran
 {
 
 	set_mesh(mesh_);
-	rotation_ = gef::DegToRad(rand() % (280 - 260 + 1) + 260); // set rotation to random angle between 260 and 280 deg
+	rotation_ = gef::DegToRad(float(rand() % (280 - 260 + 1) + 260)); // set rotation to random angle between 260 and 280 deg
 
 	this->set_transform(*transform);
 }

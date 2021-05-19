@@ -13,12 +13,13 @@ MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioMan
 
 	menu_manager_ = new MenuManager(sprite_renderer_, font_, platform_, gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.35f, -1.0f), state_manager_, audio_manager_);
 
-	int button_offset = 75.f;
+	float b_offset = 75.f;
+	float b_scale = 1.0f;
 
-	menu_manager_->addElement("START GAME", button_offset, StateManager::STATE::INGAMESTATE);
-	menu_manager_->addElement("HOW TO PLAY", button_offset, StateManager::STATE::HOWTOPLAYSTATE);
-	menu_manager_->addElement("SETTINGS", button_offset, StateManager::STATE::SETTINGSSTATE);
-	menu_manager_->addElement("QUIT GAME", button_offset, StateManager::STATE::QUIT);
+	menu_manager_->addElement("START GAME", b_scale, b_offset, StateManager::STATE::INGAMESTATE);
+	menu_manager_->addElement("HOW TO PLAY", b_scale, b_offset, StateManager::STATE::HOWTOPLAYSTATE);
+	menu_manager_->addElement("SETTINGS", b_scale, b_offset, StateManager::STATE::SETTINGSSTATE);
+	menu_manager_->addElement("QUIT GAME", b_scale, b_offset, StateManager::STATE::QUIT);
 }
 
 MainMenuState::~MainMenuState()
@@ -32,7 +33,7 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::onEnter()
 {
-	platform_->set_render_target_clear_colour(gef::Colour(0.1, 0.6, 0.7, 1));
+	platform_->set_render_target_clear_colour(gef::Colour(0.1f, 0.6f, 0.7f, 1.f));
 }
 
 void MainMenuState::onExit()

@@ -1,7 +1,8 @@
 #include "menu_element.h"
 
-MenuElement::MenuElement(const char* text, gef::Vector4 pos, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state) :
+MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state) :
 	pos_(pos),
+	text_scale_(scale),
 	size_(size),
 	platform_(platform),
 	text_(text),
@@ -16,7 +17,7 @@ MenuElement::MenuElement(const char* text, gef::Vector4 pos, float size, gef::Pl
 void MenuElement::Update()
 {
 	if (selected_) {
-		updateSprite(1.2f, 0.8f);
+		updateSprite(1.1f, 0.8f);
 	}
 	else {
 		updateSprite(1.0f, 0.5f);
@@ -32,7 +33,7 @@ void MenuElement::setSize(float size)
 
 void MenuElement::updateSprite(float scale, float alpha)
 {
-	float button_width = size_ * 40.f * scale;
+	float button_width = size_ * scale;
 	float button_height = button_width * 0.15f;
 
 	gef::Colour button_colour(0.f, 0.f, 0.f, alpha);
@@ -53,7 +54,7 @@ void MenuElement::Render()
 	font_->RenderText(
 		sprite_renderer_,
 		text_pos_,
-		1.f,
+		text_scale_,
 		0xffffffff,
 		gef::TJ_CENTRE,
 		text_);

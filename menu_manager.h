@@ -21,7 +21,7 @@ public:
 	void Update(const gef::SonyController* controller);
 	void Render();
 
-	void addElement(const char* text, float size, int state);
+	void addElement(const char* text, float scale, float offset, int state);
 
 private:
 	gef::Font* font_;
