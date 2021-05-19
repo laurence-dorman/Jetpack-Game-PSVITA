@@ -45,8 +45,22 @@ void MainSettingsState::Reset()
 
 void MainSettingsState::Update(float frame_time, const gef::SonyController* controller)
 {
-	gef::DebugOut("MASTER VOLUME: %i\nMUSIC: %s\nSFX: %s\n", master_volume_, b_music_ ? "ON" : "OFF", b_sfx_ ? "ON" : "OFF");
+
 	menu_manager_->Update(controller);
+
+	audio_manager_->SetMasterVolume(float(master_volume_ * 10));
+
+	gef::VolumeInfo music_volume_info;
+	music_volume_info.volume = b_music_ ? 100.f : 0.f;
+
+	audio_manager_->SetMusicVolumeInfo(music_volume_info);
+
+	gef::VolumeInfo sfx_volume_info;
+	sfx_volume_info.volume = b_sfx_ ? 100.f : 0.f;
+
+	audio_manager_->SetSampleVoiceVolumeInfo(0, sfx_volume_info);
+	audio_manager_->SetSampleVoiceVolumeInfo(1, sfx_volume_info);
+	audio_manager_->SetSampleVoiceVolumeInfo(2, sfx_volume_info);
 }
 
 void MainSettingsState::Render()
