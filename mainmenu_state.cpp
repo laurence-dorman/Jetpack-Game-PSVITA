@@ -1,5 +1,4 @@
 #include "mainmenu_state.h"
-#include "system/debug_log.h"
 #include "state_manager.h"
 
 MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager) :
@@ -9,7 +8,6 @@ MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioMan
 	state_manager_(state_manager),
 	audio_manager_(audio_manager)
 {
-	button_icon_ = CreateTextureFromPNG("playstation-circle-dark-icon.png", *platform_);
 
 	menu_manager_ = new MenuManager(sprite_renderer_, font_, platform_, gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.35f, -1.0f), state_manager_, audio_manager_);
 
@@ -24,9 +22,6 @@ MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioMan
 
 MainMenuState::~MainMenuState()
 {
-	delete button_icon_;
-	button_icon_ = NULL;
-
 	delete menu_manager_;
 	menu_manager_ = NULL;
 }

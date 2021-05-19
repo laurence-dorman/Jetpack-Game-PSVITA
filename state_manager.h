@@ -3,6 +3,8 @@
 #include "mainmenu_state.h"
 #include "ingame_state.h"
 #include "pausemenu_state.h"
+#include "mainsettings_state.h"
+#include "howto_state.h"
 
 #include <vector>
 
@@ -45,6 +47,8 @@ private:
 	MainMenuState mainmenu_state_;
 	InGameState ingame_state_;
 	PauseMenuState pausemenu_state_;
+	HowToState howto_state_;
+	MainSettingsState mainsettings_state_;
 	
 
 	State* current_state_;

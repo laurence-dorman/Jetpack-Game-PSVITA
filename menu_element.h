@@ -38,6 +38,8 @@ private:
 	const char* text_;
 	float size_;
 	float text_scale_;
+	float default_text_scale_;
+	float big_text_scale_;
 
 	bool selected_;
 };

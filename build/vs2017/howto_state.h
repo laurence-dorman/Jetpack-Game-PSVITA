@@ -7,18 +7,15 @@
 #include "system/platform.h"
 #include <graphics/sprite.h>
 #include <audio/audio_manager.h>
-
 #include "load_texture.h"
 
 #include "menu_manager.h"
 
-
-
-class MainMenuState : public State
+class HowToState : public State
 {
 public:
-	MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager);
-	~MainMenuState();
+	HowToState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager);
+	~HowToState();
 
 	void Update(float frame_time, const gef::SonyController* controller);
 	void Render();

@@ -240,6 +240,8 @@
     <ClCompile Include="..\..\state.cpp" />
     <ClCompile Include="..\..\state_manager.cpp" />
     <ClCompile Include="..\..\utilities.cpp" />
+    <ClCompile Include="howto_state.cpp" />
+    <ClCompile Include="mainsettings_state.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\animation_loader.h" />
@@ -262,6 +264,8 @@
     <ClInclude Include="..\..\state.h" />
     <ClInclude Include="..\..\state_manager.h" />
     <ClInclude Include="..\..\utilities.h" />
+    <ClInclude Include="howto_state.h" />
+    <ClInclude Include="mainsettings_state.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

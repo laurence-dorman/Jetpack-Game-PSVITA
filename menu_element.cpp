@@ -9,18 +9,23 @@ MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float 
 	font_(font),
 	sprite_renderer_(sprite_renderer),
 	selected_(false),
-	state_(state)
+	state_(state),
+	default_text_scale_(text_scale_),
+	big_text_scale_(text_scale_*1.1f)
 {
 	setSize(size);
+	
 }
 
 void MenuElement::Update()
 {
 	if (selected_) {
 		updateSprite(1.1f, 0.8f);
+		text_scale_ = big_text_scale_;
 	}
 	else {
 		updateSprite(1.0f, 0.5f);
+		text_scale_ = default_text_scale_;
 	}
 }
 
@@ -33,7 +38,7 @@ void MenuElement::setSize(float size)
 
 void MenuElement::updateSprite(float scale, float alpha)
 {
-	float button_width = size_ * scale;
+	float button_width = 400.f * scale * text_scale_;
 	float button_height = button_width * 0.15f;
 
 	gef::Colour button_colour(0.f, 0.f, 0.f, alpha);

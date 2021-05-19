@@ -12,13 +12,11 @@
 
 #include "menu_manager.h"
 
-
-
-class MainMenuState : public State
+class MainSettingsState : public State
 {
 public:
-	MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager);
-	~MainMenuState();
+	MainSettingsState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager);
+	~MainSettingsState();
 
 	void Update(float frame_time, const gef::SonyController* controller);
 	void Render();
@@ -34,7 +32,5 @@ private:
 	gef::AudioManager* audio_manager_;
 
 	MenuManager* menu_manager_;
-
-
 };
 
