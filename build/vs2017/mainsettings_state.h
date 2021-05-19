@@ -8,8 +8,6 @@
 #include <graphics/sprite.h>
 #include <audio/audio_manager.h>
 
-#include "load_texture.h"
-
 #include "menu_manager.h"
 
 class MainSettingsState : public State

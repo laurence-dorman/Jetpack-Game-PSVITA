@@ -32,7 +32,7 @@ void MenuManager::Update(const gef::SonyController* controller)
 		audio_manager_->PlaySample(0, 0);
 		elements_[position_]->setSelected(false);
 
-		 position_ < elements_.size() - 1 ? position_++ : position_ = 0;
+		position_ < elements_.size() - 1 ? position_++ : position_ = 0;
 
 		elements_[position_]->setSelected(true);
 	}
@@ -126,7 +126,7 @@ void MenuManager::addElement(const char* text, float scale, float offset, int st
 	elements_.push_back(element);
 }
 
-void MenuManager::addElement(const char* text, float scale, float offset, int state, MenuElement::TYPE type, int* slider_value)
+void MenuManager::addElement(const char* text, float scale, float offset, MenuElement::TYPE type, int* slider_value)
 {
 	if (strlen(text) > string_length) {
 		string_length = (int)strlen(text) * 40 * scale;
@@ -138,7 +138,7 @@ void MenuManager::addElement(const char* text, float scale, float offset, int st
 
 	float position_y = pos_.y() + (elements_.size() * offset);
 
-	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, state, type, slider_value);
+	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, type, slider_value);
 
 	if (elements_.empty()) {
 		element->setSelected(true);
@@ -147,7 +147,7 @@ void MenuManager::addElement(const char* text, float scale, float offset, int st
 	elements_.push_back(element);
 }
 
-void MenuManager::addElement(const char* text, float scale, float offset, int state, MenuElement::TYPE type, bool* toggle)
+void MenuManager::addElement(const char* text, float scale, float offset, MenuElement::TYPE type, bool* toggle)
 {
 	if (strlen(text) > string_length) {
 		string_length = (int)strlen(text) * 40 * scale;
@@ -159,7 +159,7 @@ void MenuManager::addElement(const char* text, float scale, float offset, int st
 
 	float position_y = pos_.y() + (elements_.size() * offset);
 
-	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, state, type, toggle);
+	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, type, toggle);
 
 	if (elements_.empty()) {
 		element->setSelected(true);

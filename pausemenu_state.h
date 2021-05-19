@@ -10,6 +10,8 @@
 #include "load_texture.h"
 #include <vector>
 
+#include "menu_manager.h"
+
 class StateManager;
 
 class PauseMenuState : public State
@@ -32,6 +34,10 @@ private:
 	StateManager* state_manager_;
 	gef::AudioManager* audio_manager_;
 
-	gef::Texture* button_icon_;
+	MenuManager* menu_manager_;
+
+	int master_volume_;
+	bool b_sfx_;
+	bool b_music_;
 };
 

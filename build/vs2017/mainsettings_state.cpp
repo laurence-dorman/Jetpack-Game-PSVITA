@@ -1,6 +1,5 @@
 #include "mainsettings_state.h"
 #include "state_manager.h"
-#include <system/debug_log.h>
 
 MainSettingsState::MainSettingsState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager) :
 	sprite_renderer_(sprite_renderer),
@@ -17,9 +16,9 @@ MainSettingsState::MainSettingsState(gef::SpriteRenderer* sprite_renderer, gef::
 	float b_offset = 75.f;
 	float b_scale = 0.75f;
 
-	menu_manager_->addElement("MASTER VOLUME", b_scale, b_offset, StateManager::STATE::MENUSTATE, MenuElement::SLIDER, &master_volume_);
-	menu_manager_->addElement("MUSIC", b_scale, b_offset, StateManager::STATE::MENUSTATE, MenuElement::TOGGLE, &b_music_);
-	menu_manager_->addElement("SOUNDS", b_scale, b_offset, StateManager::STATE::MENUSTATE, MenuElement::TOGGLE, &b_sfx_);
+	menu_manager_->addElement("MASTER VOLUME", b_scale, b_offset, MenuElement::SLIDER, &master_volume_);
+	menu_manager_->addElement("MUSIC", b_scale, b_offset, MenuElement::TOGGLE, &b_music_);
+	menu_manager_->addElement("SND FX", b_scale, b_offset, MenuElement::TOGGLE, &b_sfx_);
 	menu_manager_->addElement("BACK", b_scale, b_offset, StateManager::STATE::MENUSTATE, MenuElement::NORMAL);
 
 }

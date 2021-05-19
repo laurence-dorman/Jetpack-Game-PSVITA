@@ -20,7 +20,7 @@ MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float 
 	
 }
 
-MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state, TYPE type, int* slider_value) :
+MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, TYPE type, int* slider_value) :
 	pos_(pos),
 	text_scale_(scale),
 	size_(size),
@@ -29,7 +29,6 @@ MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float 
 	font_(font),
 	sprite_renderer_(sprite_renderer),
 	selected_(false),
-	state_(state),
 	default_text_scale_(text_scale_),
 	big_text_scale_(text_scale_ * 1.1f),
 	type_(type),
@@ -40,7 +39,7 @@ MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float 
 
 }
 
-MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state, TYPE type, bool* toggle) :
+MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, TYPE type, bool* toggle) :
 	pos_(pos),
 	text_scale_(scale),
 	size_(size),
@@ -49,7 +48,6 @@ MenuElement::MenuElement(const char* text, gef::Vector4 pos, float scale, float 
 	font_(font),
 	sprite_renderer_(sprite_renderer),
 	selected_(false),
-	state_(state),
 	default_text_scale_(text_scale_),
 	big_text_scale_(text_scale_ * 1.1f),
 	type_(type),

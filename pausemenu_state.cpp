@@ -7,15 +7,28 @@ PauseMenuState::PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioM
 	font_(font),
 	platform_(platform),
 	state_manager_(state_manager),
-	audio_manager_(audio_manager)
+	audio_manager_(audio_manager),
+	master_volume_(5),
+	b_music_(true),
+	b_sfx_(true)
 {
-	button_icon_ = CreateTextureFromPNG("playstation-circle-dark-icon.png", *platform_);
+	
+	menu_manager_ = new MenuManager(sprite_renderer_, font_, platform_, gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.3f, -1.0f), state_manager_, audio_manager_);
+
+	float b_offset = 75.f;
+	float b_scale = 0.75f;
+
+	menu_manager_->addElement("RESUME GAME", b_scale, b_offset, StateManager::STATE::INGAMESTATE, MenuElement::NORMAL);
+	menu_manager_->addElement("MASTER VOLUME", b_scale, b_offset, MenuElement::SLIDER, &master_volume_);
+	menu_manager_->addElement("MUSIC", b_scale, b_offset, MenuElement::TOGGLE, &b_music_);
+	menu_manager_->addElement("SND FX", b_scale, b_offset, MenuElement::TOGGLE, &b_sfx_);
+	menu_manager_->addElement("MAIN MENU", b_scale, b_offset, StateManager::STATE::MENUSTATE, MenuElement::NORMAL);
 }
 
 PauseMenuState::~PauseMenuState()
 {
-	delete button_icon_;
-	button_icon_ = NULL;
+	delete menu_manager_;
+	menu_manager_ = NULL;
 }
 
 void PauseMenuState::onEnter()
@@ -34,48 +47,34 @@ void PauseMenuState::Reset()
 
 
 void PauseMenuState::Update(float frame_time, const gef::SonyController* controller) {
-	if (controller->buttons_pressed() & gef_SONY_CTRL_CIRCLE) {
-		
+	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) { // unpause
 		state_manager_->setState(StateManager::INGAMESTATE);
 	}
-	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
-		state_manager_->setState(StateManager::MENUSTATE);
-	}
+
+	menu_manager_->Update(controller);
+
+	audio_manager_->SetMasterVolume(float(master_volume_ * 10));
+
+	gef::VolumeInfo music_volume_info;
+	music_volume_info.volume = b_music_ ? 100.f : 0.f;
+
+	audio_manager_->SetMusicVolumeInfo(music_volume_info);
+
+	gef::VolumeInfo sfx_volume_info;
+	sfx_volume_info.volume = b_sfx_ ? 100.f : 0.f;
+
+	audio_manager_->SetSampleVoiceVolumeInfo(0, sfx_volume_info);
+	audio_manager_->SetSampleVoiceVolumeInfo(1, sfx_volume_info);
+	audio_manager_->SetSampleVoiceVolumeInfo(2, sfx_volume_info);
+	audio_manager_->SetSampleVoiceVolumeInfo(3, sfx_volume_info);
 }
 
 void PauseMenuState::Render()
 {
 	sprite_renderer_->Begin();
 
-	// render "PRESS" text
-	font_->RenderText(
-		sprite_renderer_,
-		gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.5f - 64.0f, -0.99f),
-		1.0f,
-		0xffffffff,
-		gef::TJ_CENTRE,
-		"PRESS");
-
-	// Render button icon
-	gef::Sprite button;
-	button.set_texture(button_icon_);
-	button.set_position(gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.5f, -0.99f));
-	button.set_height(32.0f);
-	button.set_width(32.0f);
-	sprite_renderer_->DrawSprite(button);
-
-
-	// render "TO START" text
-	font_->RenderText(
-		sprite_renderer_,
-		gef::Vector4(platform_->width() * 0.5f, platform_->height() * 0.5f + 16.0f, -0.99f),
-		1.0f,
-		0xffffffff,
-		gef::TJ_CENTRE,
-		"TO RESUME");
-
-
-	//DrawHUD();
+	menu_manager_->Render();
+	
 	sprite_renderer_->End();
 }
 
