@@ -13,7 +13,13 @@
 class MenuElement
 {
 public:
-	MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state);
+	enum TYPE {
+		NORMAL, TOGGLE, SLIDER
+	};
+
+	MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state, TYPE type);
+	MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state, TYPE type, int* slider_value);
+	MenuElement(const char* text, gef::Vector4 pos, float scale, float size, gef::Platform* platform, gef::Font* font, gef::SpriteRenderer* sprite_renderer, int state, TYPE type, bool* toggle);
 
 	void Render();
 	void Update();
@@ -22,6 +28,12 @@ public:
 	void setSelected(bool b) { selected_ = b; };
 
 	int getState() { return state_; };
+
+	TYPE getType() { return type_; };
+
+	void addValue(int i) { *value_ += i; if (*value_ < 0) *value_ = 0; if (*value_ > 10) *value_ = 10; };
+
+	void Toggle() { *toggle_ ? *toggle_ = false : *toggle_ = true; };
 
 private:
 	void updateSprite(float scale, float alpha);
@@ -42,5 +54,10 @@ private:
 	float big_text_scale_;
 
 	bool selected_;
+
+	int* value_;
+	bool* toggle_;
+
+	TYPE type_;
 };
 

@@ -14,10 +14,10 @@ MainMenuState::MainMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioMan
 	float b_offset = 75.f;
 	float b_scale = 1.0f;
 
-	menu_manager_->addElement("START GAME", b_scale, b_offset, StateManager::STATE::INGAMESTATE);
-	menu_manager_->addElement("HOW TO PLAY", b_scale, b_offset, StateManager::STATE::HOWTOPLAYSTATE);
-	menu_manager_->addElement("SETTINGS", b_scale, b_offset, StateManager::STATE::SETTINGSSTATE);
-	menu_manager_->addElement("QUIT GAME", b_scale, b_offset, StateManager::STATE::QUIT);
+	menu_manager_->addElement("START GAME", b_scale, b_offset, StateManager::STATE::INGAMESTATE, MenuElement::NORMAL);
+	menu_manager_->addElement("HOW TO PLAY", b_scale, b_offset, StateManager::STATE::HOWTOPLAYSTATE, MenuElement::NORMAL);
+	menu_manager_->addElement("SETTINGS", b_scale, b_offset, StateManager::STATE::SETTINGSSTATE, MenuElement::NORMAL);
+	menu_manager_->addElement("QUIT GAME", b_scale, b_offset, StateManager::STATE::QUIT, MenuElement::NORMAL);
 }
 
 MainMenuState::~MainMenuState()

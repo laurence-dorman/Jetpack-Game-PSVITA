@@ -33,5 +33,9 @@ private:
 	gef::AudioManager* audio_manager_;
 
 	MenuManager* menu_manager_;
+
+	int master_volume_;
+	bool b_sfx_;
+	bool b_music_;
 };
 

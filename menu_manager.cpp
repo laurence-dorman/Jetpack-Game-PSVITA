@@ -48,29 +48,39 @@ void MenuManager::Update(const gef::SonyController* controller)
 		// IF ELEMENT IS A SLIDER ELEMENT
 		// INCREMENT ELEMENT SLIDER INTEGER
 
-		audio_manager_->PlaySample(2, 0);
+		if (elements_[position_]->getType() == MenuElement::SLIDER) {
+			audio_manager_->PlaySample(2, 0);
+			elements_[position_]->addValue(1);
+		}
 
 	}
 	else if (controller->buttons_pressed() & gef_SONY_CTRL_LEFT) {
 		// IF ELEMENT IS A SLIDER ELEMENT
 		// DECREMENT ELEMENT SLIDER INTEGER
 
-		audio_manager_->PlaySample(2, 0);
+		if (elements_[position_]->getType() == MenuElement::SLIDER) {
+			audio_manager_->PlaySample(2, 0);
+			elements_[position_]->addValue(-1);
+		}
 
 	}
 	else if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
-		audio_manager_->PlaySample(1, 0);
-
-		// IF ELEMENT IS A TOGGLE BUTTON
-		// SWAP BOOLEAN OF TOGGLE BUTTON (IF TRUE, SET TO FALSE ETC)
-		// ELSE:
-
-		if (elements_[position_]->getState() == StateManager::QUIT) {
-			state_manager_->quit();
+		if (elements_[position_]->getType() == MenuElement::SLIDER) {
 			return;
 		}
 
-		state_manager_->setState(static_cast<StateManager::STATE>(elements_[position_]->getState()));
+		if (elements_[position_]->getType() == MenuElement::TOGGLE) {
+			audio_manager_->PlaySample(2, 0);
+			elements_[position_]->Toggle();
+		}
+		else {
+			if (elements_[position_]->getState() == StateManager::QUIT) {
+				state_manager_->quit();
+				return;
+			}
+			audio_manager_->PlaySample(1, 0);
+			state_manager_->setState(static_cast<StateManager::STATE>(elements_[position_]->getState()));
+		}
 	}
 	
 	for (auto e : elements_) {
@@ -88,14 +98,17 @@ void MenuManager::Render()
 
 void MenuManager::Reset()
 {
-	elements_[position_]->setSize(1.0f);
+	elements_[position_]->setSelected(false);
+	
 	position_ = 0;
+	elements_[position_]->setSelected(true);
+
 }
 
-void MenuManager::addElement(const char* text, float scale, float offset, int state)
+void MenuManager::addElement(const char* text, float scale, float offset, int state, MenuElement::TYPE type)
 {
 	if (strlen(text) > string_length) {
-		string_length = (int)strlen(text) * 40.f * scale;
+		string_length = (int)strlen(text) * 40 * scale;
 
 		for (auto e: elements_) {
 			e->setSize((float)string_length);
@@ -104,7 +117,49 @@ void MenuManager::addElement(const char* text, float scale, float offset, int st
 
 	float position_y = pos_.y() + (elements_.size() * offset);
 
-	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, state);
+	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, state, type);
+
+	if (elements_.empty()) {
+		element->setSelected(true);
+	}
+
+	elements_.push_back(element);
+}
+
+void MenuManager::addElement(const char* text, float scale, float offset, int state, MenuElement::TYPE type, int* slider_value)
+{
+	if (strlen(text) > string_length) {
+		string_length = (int)strlen(text) * 40 * scale;
+
+		for (auto e : elements_) {
+			e->setSize((float)string_length);
+		}
+	}
+
+	float position_y = pos_.y() + (elements_.size() * offset);
+
+	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, state, type, slider_value);
+
+	if (elements_.empty()) {
+		element->setSelected(true);
+	}
+
+	elements_.push_back(element);
+}
+
+void MenuManager::addElement(const char* text, float scale, float offset, int state, MenuElement::TYPE type, bool* toggle)
+{
+	if (strlen(text) > string_length) {
+		string_length = (int)strlen(text) * 40 * scale;
+
+		for (auto e : elements_) {
+			e->setSize((float)string_length);
+		}
+	}
+
+	float position_y = pos_.y() + (elements_.size() * offset);
+
+	MenuElement* element = new MenuElement(text, gef::Vector4(pos_.x(), position_y, pos_.z(), pos_.w()), scale, (float)string_length, platform_, font_, sprite_renderer_, state, type, toggle);
 
 	if (elements_.empty()) {
 		element->setSelected(true);

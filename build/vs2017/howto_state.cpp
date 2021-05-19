@@ -13,7 +13,7 @@ HowToState::HowToState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* 
 	float b_offset = 0.f;
 	float b_scale = 0.75f;
 
-	menu_manager_->addElement("BACK", b_scale, b_offset, StateManager::STATE::MENUSTATE);
+	menu_manager_->addElement("BACK", b_scale, b_offset, StateManager::STATE::MENUSTATE, MenuElement::NORMAL);
 }
 
 HowToState::~HowToState()
@@ -51,7 +51,7 @@ void HowToState::Render()
 		1.f,
 		0xffffffff,
 		gef::TJ_CENTRE,
-		"X TO BOOST"
+		"X TO ACTIVATE THRUSTERS"
 	);
 
 	font_->RenderText(
@@ -70,6 +70,15 @@ void HowToState::Render()
 		0xffffffff,
 		gef::TJ_CENTRE,
 		"START TO PAUSE"
+	);
+
+	font_->RenderText(
+		sprite_renderer_,
+		gef::Vector4(platform_->width() * 0.5f, 200.f, 1),
+		1.f,
+		0xffffffff,
+		gef::TJ_CENTRE,
+		"COLLECT FUEL CANISTERS"
 	);
 
 	sprite_renderer_->End();
