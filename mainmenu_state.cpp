@@ -29,7 +29,7 @@ MainMenuState::~MainMenuState()
 void MainMenuState::onEnter()
 {
 	platform_->set_render_target_clear_colour(gef::Colour(0.1f, 0.6f, 0.7f, 1.f));
-	audio_manager_->PlayMusic();
+	
 }
 
 void MainMenuState::onExit()

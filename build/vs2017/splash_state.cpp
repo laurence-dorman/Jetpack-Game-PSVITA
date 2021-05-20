@@ -24,7 +24,7 @@ void SplashState::onEnter()
 
 void SplashState::onExit()
 {
-	
+	audio_manager_->PlayMusic();
 }
 
 void SplashState::Reset()

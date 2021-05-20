@@ -52,6 +52,6 @@ void HUD::Render(gef::SpriteRenderer* sprite_renderer, gef::Font* font)
 		1.0f,
 		0xffffffff,
 		gef::TJ_RIGHT,
-		"BEST HEIGHT: %.2f", best_height_);
+		"BEST HEIGHT: %.2fm", best_height_);
 	
 }

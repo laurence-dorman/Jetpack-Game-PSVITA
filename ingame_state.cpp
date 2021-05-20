@@ -87,7 +87,7 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 	camera_->Update(frame_time);
 	particles_manager_->Update(frame_time);
 	cloud_manager_->Update(frame_time);
-	HUD_->Update(player_->getFuel(), player_->getPosition().y);
+	HUD_->Update(player_->getFuel(), (player_->getPosition().y / 10.f) - 0.957f);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		state_manager_->setState(StateManager::PAUSEMENUSTATE);
@@ -175,8 +175,6 @@ void InGameState::UpdateSky()
 	sky_colour_.g = clamp(SKY_G - (player_->getPosition().y / SPACE_HEIGHT), 0.f, SKY_G);
 	sky_colour_.b = clamp(SKY_B - (player_->getPosition().y / SPACE_HEIGHT), 0.f, SKY_B);
 
-	//gef::DebugOut("RGB: %.6f, %.6f, %.6f\n", sky_colour_.r, sky_colour_.g, sky_colour_.b);
-
 	platform_->set_render_target_clear_colour(sky_colour_);
 }
 
@@ -184,6 +182,7 @@ void InGameState::Reset()
 {
 	player_->Reset();
 	camera_->Reset();
+	cloud_manager_->Reset();
 	particles_manager_->Reset();
 }
 
