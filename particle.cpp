@@ -54,12 +54,12 @@ bool Particle::Update(float frame_time)
 	gef::Vector4 pos = transform.GetTranslation();
 	
 	gef::Matrix44 scale;
-	gef::Vector4 scale_vec(1.01f, 1.01f, 1.01f);
+	gef::Vector4 scale_vec(1.01f, 1.01f, 1.01f); // scale every iteration
 	scale.Scale(scale_vec);
 	
 	transform = transform * scale;
 	
-	transform.SetTranslation(pos);
+	transform.SetTranslation(pos); // translate back to initial pos before scaling
 
 	set_transform(transform);
 

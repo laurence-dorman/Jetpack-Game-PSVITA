@@ -13,7 +13,6 @@
 #include "menu_manager.h"
 
 
-
 class MainMenuState : public State
 {
 public:

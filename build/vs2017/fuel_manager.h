@@ -4,6 +4,9 @@
 
 #include <vector>
 
+#define SPAWN_DELTA_X 40
+#define SPAWN_DELTA_Y 35
+
 class FuelManager
 {
 public:

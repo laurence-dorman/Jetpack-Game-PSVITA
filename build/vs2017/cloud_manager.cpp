@@ -5,7 +5,7 @@ CloudManager::CloudManager(gef::Platform* platform) :
 {
 	srand(time(NULL));
 
-	spawnClouds(100);
+	spawnClouds(100); // spawn initial clouds
 }
 
 CloudManager::~CloudManager()
@@ -45,11 +45,12 @@ void CloudManager::Reset()
 void CloudManager::spawnClouds(int num)
 {
 	for (int i = 0; i < num; i++) {
+		// generate random position between values
 		float rand_x = float(rand() % (400 - (-400) + 1) + (-400));
 		float rand_y = float(rand() % 400 + 25);
 		float rand_z = float(rand() % (15 - (-50) + 1) + (-50));
 
-		Cloud* cloud = new Cloud(gef::Vector4(rand_x, rand_y, rand_z), rand() % 2 + 5, platform_);
+		Cloud* cloud = new Cloud(gef::Vector4(rand_x, rand_y, rand_z), rand() % 2 + 5, platform_); // add new cloud at the random position, with a random scaling value between 2 and 5
 		clouds_.push_back(cloud);
 	}
 }

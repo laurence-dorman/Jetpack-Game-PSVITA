@@ -34,14 +34,14 @@ public:
 	void Render();
 
 	enum STATE {
-		MENUSTATE = 0,
-		INGAMESTATE = 1,
-		PAUSEMENUSTATE = 2,
-		HOWTOPLAYSTATE = 3,
-		SETTINGSSTATE = 4,
-		SPLASHSTATE = 5,
-		GAMEOVERSTATE = 6,
-		QUIT = 7,
+		MENUSTATE,
+		INGAMESTATE,
+		PAUSEMENUSTATE,
+		HOWTOPLAYSTATE,
+		SETTINGSSTATE,
+		SPLASHSTATE,
+		GAMEOVERSTATE,
+		QUIT
 	};
 
 	State* getState(int i) { return states_[i]; };
@@ -49,11 +49,13 @@ public:
 	void setState(STATE s);
 	void quit();
 
+	// state manager will also keep the pointer to settings object, so that any state can access the settings
 	Settings* settings_;
 
 private:
-	std::vector<State*> states_;
+	std::vector<State*> states_; // vector which holds pointers to all of the states, so we can switch between them in "setState"
 
+	// states
 	MainMenuState mainmenu_state_;
 	InGameState ingame_state_;
 	PauseMenuState pausemenu_state_;
@@ -62,14 +64,7 @@ private:
 	SplashState splash_state_;
 	GameOverState gameover_state_;
 
-	State* current_state_;
-	gef::Platform* platform_;
-
-	gef::Font* font_;
-	gef::SpriteRenderer* sprite_renderer_;
-	gef::Renderer3D* renderer_3d_;
-	gef::AudioManager* audio_manager_;
-	Camera* camera_;
+	State* current_state_; // holds pointer to current state
 
 };
 

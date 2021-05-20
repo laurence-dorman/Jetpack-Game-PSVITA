@@ -57,14 +57,14 @@ void PauseMenuState::Update(float frame_time, const gef::SonyController* control
 	audio_manager_->SetMasterVolume(float(*settings_->master_volume_ * 10));
 
 	gef::VolumeInfo music_volume_info;
-	music_volume_info.volume = *settings_->b_music_ ? 100.f : 0.f;
+	music_volume_info.volume = *settings_->b_music_ ? 100.f : 0.f; // if b_music_, 100, else 0
 
 	audio_manager_->SetMusicVolumeInfo(music_volume_info);
 
 	gef::VolumeInfo sfx_volume_info;
-	sfx_volume_info.volume = *settings_->b_sfx_ ? 100.f : 0.f;
+	sfx_volume_info.volume = *settings_->b_sfx_ ? 100.f : 0.f; // if b_sfx_, 100, else 0
 
-	for (int i = 0; i < settings_->num_sfx_; i++) {
+	for (int i = 0; i < settings_->num_sfx_; i++) { // set volume of all samples 
 		audio_manager_->SetSampleVoiceVolumeInfo(i, sfx_volume_info);
 	}
 

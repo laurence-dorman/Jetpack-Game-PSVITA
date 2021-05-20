@@ -19,7 +19,7 @@ Fuel::Fuel(b2World* world, b2Vec2 pos, gef::Platform* platform) :
 		gef::DebugOut("Scene file %s failed to load\n", "models/fuel.scn");
 	}
 
-	// create a physics body for the player
+	// create a physics body for the fuel
 	b2BodyDef fuel_body_def;
 	fuel_body_def.type = b2_staticBody;
 	fuel_body_def.position = pos;
@@ -36,21 +36,18 @@ Fuel::Fuel(b2World* world, b2Vec2 pos, gef::Platform* platform) :
 	b2FixtureDef fuel_fixture_def;
 	fuel_fixture_def.shape = &fuel_shape;
 
-	fuel_fixture_def.isSensor = true;
+	fuel_fixture_def.isSensor = true; // doesnt stop the player during collision but still checks for the collision
 
 	// create the fixture on the rigid body
 	fuel_body_->CreateFixture(&fuel_fixture_def);
-	
 
 	UpdateFromSimulation(fuel_body_);
 }
 
 Fuel::~Fuel()
 {
-
 	delete scene_assets_;
 	scene_assets_ = NULL;
-
 }
 
 void Fuel::Update(float frame_time)

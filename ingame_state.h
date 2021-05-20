@@ -4,7 +4,7 @@
 #include <input/sony_controller_input_manager.h>
 #include <graphics/sprite_renderer.h>
 #include <graphics/renderer_3d.h>
-#include "Camera.h"
+#include "camera.h"
 #include "primitive_builder.h"
 #include "Player.h"
 #include <box2d/Box2D.h>

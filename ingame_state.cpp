@@ -41,6 +41,7 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager
 
 	player_->Init(primitive_builder_, world_, platform_, audio_manager_);
 
+	// pass player_ to camera for its target (it will track based on this)
 	camera_->setTarget(player_);
 
 	sky_colour_ = gef::Colour(SKY_R, SKY_G, SKY_B, 1.0f);
@@ -49,7 +50,7 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager
 
 	cloud_manager_ = new CloudManager(platform);
 
-	fuel_manager_ = new FuelManager(world_, platform, &bodies_scheduled_for_removal_);
+	fuel_manager_ = new FuelManager(world_, platform, &bodies_scheduled_for_removal_); // pass fuel manager the vector which tracks bodies scheduled for removal, so that the manager can add to it
 
 	HUD_ = new HUD();
 
@@ -96,10 +97,12 @@ void InGameState::onExit()
 
 void InGameState::Update(float frame_time, const gef::SonyController* controller)
 {
+	// destroy the box2d bodies if they are scheduled for removal
 	for (int i = 0; i < bodies_scheduled_for_removal_.size(); i++) {
 		world_->DestroyBody(bodies_scheduled_for_removal_[i]);
 	}
 
+	// clear the vector
 	bodies_scheduled_for_removal_.clear();
 
 	UpdateSimulation(frame_time, controller);
@@ -110,7 +113,7 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 	cloud_manager_->Update(frame_time);
 	fuel_manager_->Update(frame_time);
 
-	HUD_->Update(player_->getFuel(), (player_->getPosition().y / 10.f) - 0.957f);
+	HUD_->Update(player_->getFuel(), (player_->getPosition().y / 10.f) - 0.957f); // update hud based on fuel and player position
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		state_manager_->setState(StateManager::PAUSEMENUSTATE);
@@ -136,14 +139,12 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	world_->Step(timeStep, velocityIterations, positionIterations);
+	world_->Step(timeStep, velocityIterations, positionIterations); // update box2d world
 
-	// update object visuals from simulation data
+	// update player
 	player_->Update(frame_time, controller, *state_manager_->settings_->difficulty_);
 
-	height_ = player_->getPosition().y;
-
-	// don't have to update the ground visuals as it is static
+	height_ = player_->getPosition().y; // (for hud)
 
 	// collision detection
 	// get the head of the contact list
@@ -160,7 +161,6 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 			b2Body* bodyB = contact->GetFixtureB()->GetBody();
 
 			// DO COLLISION RESPONSE HERE
-			Player* player = NULL;
 
 			GameObject* gameObjectA = NULL;
 			GameObject* gameObjectB = NULL;
@@ -168,23 +168,15 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 			gameObjectA = reinterpret_cast<GameObject*>(bodyA->GetUserData().pointer);
 			gameObjectB = reinterpret_cast<GameObject*>(bodyB->GetUserData().pointer);
 
-			if (gameObjectA)
-			{
-				if (gameObjectA->type() == PLAYER)
+			if (gameObjectA) { // check that gameobjects arent null pointers
+				if (gameObjectB)
 				{
-					player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);		
-					
-				}
-			}
-
-			if (gameObjectB)
-			{
-				if (gameObjectB->type() == FUEL)
-				{
-					audio_manager_->PlaySample(4, 0);
-					fuel_manager_->spawnFuel(world_, 1, player_->getPosition());
-					player_->addFuel(50.f / *state_manager_->settings_->difficulty_);
-					player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
+					if (gameObjectA->type() == PLAYER && gameObjectB->type() == FUEL) // if player type collides with fuel type
+					{
+						audio_manager_->PlaySample(4, 0); // play sound
+						fuel_manager_->spawnFuel(world_, 1, player_->getPosition()); // spawn fuel function (removes old fuel, adds new fuel)
+						player_->addFuel(50.f / *state_manager_->settings_->difficulty_); // add fuel, amount based on difficulty
+					}
 				}
 			}
 		}
@@ -194,7 +186,7 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 	}
 }
 
-void InGameState::UpdateSky()
+void InGameState::UpdateSky() // update sky colour based on player y position, (as y increases, colour moves towards black at y = 500)
 {
 	sky_colour_.r = clamp(SKY_R - (player_->getPosition().y / SPACE_HEIGHT), 0.f, SKY_R);
 	sky_colour_.g = clamp(SKY_G - (player_->getPosition().y / SPACE_HEIGHT), 0.f, SKY_G);
@@ -203,7 +195,7 @@ void InGameState::UpdateSky()
 	platform_->set_render_target_clear_colour(sky_colour_);
 }
 
-void InGameState::Reset()
+void InGameState::Reset() // reset objects to default
 {
 	player_->Reset();
 	camera_->Reset();
@@ -226,7 +218,6 @@ void InGameState::Render()
 	//draw stars
 	stars_manager_->Render(sprite_renderer_, clamp(player_->getPosition().y / SPACE_HEIGHT, 0.f, 1.f));
 
-
 	// draw ground
 	renderer_3d_->DrawMesh(ground_);
 
@@ -244,9 +235,10 @@ void InGameState::Render()
 
 	renderer_3d_->End();
 
-	
-	sprite_renderer_->Begin(false);
+	sprite_renderer_->Begin(false); // start rendering sprites but dont clear
+
 	HUD_->Render(sprite_renderer_, font_);
+
 	sprite_renderer_->End();
 
 }

@@ -22,9 +22,11 @@ public:
 	void Render();
 	void Reset();
 
-	void addElement(const char* text, float scale, float offset, int state, MenuElement::TYPE type);
-	void addElement(const char* text, float scale, float offset, MenuElement::TYPE type, int* slider_value, int min, int max);
-	void addElement(const char* text, float scale, float offset, MenuElement::TYPE type, bool* toggle);
+	void addElement(const char* text, float scale, float offset, int state, MenuElement::TYPE type); // for normal menu element that switches gamestates when activated
+
+	// overloaded functions
+	void addElement(const char* text, float scale, float offset, MenuElement::TYPE type, int* slider_value, int min, int max); // for slider menu elements
+	void addElement(const char* text, float scale, float offset, MenuElement::TYPE type, bool* toggle); // for button toggle elements
 
 private:
 	gef::Font* font_;

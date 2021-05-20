@@ -43,13 +43,8 @@ void MainMenuState::Reset()
 
 
 void MainMenuState::Update(float frame_time, const gef::SonyController* controller) {
-
-	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
-		state_manager_->quit();
-	}
 	
 	menu_manager_->Update(controller);
-
 }
 
 void MainMenuState::Render()

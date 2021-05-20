@@ -75,25 +75,24 @@ void Player::Update(float dt, const gef::SonyController* controller, int difficu
 {
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE && fuel_ > 0) {
 		thrusting_ = true;
-		rotation_ = lerpRotation(controller->left_stick_x_axis() * -MAX_ANGLE, 0.1f);
+		rotation_ = lerpRotation(controller->left_stick_x_axis() * -MAX_ANGLE, 0.1f); // rotate based on left stick using lerp function
 
 		rot_vec.Set(-sin(rotation_), cos(rotation_));
-		rot_vec *= (ACCELERATION_MODIFIER * dt) / difficulty;
+		rot_vec *= (ACCELERATION_MODIFIER * dt) / difficulty; // set rotation vec based on rotation and scaled based on acceleration, delta time, and difficulty
 
-		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
+		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1); // apply rotation vector as impulse
 
 		if (!audio_manager_->sample_voice_playing(3)) {
 			audio_manager_->PlaySample(3, 1);
 		}
 
-		fuel_ -= (dt * difficulty);
+		fuel_ -= (dt * difficulty); // decrement fuel based on dt scaled by difficulty
 		
 	}
-	else {
-
+	else { // no longer thrusting
 		audio_manager_->StopPlayingSampleVoice(3);
 		thrusting_ = false;
-		rotation_ = lerpRotation(0.f, 0.07f);
+		rotation_ = lerpRotation(0.f, 0.07f); // reset rotation back to 0
 
 	}
 
@@ -119,14 +118,15 @@ void Player::Render(gef::Renderer3D* renderer_3d)
 	renderer_3d->DrawMesh(*this);
 }
 
-float Player::lerpRotation(float target, float time)
+float Player::lerpRotation(float target, float time) // function that sets current_rotation_ member variable based on a lerp of itself and target, and then returns the new rotation
 {
 	current_rotation_ = gef::Lerp(current_rotation_, target, time);
 	return current_rotation_;
 }
 
 b2Vec2 Player::getAirResistance(b2Vec2 vel)
-{
+{ // https://en.wikipedia.org/wiki/Drag_(physics)
+
 	b2Vec2 v_sqr;
 	v_sqr = player_body_->GetLinearVelocity();
 	v_sqr.x *= v_sqr.x;
@@ -136,7 +136,7 @@ b2Vec2 Player::getAirResistance(b2Vec2 vel)
 	air_resistance.x = 0.5f * v_sqr.x;
 	air_resistance.y = 0.5f * v_sqr.y;
 
-	air_resistance.y *= (player_body_->GetLinearVelocity().y > 0) ? -1.f : 0.2f;
+	air_resistance.y *= (player_body_->GetLinearVelocity().y > 0) ? -1.f : 0.2f; // falling speed should have less drag
 	air_resistance.x *= (player_body_->GetLinearVelocity().x > 0) ? -1.f : 1.f;
 
 	return air_resistance;

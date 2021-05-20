@@ -24,15 +24,15 @@ HUD::~HUD()
 
 void HUD::Update(float fuel, float height)
 {
-	if (height > best_height_) { best_height_ = height; };
+	if (height > best_height_) { best_height_ = height; }; // update best_height_
 
-	float time = fuel / PLAYER_MAX_FUEL;
-	colour_.Lerp(gef::Vector4(1.0f, 0.0f, 0.0f), gef::Vector4(0.0f, 1.0f, 0.0f), time);
+	float time = fuel / PLAYER_MAX_FUEL; // normalise
+	colour_.Lerp(gef::Vector4(1.0f, 0.0f, 0.0f), gef::Vector4(0.0f, 1.0f, 0.0f), time); // lerp between red and greed based on time (normalised fuel)
 
-	fuel_bar_.set_width(INITIAL_WIDTH * time);
-	fuel_bar_.set_position(gef::Vector4(INITIAL_POSITION.x() - (INITIAL_WIDTH - fuel_bar_.width()) / 2.f, INITIAL_POSITION.y(), 0.f));
+	fuel_bar_.set_width(INITIAL_WIDTH * time); // set width based on time (normalised fuel)
+	fuel_bar_.set_position(gef::Vector4(INITIAL_POSITION.x() - (INITIAL_WIDTH - fuel_bar_.width()) / 2.f, INITIAL_POSITION.y(), 0.f)); // retain position after adjusting width
 
-	fuel_bar_.set_colour(gef::Colour(colour_.x(), colour_.y(), colour_.z()).GetABGR());
+	fuel_bar_.set_colour(gef::Colour(colour_.x(), colour_.y(), colour_.z()).GetABGR()); // set colour from colour_ vector4 that we calculated
 }
 
 void HUD::Render(gef::SpriteRenderer* sprite_renderer, gef::Font* font)

@@ -22,6 +22,8 @@ public:
 
 	~State() {}
 
+	// virtual functions for new states to inherit and override
+
 	virtual void Update(float frame_time, const gef::SonyController* controller) = 0;
 	virtual void Render() = 0;
 	virtual void onEnter() = 0;

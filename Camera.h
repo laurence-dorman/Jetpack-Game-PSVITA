@@ -4,7 +4,8 @@
 #include "system/platform.h"
 #include "player.h"
 
-#define Z_OFFSET 65.f
+#define Z_OFFSET 50.f // distance away from player on z axis
+#define Y_OFFSET 5.f // distance away from player on y axis
 
 class Camera
 {
@@ -42,8 +43,6 @@ private:
 	gef::Vector4 current_position_;
 	gef::Vector4 camera_position_;
 	gef::Vector4 camera_up_;
-
-	float max_speed;
 
 	void SetupCamera();
 };

@@ -11,13 +11,7 @@ StateManager::StateManager(gef::Platform* platform, gef::SpriteRenderer* sprite_
     howto_state_(sprite_renderer, audio_manager, font, platform, this),
     mainsettings_state_(sprite_renderer, audio_manager, font, platform, this, settings),
     splash_state_(sprite_renderer, audio_manager, font, platform, this),
-    gameover_state_(sprite_renderer, audio_manager, font, platform, this),
-    platform_(platform),
-    sprite_renderer_(sprite_renderer),
-    renderer_3d_(renderer_3d),
-    font_(font),
-    camera_(camera),
-    audio_manager_(audio_manager)
+    gameover_state_(sprite_renderer, audio_manager, font, platform, this)
 {
     setState(STATE::SPLASHSTATE);
     

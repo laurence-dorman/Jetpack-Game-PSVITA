@@ -26,19 +26,19 @@ void Camera::Update(float dt)
 
 void Camera::Reset()
 {
-	current_lookat_ = gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + 5.f, 0.f);
-	current_position_ = gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + 5.f, Z_OFFSET);
+	current_lookat_ = gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + Y_OFFSET, 0.f);
+	current_position_ = gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + Y_OFFSET, Z_OFFSET);
 }
 
 void Camera::UpdateTarget(float dt)
 {
-	current_lookat_.Lerp(current_lookat_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + 5.f, 0.f), 0.1f);
-	current_position_.Lerp(current_position_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + 5.f, Z_OFFSET), 0.1f);
+	current_lookat_.Lerp(current_lookat_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + Y_OFFSET, 0.f), 0.1f); // lerp camera lookat towards target (player)
+	current_position_.Lerp(current_position_, gef::Vector4(camera_target_->getPosition().x, camera_target_->getPosition().y + Y_OFFSET, Z_OFFSET), 0.1f); // lerp camera position towards target (player)
 }
 
 void Camera::SetupCamera()
 {
-	camera_position_ = gef::Vector4(0.0f, 0.0f, Z_OFFSET);
+	camera_position_ = gef::Vector4(0.0f, Y_OFFSET, Z_OFFSET);
 	camera_up_ = gef::Vector4(0.0f, 1.0f, 0.0f);
 
 	projection_matrix_ = platform_.PerspectiveProjectionFov(fov_, aspect_ratio_, 0.1f, 100.f);

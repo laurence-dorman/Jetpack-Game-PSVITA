@@ -5,7 +5,7 @@ MenuManager::MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, 
 	sprite_renderer_(sprite_renderer),
 	font_(font),
 	platform_(platform),
-	pos_(pos),
+	pos_(pos), // position of menu
 	string_length(0),
 	position_(0),
 	state_manager_(state_manager),
@@ -29,7 +29,7 @@ void MenuManager::Update(const gef::SonyController* controller)
 		audio_manager_->PlaySample(0, 0);
 		elements_[position_]->setSelected(false);
 
-		position_ < elements_.size() - 1 ? position_++ : position_ = 0;
+		position_ < elements_.size() - 1 ? position_++ : position_ = 0; // make sure position_ is within elements_.size() bounds
 
 		elements_[position_]->setSelected(true);
 	}
@@ -37,7 +37,7 @@ void MenuManager::Update(const gef::SonyController* controller)
 		audio_manager_->PlaySample(0, 0);
 		elements_[position_]->setSelected(false);
 
-		position_ > 0 ? position_-- : position_ = (int)elements_.size() - 1;
+		position_ > 0 ? position_-- : position_ = (int)elements_.size() - 1; // make sure position_ is within elements_.size() bounds
 
 		elements_[position_]->setSelected(true);
 	}
@@ -71,7 +71,7 @@ void MenuManager::Update(const gef::SonyController* controller)
 			elements_[position_]->Toggle();
 		}
 		else {
-			if (elements_[position_]->getState() == StateManager::QUIT) {
+			if (elements_[position_]->getState() == StateManager::QUIT) { // set state to null and return (will return false to main and close application)
 				state_manager_->quit();
 				return;
 			}

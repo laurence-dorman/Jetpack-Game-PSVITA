@@ -4,7 +4,6 @@ StarsManager::StarsManager(gef::Platform* platform, int num_stars):
 	platform_(platform),
 	num_stars_(num_stars)
 {
-	// constructor
 
 	for (int i = 0; i < num_stars_; i++) {
 		gef::Sprite* star = new gef::Sprite();
@@ -16,8 +15,6 @@ StarsManager::StarsManager(gef::Platform* platform, int num_stars):
 
 		stars.push_back(star);
 	}
-
-
 }
 
 StarsManager::~StarsManager()

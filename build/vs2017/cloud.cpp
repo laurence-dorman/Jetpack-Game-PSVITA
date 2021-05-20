@@ -16,20 +16,22 @@ Cloud::Cloud(gef::Vector4 pos, int scale, gef::Platform* platform) :
 	else {
 		gef::DebugOut("Scene file %s failed to load\n", "models/cloud.scn");
 	}
+	// generate random movement direction (-1 or 1)
 	direction_ = ((rand() % 2 + 1) == 1 ? 1 : -1);
+
 
 	gef::Matrix44 cloud_transform;
 	cloud_transform.SetIdentity();
 
-	cloud_transform.SetTranslation(gef::Vector4(pos.x(), pos.y(), pos.z()));
+	cloud_transform.SetTranslation(gef::Vector4(pos.x(), pos.y(), pos.z())); // translate to pos
 
 	gef::Matrix44 scale_matrix;
-	gef::Vector4 scale_vec(scale, scale, scale);
+	gef::Vector4 scale_vec(scale, scale, scale); // scale by scale
 	scale_matrix.Scale(scale_vec);
 
 	cloud_transform = cloud_transform * scale_matrix;
 
-	cloud_transform.SetTranslation(pos);
+	cloud_transform.SetTranslation(pos); // translate back to pos
 
 	this->set_transform(cloud_transform);
 
@@ -39,14 +41,13 @@ Cloud::~Cloud()
 {
 	delete scene_assets_;
 	scene_assets_ = NULL;
-	
 }
 
 void Cloud::Update(float frame_time)
 {
 	gef::Matrix44 cloud_transform;
 	cloud_transform.SetIdentity();
-	cloud_transform.SetTranslation(gef::Vector4(direction_ * frame_time * speed_, 0.f , 0.f));
+	cloud_transform.SetTranslation(gef::Vector4(direction_ * frame_time * speed_, 0.f , 0.f)); // move in direction
 
 	pos_ = this->transform().GetTranslation();
 
