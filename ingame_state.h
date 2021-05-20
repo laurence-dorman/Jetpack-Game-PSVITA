@@ -20,6 +20,8 @@
 #include "fuel_manager.h"
 #include "hud.h"
 
+#include <vector>
+
 class StateManager;
 
 class InGameState : public State
@@ -73,6 +75,8 @@ private:
 	b2Body* ground_body_;
 
 	ModelLoader* model_loader_;
+
+	std::vector<b2Body*> bodies_scheduled_for_removal_;
 	
 };
 

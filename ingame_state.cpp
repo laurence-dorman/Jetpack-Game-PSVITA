@@ -48,7 +48,7 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager
 
 	cloud_manager_ = new CloudManager(platform);
 
-	fuel_manager_ = new FuelManager(world_, platform);
+	fuel_manager_ = new FuelManager(world_, platform, &bodies_scheduled_for_removal_);
 
 	HUD_ = new HUD();
 
@@ -95,6 +95,12 @@ void InGameState::onExit()
 
 void InGameState::Update(float frame_time, const gef::SonyController* controller)
 {
+	for (int i = 0; i < bodies_scheduled_for_removal_.size(); i++) {
+		world_->DestroyBody(bodies_scheduled_for_removal_[i]);
+	}
+
+	bodies_scheduled_for_removal_.clear();
+
 	UpdateSimulation(frame_time, controller);
 	UpdateSky();
 
@@ -107,6 +113,10 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		state_manager_->setState(StateManager::PAUSEMENUSTATE);
+	}
+
+	if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE) {
+		fuel_manager_->spawnFuel(world_, 1, player_->getPosition());
 	}
 	
 }

@@ -14,6 +14,8 @@ public:
 
 	b2Vec2 getPosition() { return position_; }
 
+	b2Body* getBody() { return fuel_body_; };
+
 private:
 	ModelLoader* model_loader_;
 	gef::Scene* scene_assets_;
@@ -21,12 +23,6 @@ private:
 	b2Vec2 position_;
 
 	b2Body* fuel_body_;
-
-	float rotation_;
-
-	b2Vec2 rot_vec;
-
-	float current_rotation_;
 
 };
 

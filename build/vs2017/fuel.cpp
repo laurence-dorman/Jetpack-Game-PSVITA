@@ -5,8 +5,7 @@
 
 Fuel::Fuel(b2World* world, b2Vec2 pos, gef::Platform* platform) :
 	position_(pos),
-	scene_assets_(NULL),
-	rotation_(0.f)
+	scene_assets_(NULL)
 {
 	set_type(FUEL);
 
@@ -28,10 +27,10 @@ Fuel::Fuel(b2World* world, b2Vec2 pos, gef::Platform* platform) :
 	fuel_body_def.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
 	fuel_body_ = world->CreateBody(&fuel_body_def);
-
-	// create the shape for the player
+	
+	// create the shape for the fuel
 	b2PolygonShape fuel_shape;
-	fuel_shape.SetAsBox(2.f, 2.f, b2Vec2(0.0f, -1.0f), 0);
+	fuel_shape.SetAsBox(3.5f, 2.f, b2Vec2(0.0f, 2.0f), 0);
 
 	// create the fixture
 	b2FixtureDef fuel_fixture_def;
@@ -45,20 +44,15 @@ Fuel::Fuel(b2World* world, b2Vec2 pos, gef::Platform* platform) :
 
 Fuel::~Fuel()
 {
+
+	delete scene_assets_;
+	scene_assets_ = NULL;
+
 }
 
 void Fuel::Update(float frame_time)
 {
-	rotation_ = frame_time;
 
-	fuel_body_->SetTransform(fuel_body_->GetPosition(), rotation_);
-	
-	gef::Matrix44 fuel_transform;
-	fuel_transform.SetIdentity();
-	
-	fuel_transform.RotationY(fuel_body_->GetAngle());
-	
-	this->set_transform(transform_ * fuel_transform);
 
 }
 
