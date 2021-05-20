@@ -115,6 +115,7 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 		state_manager_->setState(StateManager::PAUSEMENUSTATE);
 	}
 
+	// for testing
 	if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE) {
 		fuel_manager_->spawnFuel(world_, 1, player_->getPosition());
 	}
@@ -165,27 +166,25 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 			{
 				if (gameObjectA->type() == PLAYER)
 				{
-					player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);
-
-					// IF BODY B EXISTS
-					// CHECK IF BODY B IS TYPE FUEL
-					// IF TRUE, PLAYER_->ADDFUEL(5.F);
-					// DELETE FUEL OBJECT
+					player = reinterpret_cast<Player*>(bodyA->GetUserData().pointer);		
 					
 				}
 			}
 
 			if (gameObjectB)
 			{
-				if (gameObjectB->type() == PLAYER)
+				if (gameObjectB->type() == FUEL)
 				{
+					audio_manager_->PlaySample(4, 0);
+					fuel_manager_->spawnFuel(world_, 1, player_->getPosition());
+					player_->addFuel(25.f);
 					player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
 				}
 			}
 
 			if (player)
 			{
-				
+		
 				// take damage / play sound
 			}
 		}
@@ -210,6 +209,7 @@ void InGameState::Reset()
 	camera_->Reset();
 	cloud_manager_->Reset();
 	particles_manager_->Reset();
+	fuel_manager_->spawnFuel(world_, 1, player_->getPosition());
 }
 
 void InGameState::Render()

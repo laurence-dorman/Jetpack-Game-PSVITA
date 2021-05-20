@@ -36,8 +36,11 @@ Fuel::Fuel(b2World* world, b2Vec2 pos, gef::Platform* platform) :
 	b2FixtureDef fuel_fixture_def;
 	fuel_fixture_def.shape = &fuel_shape;
 
+	fuel_fixture_def.isSensor = true;
+
 	// create the fixture on the rigid body
 	fuel_body_->CreateFixture(&fuel_fixture_def);
+	
 
 	UpdateFromSimulation(fuel_body_);
 }

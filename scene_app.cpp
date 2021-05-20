@@ -43,17 +43,21 @@ void SceneApp::Init()
 	audio_manager_->SetMasterVolume(50.f);
 
 	audio_manager_->LoadMusic("music.wav", platform_);
+
 	audio_manager_->LoadSample("menu_move.wav", platform_);
 	audio_manager_->LoadSample("menu_select.wav", platform_);
 	audio_manager_->LoadSample("menu_adjust.wav", platform_);
 	audio_manager_->LoadSample("thruster.wav", platform_);
+	audio_manager_->LoadSample("fuel_collected.wav", platform_);
 
 	master_volume_ = 5;
 	b_sfx_ = true;
 	b_music_ = true;
-	difficulty_ = 2;
+	difficulty_ = 4;
 
 	settings_ = new Settings(&master_volume_, &b_sfx_, &b_music_, &difficulty_);
+
+	settings_->num_sfx_ = 5;
 
 	// state manager
 	state_manager_ = new StateManager(&platform_, sprite_renderer_, renderer_3d_, font_, camera_, audio_manager_, settings_);

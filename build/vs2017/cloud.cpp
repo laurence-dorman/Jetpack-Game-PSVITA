@@ -37,6 +37,9 @@ Cloud::Cloud(gef::Vector4 pos, int scale, gef::Platform* platform) :
 
 Cloud::~Cloud()
 {
+	delete scene_assets_;
+	scene_assets_ = NULL;
+	
 }
 
 void Cloud::Update(float frame_time)

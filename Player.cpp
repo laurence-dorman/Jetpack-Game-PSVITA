@@ -14,7 +14,7 @@ Player::Player() :
 	position_(0.f, 0.f),
 	thrusting_(false),
 	playing_(false),
-	fuel_(50.f)
+	fuel_(MAX_FUEL)
 {
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;

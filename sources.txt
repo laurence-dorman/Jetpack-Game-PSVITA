@@ -4,3 +4,4 @@ menu sfx - https://www.youtube.com/watch?v=bWxUthnVhuo
 music - https://soundimage.org/looping-music/ "TRASHY ALIENS"
 cloud model - https://sketchfab.com/3d-models/cloud-852ae741a60b44ec886fbf34bbd058f8
 fuel model - https://sketchfab.com/3d-models/jerry-can-972c63e9bc4f4ff4a760f9b23042c512
+fuel collected sfx - https://www.storyblocks.com/audio/stock/game-modern-damage-or-hit-sound-4-rt7xobzlaw8k8umgkqi.html

@@ -18,6 +18,7 @@
 
 #define ACCELERATION_MODIFIER 1000.f
 #define MAX_ANGLE 1.047198f // 60 degrees in rad
+#define MAX_FUEL 50.f
 
 class PrimitiveBuilder;
 
@@ -50,7 +51,7 @@ public:
 
 	bool isThrusting() { return thrusting_; };
 
-	void addFuel(float fuel) { fuel_ += fuel; }
+	void addFuel(float fuel) { fuel_ + fuel <= MAX_FUEL ? fuel_ += fuel : fuel_ = 50.f; }
 
 	float getFuel() { return fuel_; };
 
