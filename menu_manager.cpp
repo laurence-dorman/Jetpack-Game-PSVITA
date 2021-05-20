@@ -61,7 +61,7 @@ void MenuManager::Update(const gef::SonyController* controller)
 		}
 
 	}
-	else if (controller->buttons_pressed() & gef_SONY_CTRL_SQUARE) {
+	else if (controller->buttons_pressed() & gef_SONY_CTRL_CROSS) {
 		if (elements_[position_]->getType() == MenuElement::SLIDER) {
 			return;
 		}

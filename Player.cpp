@@ -73,7 +73,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 
 void Player::Update(float dt, const gef::SonyController* controller, int difficulty)
 {
-	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE && fuel_ > 0) {
+	if (controller->buttons_down() & gef_SONY_CTRL_CROSS && fuel_ > 0) {
 		thrusting_ = true;
 		rotation_ = lerpRotation(controller->left_stick_x_axis() * -MAX_ANGLE, 0.1f); // rotate based on left stick using lerp function
 

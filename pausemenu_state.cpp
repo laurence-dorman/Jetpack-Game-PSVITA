@@ -48,7 +48,7 @@ void PauseMenuState::Reset()
 
 
 void PauseMenuState::Update(float frame_time, const gef::SonyController* controller) {
-	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) { // unpause
+	if (controller->buttons_pressed() & gef_SONY_CTRL_START) { // unpause
 		state_manager_->setState(StateManager::INGAMESTATE);
 	}
 

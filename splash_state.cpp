@@ -35,7 +35,7 @@ void SplashState::Update(float frame_time, const gef::SonyController* controller
 {
 	time_ += frame_time;
 
-	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE || controller->buttons_down() & gef_SONY_CTRL_R2) { // skip splashscreen if user presses start or A
+	if (controller->buttons_down() & gef_SONY_CTRL_CROSS || controller->buttons_down() & gef_SONY_CTRL_START) { // skip splashscreen if user presses start or A
 		state_manager_->setState(StateManager::MENUSTATE);
 	}
 

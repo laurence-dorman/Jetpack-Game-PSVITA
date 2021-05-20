@@ -118,7 +118,7 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 
 	HUD_->Update(player_->getFuel(), (player_->getPosition().y / 10.f) - 0.957f); // update hud based on fuel and player position
 
-	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
+	if (controller->buttons_pressed() & gef_SONY_CTRL_START) {
 		state_manager_->setState(StateManager::PAUSEMENUSTATE);
 	}
 
