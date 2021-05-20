@@ -210,9 +210,17 @@
   <ItemGroup>
     <ClCompile Include="..\..\animation_loader.cpp" />
     <ClCompile Include="..\..\camera.cpp" />
+    <ClCompile Include="..\..\cloud.cpp" />
+    <ClCompile Include="..\..\cloud_manager.cpp" />
+    <ClCompile Include="..\..\fuel.cpp" />
+    <ClCompile Include="..\..\fuel_manager.cpp" />
+    <ClCompile Include="..\..\gameover_state.cpp" />
     <ClCompile Include="..\..\game_object.cpp" />
+    <ClCompile Include="..\..\howto_state.cpp" />
+    <ClCompile Include="..\..\hud.cpp" />
     <ClCompile Include="..\..\ingame_state.cpp" />
     <ClCompile Include="..\..\load_texture.cpp" />
+    <ClCompile Include="..\..\mainsettings_state.cpp" />
     <ClCompile Include="..\..\main_d3d11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">true</ExcludedFromBuild>
@@ -236,28 +244,28 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\settings.cpp" />
+    <ClCompile Include="..\..\splash_state.cpp" />
     <ClCompile Include="..\..\stars_manager.cpp" />
     <ClCompile Include="..\..\state.cpp" />
     <ClCompile Include="..\..\state_manager.cpp" />
     <ClCompile Include="..\..\utilities.cpp" />
-    <ClCompile Include="cloud.cpp" />
-    <ClCompile Include="cloud_manager.cpp" />
-    <ClCompile Include="fuel.cpp" />
-    <ClCompile Include="fuel_manager.cpp" />
-    <ClCompile Include="gameover_state.cpp" />
-    <ClCompile Include="howto_state.cpp" />
-    <ClCompile Include="hud.cpp" />
-    <ClCompile Include="mainsettings_state.cpp" />
-    <ClCompile Include="settings.cpp" />
-    <ClCompile Include="splash_state.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\animation_loader.h" />
     <ClInclude Include="..\..\camera.h" />
+    <ClInclude Include="..\..\cloud.h" />
+    <ClInclude Include="..\..\cloud_manager.h" />
+    <ClInclude Include="..\..\fuel.h" />
+    <ClInclude Include="..\..\fuel_manager.h" />
+    <ClInclude Include="..\..\gameover_state.h" />
     <ClInclude Include="..\..\game_object.h" />
+    <ClInclude Include="..\..\howto_state.h" />
+    <ClInclude Include="..\..\hud.h" />
     <ClInclude Include="..\..\ingame_state.h" />
     <ClInclude Include="..\..\load_texture.h" />
     <ClInclude Include="..\..\mainmenu_state.h" />
+    <ClInclude Include="..\..\mainsettings_state.h" />
     <ClInclude Include="..\..\menu_element.h" />
     <ClInclude Include="..\..\menu_manager.h" />
     <ClInclude Include="..\..\model_loader.h" />
@@ -268,20 +276,12 @@
     <ClInclude Include="..\..\player.h" />
     <ClInclude Include="..\..\primitive_builder.h" />
     <ClInclude Include="..\..\scene_app.h" />
+    <ClInclude Include="..\..\settings.h" />
+    <ClInclude Include="..\..\splash_state.h" />
     <ClInclude Include="..\..\stars_manager.h" />
     <ClInclude Include="..\..\state.h" />
     <ClInclude Include="..\..\state_manager.h" />
     <ClInclude Include="..\..\utilities.h" />
-    <ClInclude Include="cloud.h" />
-    <ClInclude Include="cloud_manager.h" />
-    <ClInclude Include="fuel.h" />
-    <ClInclude Include="fuel_manager.h" />
-    <ClInclude Include="gameover_state.h" />
-    <ClInclude Include="howto_state.h" />
-    <ClInclude Include="hud.h" />
-    <ClInclude Include="mainsettings_state.h" />
-    <ClInclude Include="settings.h" />
-    <ClInclude Include="splash_state.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

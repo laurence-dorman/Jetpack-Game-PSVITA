@@ -81,34 +81,34 @@
     <ClCompile Include="..\..\utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mainsettings_state.cpp">
+    <ClCompile Include="..\..\splash_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="howto_state.cpp">
+    <ClCompile Include="..\..\settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="settings.cpp">
+    <ClCompile Include="..\..\mainsettings_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cloud.cpp">
+    <ClCompile Include="..\..\hud.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cloud_manager.cpp">
+    <ClCompile Include="..\..\howto_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hud.cpp">
+    <ClCompile Include="..\..\gameover_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="splash_state.cpp">
+    <ClCompile Include="..\..\fuel_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="fuel.cpp">
+    <ClCompile Include="..\..\fuel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="fuel_manager.cpp">
+    <ClCompile Include="..\..\cloud_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameover_state.cpp">
+    <ClCompile Include="..\..\cloud.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,34 +173,34 @@
     <ClInclude Include="..\..\utilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mainsettings_state.h">
+    <ClInclude Include="..\..\cloud.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="howto_state.h">
+    <ClInclude Include="..\..\cloud_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="settings.h">
+    <ClInclude Include="..\..\fuel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cloud.h">
+    <ClInclude Include="..\..\fuel_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cloud_manager.h">
+    <ClInclude Include="..\..\gameover_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hud.h">
+    <ClInclude Include="..\..\howto_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="splash_state.h">
+    <ClInclude Include="..\..\hud.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fuel.h">
+    <ClInclude Include="..\..\mainsettings_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fuel_manager.h">
+    <ClInclude Include="..\..\settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gameover_state.h">
+    <ClInclude Include="..\..\splash_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
