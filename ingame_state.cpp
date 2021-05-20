@@ -46,6 +46,8 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager
 
 	platform_->set_render_target_clear_colour(sky_colour_);
 
+	cloud_manager_ = new CloudManager(platform);
+
 	InitGround();
 }
 
@@ -82,6 +84,7 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 
 	camera_->Update(frame_time);
 	particles_manager_->Update(frame_time);
+	cloud_manager_->Update(frame_time);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		state_manager_->setState(StateManager::PAUSEMENUSTATE);
@@ -202,6 +205,10 @@ void InGameState::Render()
 	// draw particles
 	particles_manager_->Render(renderer_3d_);
 
+	// draw clouds
+	player_->getPosition();
+	cloud_manager_->Render(renderer_3d_, gef::Vector4(player_->getPosition().x, player_->getPosition().y, 0.f));
+
 	renderer_3d_->End();
 
 	// start drawing sprites, but don't clear the frame buffer
@@ -230,7 +237,7 @@ void InGameState::SetupLights()
 void InGameState::InitGround()
 {
 	// ground dimensions
-	gef::Vector4 ground_half_dimensions(50.0f, 0.5f, 500.0f);
+	gef::Vector4 ground_half_dimensions(500.0f, 2.5f, 500.0f);
 
 	// setup the mesh for the ground
 	ground_mesh_ = primitive_builder_->CreateBoxMesh(ground_half_dimensions);

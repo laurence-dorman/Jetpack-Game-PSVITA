@@ -2,3 +2,4 @@ player model - https://sketchfab.com/3d-models/standard-low-poly-character-1a655
 jetpack thruster sfx - https://www.soundsnap.com/node/84677
 menu sfx - https://www.youtube.com/watch?v=bWxUthnVhuo
 music - https://soundimage.org/looping-music/ "TRASHY ALIENS"
+cloud model - https://sketchfab.com/3d-models/cloud-852ae741a60b44ec886fbf34bbd058f8

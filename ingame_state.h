@@ -16,6 +16,7 @@
 #include "utilities.h"
 #include "stars_manager.h"
 #include "particle_manager.h"
+#include "cloud_manager.h"
 
 class StateManager;
 
@@ -53,6 +54,8 @@ private:
 	Player* player_;
 
 	gef::Colour sky_colour_;
+
+	CloudManager* cloud_manager_;
 	
 	StarsManager* stars_manager_;
 	ParticleManager* particles_manager_;
