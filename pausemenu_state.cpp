@@ -1,6 +1,7 @@
 #include "pausemenu_state.h"
 
 #include "state_manager.h"
+#include "graphics/colour.h"
 
 PauseMenuState::PauseMenuState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Font* font, gef::Platform* platform, StateManager* state_manager, Settings* settings) :
 	sprite_renderer_(sprite_renderer),
@@ -32,7 +33,7 @@ PauseMenuState::~PauseMenuState()
 
 void PauseMenuState::onEnter()
 {
-	
+	platform_->set_render_target_clear_colour(gef::Colour(0.1f, 0.6f, 0.7f, 1.f));
 }
 
 void PauseMenuState::onExit()

@@ -100,7 +100,7 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 	world_->Step(timeStep, velocityIterations, positionIterations);
 
 	// update object visuals from simulation data
-	player_->Update(frame_time, controller, state_manager_->settings_);
+	player_->Update(frame_time, controller, *state_manager_->settings_->difficulty_);
 
 	// don't have to update the ground visuals as it is static
 

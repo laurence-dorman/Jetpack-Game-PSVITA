@@ -18,7 +18,6 @@
 #define MAX_ANGLE 1.047198f // 60 degrees in rad
 
 class PrimitiveBuilder;
-class Settings;
 
 namespace gef
 {
@@ -32,7 +31,7 @@ public:
 	Player();
 	~Player();
 
-	void Update(float dt, const gef::SonyController* controller, Settings* settings);
+	void Update(float dt, const gef::SonyController* controller, int difficulty);
 
 	void Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Platform* platform, gef::AudioManager* audio_manager);
 	void Render(gef::Renderer3D* renderer_3d);

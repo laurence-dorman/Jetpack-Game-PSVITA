@@ -3,7 +3,6 @@
 #include <graphics/renderer_3d.h>
 #include "graphics/mesh.h"
 #include "system/debug_log.h"
-#include "settings.h"
 
 Player::Player() :
 	player_body_(NULL),
@@ -106,7 +105,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 	
 }
 
-void Player::Update(float dt, const gef::SonyController* controller, Settings* settings)
+void Player::Update(float dt, const gef::SonyController* controller, int difficulty)
 {
 	// animation stuff (not using for now)
 	//if (player_) {
@@ -129,7 +128,7 @@ void Player::Update(float dt, const gef::SonyController* controller, Settings* s
 		rotation_ = lerpRotation(controller->left_stick_x_axis() * -MAX_ANGLE, 0.1f);
 
 		rot_vec.Set(-sin(rotation_), cos(rotation_));
-		rot_vec *= (ACCELERATION_MODIFIER * dt) / *settings->difficulty_;
+		rot_vec *= (ACCELERATION_MODIFIER * dt) / difficulty;
 
 		player_body_->ApplyLinearImpulseToCenter(rot_vec, 1);
 
@@ -137,7 +136,7 @@ void Player::Update(float dt, const gef::SonyController* controller, Settings* s
 			audio_manager_->PlaySample(3, 1);
 		}
 
-		fuel_ -= (dt * *settings->difficulty_);
+		fuel_ -= (dt * difficulty);
 		
 	}
 	else {
