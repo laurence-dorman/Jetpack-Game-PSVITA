@@ -12,7 +12,7 @@ public:
 	HUD();
 	~HUD();
 
-	void Update(float fuel);
+	void Update(float fuel, float height);
 	void Render(gef::SpriteRenderer* sprite_renderer, gef::Font* font);
 
 private:
@@ -20,6 +20,8 @@ private:
 	gef::Sprite fuel_bar_;
 
 	gef::Vector4 colour_;
+
+	float best_height_;
 
 };
 

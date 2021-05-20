@@ -87,7 +87,7 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 	camera_->Update(frame_time);
 	particles_manager_->Update(frame_time);
 	cloud_manager_->Update(frame_time);
-	HUD_->Update(player_->getFuel());
+	HUD_->Update(player_->getFuel(), player_->getPosition().y);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		state_manager_->setState(StateManager::PAUSEMENUSTATE);
