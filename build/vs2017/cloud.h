@@ -19,5 +19,8 @@ private:
 	ModelLoader* model_loader_;
 	gef::Scene* scene_assets_;
 	gef::Vector4 pos_;
+
+	int direction_;
+	float speed_;
 };
 

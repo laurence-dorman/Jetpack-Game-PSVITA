@@ -3,8 +3,10 @@
 
 Cloud::Cloud(gef::Vector4 pos, int scale, gef::Platform* platform) :
 	scene_assets_(NULL),
-	pos_(pos)
+	pos_(pos),
+	speed_(0.5f)
 {
+
 	scene_assets_ = new gef::Scene();
 	scene_assets_ = model_loader_->LoadSceneAssets(*platform, "models/cloud.scn");
 
@@ -14,6 +16,7 @@ Cloud::Cloud(gef::Vector4 pos, int scale, gef::Platform* platform) :
 	else {
 		gef::DebugOut("Scene file %s failed to load\n", "models/cloud.scn");
 	}
+	direction_ = ((rand() % 2 + 1) == 1 ? 1 : -1);
 
 	gef::Matrix44 cloud_transform;
 	cloud_transform.SetIdentity();
@@ -38,7 +41,15 @@ Cloud::~Cloud()
 
 void Cloud::Update(float frame_time)
 {
+	gef::Matrix44 cloud_transform;
+	cloud_transform.SetIdentity();
+	cloud_transform.SetTranslation(gef::Vector4(direction_ * frame_time * speed_, 0.f , 0.f));
+
+	pos_ = this->transform().GetTranslation();
+
+	cloud_transform = cloud_transform * this->transform();
 	
+	this->set_transform(cloud_transform);
 }
 
 void Cloud::Render(gef::Renderer3D* renderer_3d)
