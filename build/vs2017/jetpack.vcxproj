@@ -244,6 +244,7 @@
     <ClCompile Include="cloud_manager.cpp" />
     <ClCompile Include="fuel.cpp" />
     <ClCompile Include="fuel_manager.cpp" />
+    <ClCompile Include="gameover_state.cpp" />
     <ClCompile Include="howto_state.cpp" />
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="mainsettings_state.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="cloud_manager.h" />
     <ClInclude Include="fuel.h" />
     <ClInclude Include="fuel_manager.h" />
+    <ClInclude Include="gameover_state.h" />
     <ClInclude Include="howto_state.h" />
     <ClInclude Include="hud.h" />
     <ClInclude Include="mainsettings_state.h" />

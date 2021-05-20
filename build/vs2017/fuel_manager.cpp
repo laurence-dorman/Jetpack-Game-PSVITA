@@ -54,7 +54,7 @@ void FuelManager::spawnFuel(b2World* world, int num, b2Vec2 player_pos)
 	fuel_vec_.clear();
 
 	float rand_x = float(rand() % ( (int(player_pos.x) + 50) - (int(player_pos.x) - 50) + 1) + (int(player_pos.x) - 50));
-	float y = player_pos.y + 40.f;
+	float y = player_pos.y + 45.f;
 
 	Fuel* fuel = new Fuel(world, b2Vec2(rand_x, y), platform_);
 	fuel_vec_.push_back(fuel);

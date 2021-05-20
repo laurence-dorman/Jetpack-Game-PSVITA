@@ -34,6 +34,7 @@ PauseMenuState::~PauseMenuState()
 void PauseMenuState::onEnter()
 {
 	platform_->set_render_target_clear_colour(gef::Colour(0.1f, 0.6f, 0.7f, 1.f));
+	menu_manager_->Reset();
 }
 
 void PauseMenuState::onExit()

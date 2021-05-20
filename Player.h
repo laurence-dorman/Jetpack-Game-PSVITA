@@ -18,7 +18,7 @@
 
 #define ACCELERATION_MODIFIER 1000.f
 #define MAX_ANGLE 1.047198f // 60 degrees in rad
-#define MAX_FUEL 50.f
+#define MAX_FUEL 30.f
 
 class PrimitiveBuilder;
 
@@ -51,7 +51,7 @@ public:
 
 	bool isThrusting() { return thrusting_; };
 
-	void addFuel(float fuel) { fuel_ + fuel <= MAX_FUEL ? fuel_ += fuel : fuel_ = 50.f; }
+	void addFuel(float fuel) { fuel_ + fuel <= MAX_FUEL ? fuel_ += fuel : fuel_ = MAX_FUEL; }
 
 	float getFuel() { return fuel_; };
 
@@ -67,7 +67,6 @@ private:
 
 	ModelLoader* model_loader_;
 
-	//gef::MeshInstance player_mesh_;
 	gef::Scene* scene_assets_;
 
 	float rotation_;
@@ -75,11 +74,6 @@ private:
 	b2Vec2 rot_vec;
 
 	float current_rotation_;
-
-	gef::SkinnedMeshInstance* player_;
-
-	MotionClipPlayer anim_player_;
-	gef::Animation* trans_anim_;
 
 	AnimationLoader* animation_loader_;
 

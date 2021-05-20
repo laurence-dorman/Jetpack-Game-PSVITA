@@ -6,6 +6,7 @@
 #include "mainsettings_state.h"
 #include "howto_state.h"
 #include "splash_state.h"
+#include "gameover_state.h"
 
 #include "settings.h"
 
@@ -39,7 +40,8 @@ public:
 		HOWTOPLAYSTATE = 3,
 		SETTINGSSTATE = 4,
 		SPLASHSTATE = 5,
-		QUIT = 6,
+		GAMEOVERSTATE = 6,
+		QUIT = 7,
 	};
 
 	State* getState(int i) { return states_[i]; };
@@ -58,6 +60,7 @@ private:
 	HowToState howto_state_;
 	MainSettingsState mainsettings_state_;
 	SplashState splash_state_;
+	GameOverState gameover_state_;
 
 	State* current_state_;
 	gef::Platform* platform_;

@@ -77,6 +77,8 @@ private:
 	ModelLoader* model_loader_;
 
 	std::vector<b2Body*> bodies_scheduled_for_removal_;
+
+	float death_timer_;
 	
 };
 

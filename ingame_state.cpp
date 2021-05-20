@@ -16,7 +16,8 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager
 	player_(NULL),
 	platform_(platform),
 	state_manager_(state_manager),
-	audio_manager_(audio_manager)
+	audio_manager_(audio_manager),
+	death_timer_(0.f)
 	
 {
 	// initialise primitive builder to make create some 3D geometry easier
@@ -115,9 +116,14 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 		state_manager_->setState(StateManager::PAUSEMENUSTATE);
 	}
 
-	// for testing
-	if (controller->buttons_pressed() & gef_SONY_CTRL_TRIANGLE) {
-		fuel_manager_->spawnFuel(world_, 1, player_->getPosition());
+	if (player_->getFuel() <= 0.f) { // if player has no fuel, start timer, if timer >= 5.f, then game over
+		death_timer_ += frame_time;
+		if (death_timer_ >= 5.f) {
+			state_manager_->setState(StateManager::GAMEOVERSTATE);
+		}
+	}
+	else {
+		death_timer_ = 0.f;
 	}
 	
 }
@@ -180,12 +186,6 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 					player_->addFuel(50.f / *state_manager_->settings_->difficulty_);
 					player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
 				}
-			}
-
-			if (player)
-			{
-		
-				// take damage / play sound
 			}
 		}
 

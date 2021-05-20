@@ -9,7 +9,6 @@
 Player::Player() :
 	player_body_(NULL),
 	max_speed(10.f),
-	trans_anim_(NULL),
 	scene_assets_(NULL),
 	position_(0.f, 0.f),
 	thrusting_(false),
@@ -25,9 +24,6 @@ Player::~Player()
 	delete scene_assets_;
 	scene_assets_ = NULL;
 
-	delete player_;
-	player_ = NULL;
-
 	delete mesh_;
 	mesh_ = NULL;
 }
@@ -39,30 +35,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 	scene_assets_ = new gef::Scene();
 	scene_assets_ = model_loader_->LoadSceneAssets(*platform, "models/jetpack/player.scn");
 
-	/* animation stuff (not using for now)
-	//if (scene_assets_)
-	//{
-	//	//player_mesh_.set_mesh(model_loader_->GetMeshFromSceneAssets(scene_assets_));
-	//}
-	//else
-	//{
-	//	//gef::DebugOut("Scene file %s failed to load\n", "models/jetpack/player.scn");
-	//}
-
-	//scene_assets_->CreateMaterials(*platform);
-
-	//mesh_ = animation_loader_->GetMesh(scene_assets_, platform, 0);
-
-	//gef::Skeleton* skeleton = animation_loader_->GetFirstSkeleton(scene_assets_);
-
-	//if (skeleton) {
-	//	player_ = new gef::SkinnedMeshInstance(*skeleton);
-	//	anim_player_.Init(player_->bind_pose());
-	//	player_->set_mesh(mesh_);
-	//	// setup the mesh for the player
-	//	//this->set_mesh(player_->mesh());
-	//}
-	*/
+	set_type(PLAYER);
 
 	if (scene_assets_) {
 		this->set_mesh(model_loader_->GetMeshFromSceneAssets(scene_assets_));
@@ -71,15 +44,6 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 		gef::DebugOut("Scene file %s failed to load\n", "models/jetpack/player.scn");
 	}
 
-	/* animation stuff (not using for now)
-	//trans_anim_ = animation_loader_->LoadAnimation("models/player/player@transition.scn", "", platform);
-
-	//if (trans_anim_) {
-	//	anim_player_.set_clip(trans_anim_);
-	//	anim_player_.set_looping(true);
-	//	anim_player_.set_anim_time(0.0f);
-	//}
-	*/
 
 	// create a physics body for the player
 	b2BodyDef player_body_def;
@@ -109,20 +73,6 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 
 void Player::Update(float dt, const gef::SonyController* controller, int difficulty)
 {
-	// animation stuff (not using for now)
-	//if (player_) {
-	//	anim_player_.Update(dt, player_->bind_pose());
-	//
-	//	player_->UpdateBoneMatrices(anim_player_.pose());
-	//
-
-	//if (player_)
-	//{
-	//	gef::Matrix44 player_transform;
-	//	player_transform.SetIdentity();
-	//	player_->set_transform(player_transform);
-	//}
-
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE && fuel_ > 0) {
 		thrusting_ = true;
 		rotation_ = lerpRotation(controller->left_stick_x_axis() * -MAX_ANGLE, 0.1f);
@@ -150,10 +100,6 @@ void Player::Update(float dt, const gef::SonyController* controller, int difficu
 	// apply air resistance
 	player_body_->ApplyForceToCenter(getAirResistance(player_body_->GetLinearVelocity()), 1);
 
-	//gef::DebugOut("Velocity: (%.1f, %.1f)\n", player_body_->GetLinearVelocity().x, player_body_->GetLinearVelocity().y);
-	//gef::DebugOut("Position: (%.1f, %.1f)\n", player_body_->GetPosition().x, player_body_->GetPosition().y);
-	//gef::DebugOut("Rotation: %.2f\n", gef::RadToDeg(rotation_));
-
 	player_body_->SetTransform(player_body_->GetPosition(), rotation_);
 
 	gef::Matrix44 player_transform;
@@ -171,12 +117,6 @@ void Player::Update(float dt, const gef::SonyController* controller, int difficu
 void Player::Render(gef::Renderer3D* renderer_3d)
 {
 	renderer_3d->DrawMesh(*this);
-
-	//animation stuff(not using for now)
-	//if (player_) {
-	//	renderer_3d->DrawSkinnedMesh(*player_, player_->bone_matrices());
-	//}
-		
 }
 
 float Player::lerpRotation(float target, float time)
@@ -209,7 +149,7 @@ void Player::Reset()
 	playing_ = false;
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;
-	fuel_ = 50.f;
+	fuel_ = MAX_FUEL;
 	position_.Set(INITIAL_POS);
 	player_body_->SetTransform(b2Vec2(INITIAL_POS), 0.f);
 }

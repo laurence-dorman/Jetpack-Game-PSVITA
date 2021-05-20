@@ -3,6 +3,7 @@
 
 #define INITIAL_WIDTH 365.f
 #define INITIAL_POSITION gef::Vector4(365.f, 504.f, 0.f)
+#define PLAYER_MAX_FUEL 30.f
 
 HUD::HUD() :
 	best_height_(0.f)
@@ -25,7 +26,7 @@ void HUD::Update(float fuel, float height)
 {
 	if (height > best_height_) { best_height_ = height; };
 
-	float time = fuel / 50.f;
+	float time = fuel / PLAYER_MAX_FUEL;
 	colour_.Lerp(gef::Vector4(1.0f, 0.0f, 0.0f), gef::Vector4(0.0f, 1.0f, 0.0f), time);
 
 	fuel_bar_.set_width(INITIAL_WIDTH * time);
