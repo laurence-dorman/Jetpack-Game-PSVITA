@@ -50,6 +50,8 @@ public:
 
 	void addFuel(float fuel) { fuel_ += fuel; }
 
+	float getFuel() { return fuel_; };
+
 	void Reset();
 
 private:

@@ -17,6 +17,7 @@
 #include "stars_manager.h"
 #include "particle_manager.h"
 #include "cloud_manager.h"
+#include "hud.h"
 
 class StateManager;
 
@@ -46,12 +47,16 @@ private:
 	gef::Platform* platform_;
 	StateManager* state_manager_;
 	gef::AudioManager* audio_manager_;
+
+	HUD* HUD_;
 	
 	// create the physics world
 	b2World* world_;
 
 	// player variables
 	Player* player_;
+
+	float height_;
 
 	gef::Colour sky_colour_;
 

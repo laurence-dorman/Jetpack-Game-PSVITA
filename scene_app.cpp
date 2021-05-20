@@ -102,9 +102,9 @@ bool SceneApp::Update(float frame_time)
 
 void SceneApp::Render()
 {
-	sprite_renderer_->Begin();
+	
 	state_manager_->Render();
-	//DrawHUD();
+	
 }
 
 
@@ -127,5 +127,5 @@ void SceneApp::DrawHUD()
 		// display frame rate
 		font_->RenderText(sprite_renderer_, gef::Vector4(5.0f, 5.0f, -0.9f), 0.75f, 0xffffffff, gef::TJ_LEFT, "FPS: %.1f",  fps_);
 	}
-	sprite_renderer_->End();
+	
 }

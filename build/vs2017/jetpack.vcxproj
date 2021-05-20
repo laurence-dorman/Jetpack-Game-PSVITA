@@ -243,6 +243,7 @@
     <ClCompile Include="cloud.cpp" />
     <ClCompile Include="cloud_manager.cpp" />
     <ClCompile Include="howto_state.cpp" />
+    <ClCompile Include="hud.cpp" />
     <ClCompile Include="mainsettings_state.cpp" />
     <ClCompile Include="settings.cpp" />
   </ItemGroup>
@@ -270,6 +271,7 @@
     <ClInclude Include="cloud.h" />
     <ClInclude Include="cloud_manager.h" />
     <ClInclude Include="howto_state.h" />
+    <ClInclude Include="hud.h" />
     <ClInclude Include="mainsettings_state.h" />
     <ClInclude Include="settings.h" />
   </ItemGroup>

@@ -48,6 +48,8 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager
 
 	cloud_manager_ = new CloudManager(platform);
 
+	HUD_ = new HUD();
+
 	InitGround();
 }
 
@@ -85,6 +87,7 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 	camera_->Update(frame_time);
 	particles_manager_->Update(frame_time);
 	cloud_manager_->Update(frame_time);
+	HUD_->Update(player_->getFuel());
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
 		state_manager_->setState(StateManager::PAUSEMENUSTATE);
@@ -104,6 +107,8 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 
 	// update object visuals from simulation data
 	player_->Update(frame_time, controller, *state_manager_->settings_->difficulty_);
+
+	height_ = player_->getPosition().y;
 
 	// don't have to update the ground visuals as it is static
 
@@ -190,11 +195,15 @@ void InGameState::Render()
 	// view
 	renderer_3d_->set_view_matrix(camera_->getViewMatrix());
 
+	
+	
+
 	// draw 3d geometry
 	renderer_3d_->Begin();
 
 	//draw stars
 	stars_manager_->Render(sprite_renderer_, clamp(player_->getPosition().y / SPACE_HEIGHT, 0.f, 1.f));
+
 
 	// draw ground
 	renderer_3d_->DrawMesh(ground_);
@@ -206,15 +215,16 @@ void InGameState::Render()
 	particles_manager_->Render(renderer_3d_);
 
 	// draw clouds
-	player_->getPosition();
 	cloud_manager_->Render(renderer_3d_, gef::Vector4(player_->getPosition().x, player_->getPosition().y, 0.f));
 
 	renderer_3d_->End();
 
-	// start drawing sprites, but don't clear the frame buffer
+	
 	sprite_renderer_->Begin(false);
-	//DrawHUD();
+	HUD_->Render(sprite_renderer_, font_);
 	sprite_renderer_->End();
+
+	
 }
 
 
