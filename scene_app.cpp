@@ -42,6 +42,12 @@ void SceneApp::Init()
 	audio_manager_ = gef::AudioManager::Create();
 	audio_manager_->SetMasterVolume(50.f);
 
+	audio_manager_->LoadMusic("music.wav", platform_);
+	audio_manager_->LoadSample("menu_move.wav", platform_);
+	audio_manager_->LoadSample("menu_select.wav", platform_);
+	audio_manager_->LoadSample("menu_adjust.wav", platform_);
+	audio_manager_->LoadSample("thruster.wav", platform_);
+
 	master_volume_ = 5;
 	b_sfx_ = true;
 	b_music_ = true;

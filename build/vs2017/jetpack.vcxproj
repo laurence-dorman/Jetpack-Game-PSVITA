@@ -246,6 +246,7 @@
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="mainsettings_state.cpp" />
     <ClCompile Include="settings.cpp" />
+    <ClCompile Include="splash_state.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\animation_loader.h" />
@@ -274,6 +275,7 @@
     <ClInclude Include="hud.h" />
     <ClInclude Include="mainsettings_state.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="splash_state.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

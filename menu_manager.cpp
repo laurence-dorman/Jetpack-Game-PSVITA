@@ -11,13 +11,6 @@ MenuManager::MenuManager(gef::SpriteRenderer* sprite_renderer, gef::Font* font, 
 	state_manager_(state_manager),
 	audio_manager_(audio_manager)
 {
-	audio_manager_->LoadSample("menu_move.wav", *platform_);
-	audio_manager_->LoadSample("menu_select.wav", *platform_);
-	audio_manager_->LoadSample("menu_adjust.wav", *platform_);
-	audio_manager_->LoadSample("thruster.wav", *platform_);
-
-	audio_manager_->LoadMusic("music.wav", *platform_);
-	audio_manager_->PlayMusic();
 
 }
 
@@ -112,7 +105,7 @@ void MenuManager::Reset()
 void MenuManager::addElement(const char* text, float scale, float offset, int state, MenuElement::TYPE type)
 {
 	if (strlen(text) > string_length) {
-		string_length = (int)strlen(text) * 40 * scale;
+		string_length = (int)strlen(text) * 40 * (int)scale;
 
 		for (auto e: elements_) {
 			e->setSize((float)string_length);
@@ -133,7 +126,7 @@ void MenuManager::addElement(const char* text, float scale, float offset, int st
 void MenuManager::addElement(const char* text, float scale, float offset, MenuElement::TYPE type, int* slider_value, int min, int max)
 {
 	if (strlen(text) > string_length) {
-		string_length = (int)strlen(text) * 40 * scale;
+		string_length = (int)strlen(text) * 40 * (int)scale;
 
 		for (auto e : elements_) {
 			e->setSize((float)string_length);
@@ -154,7 +147,7 @@ void MenuManager::addElement(const char* text, float scale, float offset, MenuEl
 void MenuManager::addElement(const char* text, float scale, float offset, MenuElement::TYPE type, bool* toggle)
 {
 	if (strlen(text) > string_length) {
-		string_length = (int)strlen(text) * 40 * scale;
+		string_length = (int)strlen(text) * 40 * (int)scale;
 
 		for (auto e : elements_) {
 			e->setSize((float)string_length);

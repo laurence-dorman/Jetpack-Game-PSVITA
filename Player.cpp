@@ -2,7 +2,6 @@
 #include "primitive_builder.h"
 #include <graphics/renderer_3d.h>
 #include "graphics/mesh.h"
-#include "system/debug_log.h"
 
 Player::Player() :
 	player_body_(NULL),
@@ -120,8 +119,6 @@ void Player::Update(float dt, const gef::SonyController* controller, int difficu
 	//	player_transform.SetIdentity();
 	//	player_->set_transform(player_transform);
 	//}
-
-	gef::DebugOut("FUEL: %.2f\n", fuel_);
 
 	if (controller->buttons_down() & gef_SONY_CTRL_SQUARE && fuel_ > 0) {
 		thrusting_ = true;

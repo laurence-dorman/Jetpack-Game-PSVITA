@@ -5,6 +5,8 @@
 #include "pausemenu_state.h"
 #include "mainsettings_state.h"
 #include "howto_state.h"
+#include "splash_state.h"
+
 #include "settings.h"
 
 #include <vector>
@@ -36,7 +38,8 @@ public:
 		PAUSEMENUSTATE = 2,
 		HOWTOPLAYSTATE = 3,
 		SETTINGSSTATE = 4,
-		QUIT = 5,
+		SPLASHSTATE = 5,
+		QUIT = 6,
 	};
 
 	State* getState(int i) { return states_[i]; };
@@ -54,6 +57,7 @@ private:
 	PauseMenuState pausemenu_state_;
 	HowToState howto_state_;
 	MainSettingsState mainsettings_state_;
+	SplashState splash_state_;
 
 	State* current_state_;
 	gef::Platform* platform_;

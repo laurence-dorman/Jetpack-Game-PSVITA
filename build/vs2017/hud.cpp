@@ -23,7 +23,7 @@ HUD::~HUD()
 
 void HUD::Update(float fuel, float height)
 {
-	height > best_height_ ? best_height_ = height : best_height_ = best_height_;
+	if (height > best_height_) { best_height_ = height; };
 
 	float time = fuel / 50.f;
 	colour_.Lerp(gef::Vector4(1.0f, 0.0f, 0.0f), gef::Vector4(0.0f, 1.0f, 0.0f), time);
