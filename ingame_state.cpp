@@ -7,6 +7,9 @@
 #define SKY_B 0.92f
 #define SPACE_HEIGHT 500.f
 
+// Level 1 is the clouds region, y < 500, you have to collect the fuel to progress, but the clouds may obscure your vision of the fuel.
+// Level 2 of the game would start after the clouds section, above y = 500, which would possibly include enemy UFOs, rocket ships, space debris etc.
+
 InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager* audio_manager, gef::Renderer3D* renderer_3d, gef::Font* font, Camera* camera, gef::Platform* platform, StateManager* state_manager) :
 	sprite_renderer_(sprite_renderer),
 	renderer_3d_(renderer_3d),
