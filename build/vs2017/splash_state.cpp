@@ -42,7 +42,6 @@ void SplashState::Update(float frame_time, const gef::SonyController* controller
 		played_ = true;
 		audio_manager_->PlaySample(0);
 	}
-	
 
 	if (time_ >= 3.f) {
 		state_manager_->setState(StateManager::MENUSTATE);

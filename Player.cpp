@@ -2,6 +2,9 @@
 #include "primitive_builder.h"
 #include <graphics/renderer_3d.h>
 #include "graphics/mesh.h"
+#include "system/debug_log.h"
+
+#define INITIAL_POS 0.0f, 9.57f
 
 Player::Player() :
 	player_body_(NULL),
@@ -81,7 +84,7 @@ void Player::Init(PrimitiveBuilder* primitive_builder, b2World* world, gef::Plat
 	// create a physics body for the player
 	b2BodyDef player_body_def;
 	player_body_def.type = b2_dynamicBody;
-	player_body_def.position = b2Vec2(0.0f, 6.0f);
+	player_body_def.position = b2Vec2(INITIAL_POS);
 	// create a connection between the rigid body and GameObject
 	player_body_def.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
@@ -207,6 +210,6 @@ void Player::Reset()
 	rotation_ = 0.f;
 	current_rotation_ = 0.f;
 	fuel_ = 50.f;
-	position_.Set(0.f, 6.f);
-	player_body_->SetTransform(b2Vec2(0.0f, 6.0f), 0.f);
+	position_.Set(INITIAL_POS);
+	player_body_->SetTransform(b2Vec2(INITIAL_POS), 0.f);
 }
