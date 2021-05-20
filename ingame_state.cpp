@@ -177,7 +177,7 @@ void InGameState::UpdateSimulation(float frame_time, const gef::SonyController* 
 				{
 					audio_manager_->PlaySample(4, 0);
 					fuel_manager_->spawnFuel(world_, 1, player_->getPosition());
-					player_->addFuel(25.f);
+					player_->addFuel(50.f / *state_manager_->settings_->difficulty_);
 					player = reinterpret_cast<Player*>(bodyB->GetUserData().pointer);
 				}
 			}
