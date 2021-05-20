@@ -1,4 +1,6 @@
 #pragma once
+#include "game_object.h"
+
 #include "graphics/mesh_instance.h"
 #include <maths/quaternion.h>
 #include "maths/math_utils.h"
@@ -25,7 +27,7 @@ namespace gef
 }
 
 
-class Player : public gef::MeshInstance
+class Player : public GameObject
 {
 public:
 	Player();

@@ -17,6 +17,7 @@
 #include "stars_manager.h"
 #include "particle_manager.h"
 #include "cloud_manager.h"
+#include "fuel_manager.h"
 #include "hud.h"
 
 class StateManager;
@@ -47,6 +48,7 @@ private:
 	gef::Platform* platform_;
 	StateManager* state_manager_;
 	gef::AudioManager* audio_manager_;
+	FuelManager* fuel_manager_;
 
 	HUD* HUD_;
 	

@@ -61,7 +61,7 @@ bool Particle::Update(float frame_time)
 	
 	transform.SetTranslation(pos);
 
-	this->set_transform(transform);
+	set_transform(transform);
 
 	return true; // alive
 

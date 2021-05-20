@@ -102,6 +102,12 @@
     <ClCompile Include="splash_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fuel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fuel_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\scene_app.h">
@@ -183,6 +189,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="splash_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fuel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fuel_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

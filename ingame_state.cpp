@@ -48,6 +48,8 @@ InGameState::InGameState(gef::SpriteRenderer* sprite_renderer, gef::AudioManager
 
 	cloud_manager_ = new CloudManager(platform);
 
+	fuel_manager_ = new FuelManager(world_, platform);
+
 	HUD_ = new HUD();
 
 	InitGround();
@@ -65,8 +67,20 @@ InGameState::~InGameState()
 	delete primitive_builder_;
 	primitive_builder_ = NULL;
 
+	delete stars_manager_;
+	stars_manager_ = NULL;
+
 	delete renderer_3d_;
 	renderer_3d_ = NULL;
+
+	delete particles_manager_;
+	particles_manager_ = NULL;
+
+	delete cloud_manager_;
+	cloud_manager_ = NULL;
+	
+	delete fuel_manager_;
+	fuel_manager_ = NULL;
 }
 
 void InGameState::onEnter()
@@ -87,6 +101,8 @@ void InGameState::Update(float frame_time, const gef::SonyController* controller
 	camera_->Update(frame_time);
 	particles_manager_->Update(frame_time);
 	cloud_manager_->Update(frame_time);
+	fuel_manager_->Update(frame_time);
+
 	HUD_->Update(player_->getFuel(), (player_->getPosition().y / 10.f) - 0.957f);
 
 	if (controller->buttons_pressed() & gef_SONY_CTRL_R2) {
@@ -194,9 +210,6 @@ void InGameState::Render()
 	// view
 	renderer_3d_->set_view_matrix(camera_->getViewMatrix());
 
-	
-	
-
 	// draw 3d geometry
 	renderer_3d_->Begin();
 
@@ -213,6 +226,9 @@ void InGameState::Render()
 	// draw particles
 	particles_manager_->Render(renderer_3d_);
 
+	// draw fuel
+	fuel_manager_->Render(renderer_3d_, player_->getPosition());
+
 	// draw clouds
 	cloud_manager_->Render(renderer_3d_, gef::Vector4(player_->getPosition().x, player_->getPosition().y, 0.f));
 
@@ -223,7 +239,6 @@ void InGameState::Render()
 	HUD_->Render(sprite_renderer_, font_);
 	sprite_renderer_->End();
 
-	
 }
 
 

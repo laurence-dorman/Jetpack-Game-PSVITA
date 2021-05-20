@@ -8,7 +8,6 @@ enum OBJECT_TYPE
 {
 	PLAYER,
 	ENEMY,
-	BULLET,
 	FUEL
 };
 
